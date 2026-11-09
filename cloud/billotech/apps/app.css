@@ -1,0 +1,30 @@
+/* BilloTech app chrome — locked BET tokens: black, teal #2DD6AE, purple, Anton / Outfit / JetBrains Mono, zero radius */
+:root{--k:#000;--p1:#0D0D10;--p2:#141418;--p3:#1B1B21;--ln:rgba(255,255,255,.10);--ln2:rgba(255,255,255,.18);--tx:#F3F3F3;--dim:#A1A1A1;--teal:#2DD6AE;--ink:#041714;--pur:#9B81B6;--warn:#F2B13C;--bad:#FF5F5F}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--k);color:var(--tx);font:15px/1.5 Outfit,-apple-system,"Segoe UI",Roboto,sans-serif}
+a{color:inherit}
+button{font:inherit}
+.ab{position:sticky;top:0;z-index:50;display:flex;align-items:center;gap:12px;padding:0 14px;height:56px;border-bottom:1px solid var(--ln2);background:#000}
+.ab-mark{display:flex;align-items:center;gap:10px;text-decoration:none;flex:none}
+.ab-mark img{width:30px;height:30px;display:block}
+.ab-name{font:400 22px/1 Anton,Impact,sans-serif;text-transform:uppercase;letter-spacing:.01em;white-space:nowrap}
+.ab-name em{font-style:normal;color:var(--teal)}
+.ab-doc{min-width:0;flex:1;display:flex;align-items:center;gap:8px}
+.ab-doc input{min-width:0;width:100%;max-width:420px;background:transparent;border:1px solid transparent;color:var(--tx);font:500 15px Outfit,sans-serif;padding:7px 9px;border-radius:0}
+.ab-doc input:hover{border-color:var(--ln2)}.ab-doc input:focus{outline:none;border-color:var(--teal)}
+.ab-state{font:11px "JetBrains Mono",monospace;color:var(--dim);white-space:nowrap}
+.ab-acts{display:flex;gap:6px;align-items:center;flex:none}
+.b{background:none;border:1px solid var(--ln2);color:var(--tx);padding:8px 12px;font:600 12px Outfit,sans-serif;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;border-radius:0;white-space:nowrap;text-decoration:none;display:inline-flex;align-items:center;gap:6px}
+.b:hover{border-color:#fff}.b.pri{background:var(--teal);color:var(--ink);border-color:var(--teal)}.b.pri:hover{background:#fff;border-color:#fff}
+.b:focus-visible,.ab-doc input:focus-visible{outline:2px solid var(--teal);outline-offset:2px}
+.b.icon{padding:8px 10px}
+.menu{position:relative}.menu>.dd{position:absolute;right:0;top:calc(100% + 6px);background:var(--p1);border:1px solid var(--ln2);min-width:230px;display:none;z-index:60;padding:6px 0}
+.menu.on>.dd{display:block}.dd button,.dd a{display:flex;justify-content:space-between;gap:16px;width:100%;background:none;border:0;color:var(--tx);text-align:left;padding:9px 14px;font:14px Outfit,sans-serif;cursor:pointer;text-decoration:none}
+.dd button:hover,.dd a:hover{background:var(--p3)}.dd kbd{font:11px "JetBrains Mono",monospace;color:var(--dim)}.dd hr{border:0;border-top:1px solid var(--ln);margin:6px 0}
+.kick{font:500 11px "JetBrains Mono",monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--teal)}
+.h{font:400 26px/1 Anton,Impact,sans-serif;text-transform:uppercase;margin:6px 0 10px}
+.dimt{color:var(--dim)}
+.mono{font-family:"JetBrains Mono",monospace}
+.pill{font:10.5px "JetBrains Mono",monospace;letter-spacing:.1em;text-transform:uppercase;padding:3px 8px;border:1px solid currentColor;white-space:nowrap}
+@media (max-width:720px){.ab-name{font-size:18px}.ab-state{display:none}.b .lbl{display:none}.ab{gap:8px;padding:0 10px}}
+@media print{.ab,.noprint{display:none!important}body{background:#fff;color:#000}}

@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>BilloTech Plans · Free, Basic, Premium, Schools</title>
+<meta name="description" content="BilloTech runs in your browser. Free for personal use. Basic is $8 a month for paid work: full resolution, no end card, commercial license. Donated free to schools.">
+<meta property="og:title" content="BilloTech Plans"><meta property="og:description" content="Free for personal use. $8 a month for paid work. Donated to schools.">
+<link rel="icon" href="/billotech/apps/mark.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Outfit:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/billotech/apps/app.css"><link rel="stylesheet" href="/billotech/site.css">
+<style>[hidden]{display:none!important}</style>
+</head>
+<body>
+<header class="ab">
+  <a class="ab-mark" href="/billotech/pro/"><img src="/billotech/apps/mark.svg" alt=""><span class="ab-name">Billo<em>Tech</em></span></a>
+  <div class="ab-doc"><span class="ab-state" id="who">Not signed in</span></div>
+  <div class="ab-acts"><a class="b" href="/billotech/schools/">Schools</a><a class="b pri" href="/billotech/cloud/">Open Billo Forge</a></div>
+</header>
+<main class="pg">
+  <section class="sec hero">
+    <div class="kick">BilloTech Cloud · Plans</div>
+    <h1>The free one is great.<br><em>Pro is $8.</em></h1>
+    <p class="lede">Every BilloTech tool runs in your browser. Nothing to install, nothing to design: open it, drop your footage, pick a recipe. Your projects save to your device or snap to your own Google Drive. Free for personal use. When it's paid work, it's eight dollars a month.</p>
+    <p class="msg ok" id="paidMsg" hidden>Payment received. Step 3 below links it to your account and unlocks Basic everywhere.</p>
+  </section>
+
+  <section class="sec" id="plans">
+    <div class="kick">Plans</div><h2 class="h2">Pick yours</h2>
+    <div class="grid" id="planGrid"></div>
+  </section>
+
+  <section class="sec" id="start">
+    <div class="kick">Three steps</div><h2 class="h2">Unlock Basic</h2>
+    <div class="steps">
+      <div class="step"><span class="n">STEP 1 · ACCOUNT</span>
+        <div id="s1New"><p class="msg">A free BilloTech account. No password: you get a key. Keep it like a password.</p>
+          <input id="hn" placeholder="Your name" autocomplete="nickname" aria-label="Your name"><br><br>
+          <input id="em" type="email" placeholder="Email you'll pay with" autocomplete="email" aria-label="Email"><br><br>
+          <button class="b pri" id="mk">Make my account</button>
+          <details style="margin-top:10px"><summary class="msg" style="cursor:pointer">I already have a key</summary><br><input id="pk" placeholder="bt_…" aria-label="Your key"><br><br><button class="b" id="use">Sign in with key</button></details></div>
+        <div id="s1Key" hidden><p class="msg ok">Account made. Copy your key now, it's shown once:</p><div class="key" id="kk"></div></div>
+        <div id="s1In" hidden><p class="msg ok" id="inTxt"></p><button class="b" id="out">Sign out</button></div>
+        <p class="msg bad" id="e1"></p>
+      </div>
+      <div class="step"><span class="n">STEP 2 · PAY</span>
+        <p class="msg">$8 a month through Square. Card, Apple Pay or Google Pay. Cancel any time from your Square receipt.</p>
+        <a class="b pri" id="pay" href="https://square.link/u/SN7ejve4" target="_blank" rel="noopener">Subscribe for $8 a month</a>
+        <p class="msg">Use the same email as step 1.</p>
+      </div>
+      <div class="step"><span class="n">STEP 3 · LINK</span>
+        <p class="msg">Prove it's your subscription: the email you paid with and the last 4 digits of that card. We never see the full card.</p>
+        <input id="le" type="email" placeholder="Email you paid with" aria-label="Email you paid with" autocomplete="email">
+        <input id="l4" inputmode="numeric" maxlength="4" placeholder="Last 4 of the card" aria-label="Last 4 digits">
+        <button class="b pri" id="link">Unlock Basic</button>
+        <p class="msg" id="e3"></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="premium">
+    <div class="kick">Premium · in the build</div><h2 class="h2">The whole studio</h2>
+    <div class="cols">
+      <div><h3>Billo Swarm</h3><p>Split a long render across every device you own: phone, laptop, the lab's Chromebooks. Each one renders a slice in its browser and the finished file comes back together. Runs over plain HTTPS, so it works where torrents get blocked.</p></div>
+      <div><h3>AI assists</h3><p>Auto captions, voice-over from your script, true 9:16 reframe, and builders that cut a trailer or an event recap from your footage.</p></div>
+      <div><h3>Billo Live</h3><p>Stream and collaborate from the browser, built on the open-source OBS stack. Scenes, guests and overlays that match your BilloTech look.</p></div>
+      <div><h3>Brand kit and seats</h3><p>Your fonts, colors, logos and end cards on every export. Seats for your team, crew or class.</p></div>
+    </div>
+    <div class="form"><label>Tell me when Premium opens<input id="wlE" type="email" placeholder="you@email.com" autocomplete="email"></label><button class="b pri" id="wl" style="justify-self:start">Put me on the list</button><p class="msg" id="wlM"></p></div>
+  </section>
+
+  <section class="sec">
+    <div class="kick">The license</div><h2 class="h2">Read the code. Own your work.</h2>
+    <p class="lede">BilloTech is source-available: anyone can read the code and learn from it. Personal use and school use are free. Paid work needs a subscription. Everything you make is yours. <a href="/billotech/license/" style="color:var(--teal)">Read the BilloTech Source License</a>.</p>
+  </section>
+</main>
+<footer class="pg foot"><span>BilloTech · Billy Sorrells Entertainment LLC · Houston</span><span><a href="/billotech/license/">License</a> · <a href="/billotech/schools/">Schools</a> · <a href="/billotech/cloud/">Billo Forge</a></span></footer>
+<script src="/billotech/cloud/cloud.js"></script>
+<script>
+(function(){
+  var B=window.BilloCloud,$=function(s){return document.querySelector(s)};
+  var FALLBACK=[{id:"free",name:"Free",price_cents:0,status:"live",tagline:"Every BilloTech tool in your browser. Personal use.",features:["Every BilloTech app runs in your browser","Edit Forge: every effect, look and cut style","Exports up to 720p with a BilloTech end card","Save to your device or your Google Drive","Personal, non-commercial use"]},
+    {id:"basic",name:"Basic",price_cents:800,interval:"month",status:"live",tagline:"Use it for paid work. Full resolution, no end card.",features:["Everything in Free","Commercial license for client and paid work","Full-resolution exports, no end card","Cut lists for Premiere, Resolve and Final Cut (EDL)","Every new BilloTech tool as it ships"],checkout_url:"https://square.link/u/SN7ejve4"}];
+  function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+  function price(p){ if(p.status==="coming")return '<div class="price">Soon</div>'; if(!p.price_cents)return '<div class="price">$0'+(p.id==="schools"?'<small>donated</small>':'')+'</div>'; return '<div class="price">$'+(p.price_cents/100).toFixed(0)+'<small>/ '+(p.interval||"month")+'</small></div>'; }
+  function cta(p){ if(p.id==="free")return '<a class="b" href="/billotech/cloud/">Start free</a>'; if(p.id==="basic")return '<a class="b pri" href="#start">Get Basic</a>'; if(p.id==="premium")return '<a class="b" href="#premium">Join the list</a>'; return '<a class="b" href="/billotech/schools/">Request for your school</a>'; }
+  function render(plans){ $("#planGrid").innerHTML=plans.map(function(p){return '<div class="card'+(p.id==="basic"?" hot":"")+'"><h3>'+esc(p.name)+(p.status==="coming"?'<span class="soon">Coming</span>':'')+'</h3>'+price(p)+'<p class="tag">'+esc(p.tagline||"")+'</p><ul>'+(p.features||[]).map(function(f){return"<li>"+esc(f)+"</li>"}).join("")+"</ul>"+cta(p)+"</div>"}).join(""); }
+  render(FALLBACK);
+  if(/[?&]paid=1/.test(location.search)){$("#paidMsg").hidden=false;}
+  B.on(function(c){
+    if(c.plans&&c.plans.length){render(c.plans); var b=c.plans.filter(function(p){return p.id==="basic"})[0]; if(b&&b.checkout_url)$("#pay").href=b.checkout_url;}
+    var signed=!!B.key();
+    $("#s1New").hidden=signed; $("#s1In").hidden=!signed||!$("#s1Key").hidden; if(!signed)$("#s1Key").hidden=true;
+    if(signed){var nm={free:"Free",basic:"Basic",premium:"Premium",schools:"Schools"}[c.plan.plan]||c.plan.plan; $("#inTxt").textContent="Signed in"+(c.account?" as "+c.account.handle:"")+" · "+nm+" plan"+(c.plan.until?" · paid through "+new Date(c.plan.until).toLocaleDateString():""); $("#who").textContent=(c.account?c.account.handle+" · ":"")+nm;}
+    else $("#who").textContent="Not signed in";
+  });
+  B.boot();
+  $("#mk").onclick=function(){var h=$("#hn").value.trim(); if(h.length<2){$("#e1").textContent="Add your name.";return;}
+    B.createAccount(h,$("#em").value.trim()).then(function(d){$("#s1New").hidden=true;$("#s1Key").hidden=false;$("#kk").textContent=d.api_key;$("#e1").textContent="";if($("#em").value)$("#le").value=$("#em").value;}).catch(function(e){$("#e1").textContent=e.message;});};
+  $("#use").onclick=function(){B.useKey($("#pk").value).then(function(){$("#e1").textContent="";}).catch(function(e){$("#e1").textContent=e.message;});};
+  $("#out").onclick=function(){B.signOut();$("#s1Key").hidden=true;};
+  $("#link").onclick=function(){
+    if(!B.key()){$("#e3").className="msg bad";$("#e3").textContent="Do step 1 first (make an account or sign in with your key).";return;}
+    $("#e3").className="msg";$("#e3").textContent="Checking with Square…";
+    B.link($("#le").value.trim(),$("#l4").value.trim()).then(function(d){$("#e3").className="msg ok";$("#e3").textContent="Unlocked: "+d.plan.plan+" plan. Open Billo Forge and export at full size.";}).catch(function(e){$("#e3").className="msg bad";$("#e3").textContent=e.message;});};
+  $("#wl").onclick=function(){var e=$("#wlE").value.trim(); if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(e)){$("#wlM").className="msg bad";$("#wlM").textContent="That email looks off.";return;}
+    fetch("https://hnzekejoaamsnmtqtwie.supabase.co/functions/v1/billotech-api/requests",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({app:"hub",title:"Premium waitlist",body:e,priority:"later",name:"premium-waitlist"})})
+      .then(function(r){return r.json()}).then(function(){$("#wlM").className="msg ok";$("#wlM").textContent="You're on the list.";}).catch(function(){$("#wlM").className="msg bad";$("#wlM").textContent="Didn't go through. Try again.";});};
+})();
+</script>
+</body>
+</html>

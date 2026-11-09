@@ -1,0 +1,37 @@
+/* BilloTech marketing pages: same locked BET tokens as /billotech (black, teal, purple, Anton / Outfit / JetBrains Mono, zero radius). */
+.pg{max-width:1180px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.sec{padding-block:clamp(44px,7vw,84px);border-top:1px solid var(--ln)}
+.sec:first-of-type{border-top:0}
+.hero h1{font:400 clamp(44px,8vw,92px)/.92 Anton,Impact,sans-serif;text-transform:uppercase;margin:10px 0 0;text-wrap:balance}
+.hero h1 em{font-style:normal;color:var(--teal)}
+.lede{color:var(--dim);font-size:clamp(16px,1.6vw,19px);max-width:62ch;margin:18px 0 0;line-height:1.55}
+h2.h2{font:400 clamp(30px,4.6vw,48px)/1 Anton,Impact,sans-serif;text-transform:uppercase;margin:6px 0 0;text-wrap:balance}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1px;background:var(--ln);border:1px solid var(--ln);margin-top:26px}
+.card{background:var(--k);padding:22px;display:flex;flex-direction:column;gap:12px;min-width:0}
+.card.hot{background:var(--p1);box-shadow:inset 0 3px 0 var(--teal)}
+.card h3{font:400 30px/1 Anton,Impact,sans-serif;text-transform:uppercase;margin:0}
+.price{font:400 46px/1 Anton,Impact,sans-serif}
+.price small{font:500 14px Outfit,sans-serif;color:var(--dim);margin-left:4px}
+.card ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px;font-size:14.5px}
+.card li{padding-left:18px;position:relative;line-height:1.45}
+.card li::before{content:"";position:absolute;left:0;top:.55em;width:8px;height:8px;background:var(--teal)}
+.card .tag{color:var(--dim);font-size:14px;min-height:2.9em}
+.card .b{justify-content:center;margin-top:auto}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin-top:22px}
+.step{border:1px solid var(--ln);padding:18px;background:var(--p1);display:flex;flex-direction:column;gap:10px;min-width:0}
+.step .n{font:500 11px "JetBrains Mono",monospace;letter-spacing:.14em;color:var(--teal)}
+.step input,.form input,.form textarea,.form select{background:var(--p2);color:var(--tx);border:1px solid var(--ln2);padding:10px;font:14px Outfit,sans-serif;border-radius:0;width:100%}
+.form{display:grid;gap:10px;max-width:620px;margin-top:18px}
+.form label{display:flex;flex-direction:column;gap:6px;font:11px "JetBrains Mono",monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--dim)}
+.msg{font-size:14px;color:var(--dim)}.msg.ok{color:var(--teal)}.msg.bad{color:var(--bad)}
+.key{font:13px "JetBrains Mono",monospace;background:#000;border:1px solid var(--teal);padding:10px;word-break:break-all;user-select:all}
+.legal{max-width:72ch;font-size:15.5px;line-height:1.65}
+.legal h3{font:400 22px/1.1 Anton,Impact,sans-serif;text-transform:uppercase;margin:30px 0 8px}
+.legal p,.legal li{color:#d9d9d9}
+.legal code{font:13px "JetBrains Mono",monospace;background:var(--p2);padding:2px 5px}
+.foot{border-top:1px solid var(--ln);padding-block:26px 40px;font:11px "JetBrains Mono",monospace;color:var(--dim);display:flex;flex-wrap:wrap;gap:14px;justify-content:space-between}
+.foot a{color:var(--dim)}
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:22px;margin-top:22px}
+.cols div{min-width:0}.cols h3{font:400 22px/1.05 Anton,Impact,sans-serif;text-transform:uppercase;margin:0 0 6px}
+.cols p{margin:0;color:var(--dim);line-height:1.55}
+.soon{font:10.5px "JetBrains Mono",monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--warn);border:1px solid var(--warn);padding:2px 6px;vertical-align:middle;margin-left:8px}

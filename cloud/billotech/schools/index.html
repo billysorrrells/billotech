@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>BilloTech Schools · Students make it, students own it</title>
+<meta name="description" content="BilloTech is donated to schools: browser tools for video, music and journalism that run on school networks with nothing to install. Student work saves to the school's own Google Drive.">
+<link rel="icon" href="/billotech/apps/mark.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Outfit:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/billotech/apps/app.css"><link rel="stylesheet" href="/billotech/site.css">
+</head>
+<body>
+<header class="ab">
+  <a class="ab-mark" href="/billotech/pro/"><img src="/billotech/apps/mark.svg" alt=""><span class="ab-name">Billo<em>Tech</em> Schools</span></a>
+  <div class="ab-doc"></div>
+  <div class="ab-acts"><a class="b" href="/billotech/pro/">Plans</a><a class="b pri" href="/billotech/cloud/?demo">Try it</a></div>
+</header>
+<main class="pg">
+  <section class="sec hero">
+    <div class="kick">Donated to schools</div>
+    <h1>Students make it.<br><em>Students own it.</em></h1>
+    <p class="lede">BilloTech puts a real production studio in every student's browser: video, color, beat editing, music and journalism tools. Nothing to install, nothing for IT to image. It runs over plain HTTPS on the Chromebooks and lab machines schools already have. We donate the license. Students keep everything they make.</p>
+  </section>
+
+  <section class="sec">
+    <div class="kick">What students get</div><h2 class="h2">A studio, free</h2>
+    <div class="cols">
+      <div><h3>Billo Forge</h3><p>Edit video with the same effects, color and beat-cut tools the paid creators use. Live now.</p></div>
+      <div><h3>The student channel<span class="soon">In the build</span></h3><p>A school channel for student news, music and projects, made and run by students, in the spirit of the classroom news shows and reading programs a lot of us grew up on.</p></div>
+      <div><h3>Learn by making<span class="soon">In the build</span></h3><p>Games that teach the technology while students use it: how a cut works, what a color grade does, how a beat is counted, how a stream goes live.</p></div>
+      <div><h3>Billo Swarm<span class="soon">In the build</span></h3><p>A class renders together. Every machine in the lab takes a slice of a long render, so a 30-machine lab finishes in a fraction of the time.</p></div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="kick">For IT and administrators</div><h2 class="h2">Built to get through</h2>
+    <div class="cols">
+      <div><h3>Plain web, no installs</h3><p>Every tool is a web page on HTTPS port 443. No downloads, no plugins, no peer-to-peer ports.</p></div>
+      <div><h3>Work stays with the school</h3><p>Footage is processed on the student's own machine and never uploaded to BilloTech. Projects save to the device or to the school's own Google Drive.</p></div>
+      <div><h3>No ads</h3><p>No ads, ever, on the school version. Student work is never sold.</p></div>
+      <div><h3>Domains to allow</h3><p><code style="font:12px 'JetBrains Mono',monospace">billysorrells.com</code>, <code style="font:12px 'JetBrains Mono',monospace">billotech-cloud.netlify.app</code>, <code style="font:12px 'JetBrains Mono',monospace">hnzekejoaamsnmtqtwie.supabase.co</code>, <code style="font:12px 'JetBrains Mono',monospace">fonts.googleapis.com</code>, <code style="font:12px 'JetBrains Mono',monospace">fonts.gstatic.com</code>.</p></div>
+    </div>
+  </section>
+
+  <section class="sec" id="request">
+    <div class="kick">Request</div><h2 class="h2">Bring BilloTech to your school</h2>
+    <div class="form">
+      <label>School or program<input id="sc" autocomplete="organization"></label>
+      <label>District<input id="di" placeholder="e.g. Houston ISD, Alief ISD, Fort Bend ISD"></label>
+      <label>Your name and role<input id="nm" placeholder="Name, title"></label>
+      <label>Email<input id="em" type="email" autocomplete="email"></label>
+      <label>Students who'd use it (about)<input id="ct" inputmode="numeric"></label>
+      <button class="b pri" id="go" style="justify-self:start">Request a donated license</button>
+      <p class="msg" id="m"></p>
+    </div>
+  </section>
+</main>
+<footer class="pg foot"><span>BilloTech · Billy Sorrells Entertainment LLC · Houston</span><span><a href="/billotech/license/">License</a> · <a href="/billotech/pro/">Plans</a></span></footer>
+<script>
+document.getElementById("go").onclick=function(){
+  var g=function(i){return document.getElementById(i).value.trim()},m=document.getElementById("m");
+  if(!g("sc")||!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(g("em"))){m.className="msg bad";m.textContent="Add the school and a working email.";return;}
+  var body="School: "+g("sc")+"\nDistrict: "+g("di")+"\nContact: "+g("nm")+"\nEmail: "+g("em")+"\nStudents: "+g("ct");
+  fetch("https://hnzekejoaamsnmtqtwie.supabase.co/functions/v1/billotech-api/requests",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({app:"hub",title:"Schools license request: "+g("sc").slice(0,100),body:body,priority:"now",name:"schools"})})
+    .then(function(r){if(!r.ok)throw 0;m.className="msg ok";m.textContent="Got it. Billy's team will reach out about your donated license.";})
+    .catch(function(){m.className="msg bad";m.textContent="That didn't go through. Try again in a minute.";});
+};
+</script>
+</body>
+</html>

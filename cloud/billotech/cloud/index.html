@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Billo Forge · BilloTech Cloud</title>
+<meta name="description" content="Billo Forge: drop a clip, pick a recipe, export. Glitch, VHS, light leaks, film burn, grain, punch-ins and pro color looks, cut to the beat of your song. Runs in your browser. Free for personal use.">
+<meta property="og:title" content="Billo Forge · BilloTech Cloud"><meta property="og:description" content="Drop a clip, pick a recipe, export. Effects, looks and beat-cut editing in your browser.">
+<link rel="icon" href="/billotech/apps/mark.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Outfit:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/billotech/apps/app.css">
+<style>
+[hidden]{display:none!important}
+body{overflow-x:hidden}
+.wrap{display:grid;grid-template-columns:minmax(0,1fr) 380px;min-height:calc(100vh - 56px)}
+.col{min-width:0;display:flex;flex-direction:column}
+.col+.col{border-left:1px solid var(--ln)}
+.stage{position:relative;background:#050506;display:grid;place-items:center;padding:18px;border-bottom:1px solid var(--ln);min-height:52vh}
+.stage canvas{max-width:100%;max-height:64vh;display:block;background:#000;box-shadow:0 0 0 1px var(--ln2)}
+.stage::before,.stage::after{content:"";position:absolute;width:18px;height:18px;border:2px solid var(--teal);pointer-events:none}
+.stage::before{left:8px;top:8px;border-right:0;border-bottom:0}.stage::after{right:8px;bottom:8px;border-left:0;border-top:0}
+.drop{position:absolute;inset:18px;display:grid;place-items:center;text-align:center;border:1px dashed var(--ln2);background:rgba(0,0,0,.6);padding:20px}
+.drop.on{border-color:var(--teal);background:rgba(45,214,174,.08)}
+.drop .h{font-size:34px}
+.drop p{max-width:46ch;margin:6px auto 16px;color:var(--dim)}
+.drop .acts{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+.tp{display:flex;align-items:center;gap:10px;padding:10px 14px;border-bottom:1px solid var(--ln)}
+.tp input[type=range]{flex:1;min-width:0;accent-color:var(--teal)}
+.tc{font:12px "JetBrains Mono",monospace;color:var(--dim);font-variant-numeric:tabular-nums;white-space:nowrap}
+.lane{position:relative;height:34px;margin:0 14px 12px;background:var(--p1);border:1px solid var(--ln);cursor:crosshair}
+.lane i{position:absolute;top:0;bottom:0;width:2px;background:var(--warn);transform:translateX(-1px)}
+.lane i.k{background:var(--pur)}
+.lane b{position:absolute;top:0;bottom:0;width:1px;background:var(--teal)}
+.lane span{position:absolute;left:8px;top:8px;font:10.5px "JetBrains Mono",monospace;color:var(--dim);letter-spacing:.08em;pointer-events:none}
+.status{padding:10px 14px;font:12px "JetBrains Mono",monospace;color:var(--dim);border-top:1px solid var(--ln);margin-top:auto}
+.status b{color:var(--teal);font-weight:500}
+.tabs{display:flex;border-bottom:1px solid var(--ln);overflow-x:auto}
+.tabs button{flex:1;background:none;border:0;border-bottom:2px solid transparent;color:var(--dim);padding:12px 8px;font:600 11.5px Outfit,sans-serif;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;white-space:nowrap}
+.tabs button[aria-selected=true]{color:var(--tx);border-bottom-color:var(--teal)}
+.panel{padding:14px;display:flex;flex-direction:column;gap:12px;overflow:auto;max-height:calc(100vh - 106px)}
+.rec{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.rc{background:var(--p1);border:1px solid var(--ln);padding:12px;text-align:left;color:var(--tx);cursor:pointer;display:flex;flex-direction:column;gap:6px;min-width:0}
+.rc:hover{border-color:var(--ln2)}.rc[aria-pressed=true]{border-color:var(--teal);box-shadow:inset 0 0 0 1px var(--teal)}
+.rc b{font:400 18px/1 Anton,Impact,sans-serif;text-transform:uppercase}
+.rc small{color:var(--dim);font-size:12px;line-height:1.35}
+.sw{height:6px;display:flex}.sw i{flex:1}
+.fx{display:grid;grid-template-columns:auto 1fr auto;gap:8px 10px;align-items:center;padding:10px 0;border-bottom:1px solid var(--ln)}
+.fx label{font-weight:600;font-size:14px}
+.fx input[type=range]{width:100%;accent-color:var(--teal)}
+.fx select,.field select,.field input{background:var(--p2);color:var(--tx);border:1px solid var(--ln2);padding:6px 8px;font:12px "JetBrains Mono",monospace;border-radius:0}
+.fx .tg{width:18px;height:18px;accent-color:var(--teal)}
+.fx .d{grid-column:2/4;color:var(--dim);font-size:12px;margin-top:-4px}
+.field{display:flex;flex-direction:column;gap:6px}
+.field>span{font:11px "JetBrains Mono",monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--dim)}
+.looks{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.note{font-size:13px;color:var(--dim);line-height:1.5}
+.note a{color:var(--teal)}
+.lock{border:1px solid var(--warn);color:var(--warn);padding:10px 12px;font-size:13px}
+.lock a{color:var(--warn);font-weight:600}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.clips{display:flex;flex-direction:column;gap:6px}
+.clips div{display:flex;justify-content:space-between;gap:10px;background:var(--p1);border:1px solid var(--ln);padding:8px 10px;font:12px "JetBrains Mono",monospace}
+.clips div span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+.plan{font:10.5px "JetBrains Mono",monospace;letter-spacing:.1em;text-transform:uppercase;padding:3px 8px;border:1px solid var(--teal);color:var(--teal);text-decoration:none;white-space:nowrap}
+.plan.free{border-color:var(--ln2);color:var(--dim)}
+.toast{position:fixed;left:50%;bottom:max(18px,env(safe-area-inset-bottom));transform:translateX(-50%);background:var(--p3);border:1px solid var(--ln2);padding:10px 16px;font-size:14px;z-index:90;max-width:min(560px,92vw)}
+.toast a{color:var(--teal)}
+dialog{background:var(--p1);color:var(--tx);border:1px solid var(--ln2);padding:0;max-width:min(520px,94vw);width:100%}
+dialog::backdrop{background:rgba(0,0,0,.7)}
+dialog .in{padding:20px;display:flex;flex-direction:column;gap:12px}
+dialog input{background:var(--p2);color:var(--tx);border:1px solid var(--ln2);padding:9px 10px;font:14px Outfit,sans-serif;border-radius:0}
+.key{font:13px "JetBrains Mono",monospace;background:#000;border:1px solid var(--teal);padding:10px;word-break:break-all;user-select:all}
+.progress{height:4px;background:var(--p2)}.progress i{display:block;height:100%;width:0;background:var(--teal);transition:width .2s}
+@media (max-width:900px){.wrap{grid-template-columns:1fr}.col+.col{border-left:0;border-top:1px solid var(--ln)}.panel{max-height:none}.stage{min-height:40vh}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<header class="ab">
+  <a class="ab-mark" href="/billotech/pro/" title="BilloTech"><img src="/billotech/apps/mark.svg" alt=""><span class="ab-name">Billo <em>Forge</em></span></a>
+  <div class="ab-doc"><input id="title" value="Untitled project" aria-label="Project name"><span class="ab-state" id="state">Not saved</span></div>
+  <div class="ab-acts">
+    <a class="plan free" id="planPill" href="/billotech/pro/">Free</a>
+    <div class="menu" id="openMenu"><button class="b" id="openBtn" aria-haspopup="true"><span class="lbl">Open</span><span aria-hidden="true">▾</span></button>
+      <div class="dd" role="menu">
+        <button id="openDevice" role="menuitem">From this device <kbd>.billo</kbd></button>
+        <button id="openDrive" role="menuitem">From Google Drive</button>
+        <button id="openCloud" role="menuitem">From my BilloTech account</button>
+      </div></div>
+    <div class="menu" id="saveMenu"><button class="b" id="saveBtn" aria-haspopup="true"><span class="lbl">Save</span><span aria-hidden="true">▾</span></button>
+      <div class="dd" role="menu">
+        <button id="saveDevice" role="menuitem">Save to this device <kbd>⌘S</kbd></button>
+        <button id="saveDrive" role="menuitem">Snap to Google Drive</button>
+        <button id="saveCloud" role="menuitem">Sync to my BilloTech account</button>
+      </div></div>
+    <button class="b pri" id="exportBtn">Export</button>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="col" aria-label="Preview">
+    <div class="stage" id="stage">
+      <canvas id="cv" width="540" height="960" aria-label="Preview"></canvas>
+      <div class="drop" id="drop">
+        <div>
+          <div class="kick">Billo Forge · BilloTech Cloud</div>
+          <div class="h">Drop a clip. Pick a recipe. Export.</div>
+          <p>Glitch, VHS, light leaks, film burn, grain, punch-ins and pro color looks, timed to the hits in your audio. Everything runs in this browser. Your footage never leaves your machine.</p>
+          <div class="acts">
+            <label class="b pri" for="fileIn">Choose a clip</label>
+            <button class="b" id="demoBtn">Try the demo</button>
+          </div>
+        </div>
+      </div>
+      <input type="file" id="fileIn" accept="video/*" hidden>
+    </div>
+    <div class="tp">
+      <button class="b icon" id="playBtn" aria-label="Play">▶</button>
+      <input type="range" id="scrub" min="0" max="1000" value="0" aria-label="Position">
+      <span class="tc" id="tc">0:00.0 / 0:00.0</span>
+      <button class="b" id="hitBtn" title="Mark a hit at the playhead (H)">+ Hit</button>
+    </div>
+    <div class="lane" id="lane" title="Hits: yellow = audio hits and your marks, purple = kick drums. Click to add, shift-click to remove."><span>HITS</span><b id="ph"></b></div>
+    <div class="status" id="status">Ready. <b>Free</b> for personal use.</div>
+  </section>
+
+  <aside class="col" aria-label="Controls">
+    <div class="tabs" role="tablist">
+      <button role="tab" aria-selected="true" data-tab="recipes">Recipes</button>
+      <button role="tab" aria-selected="false" data-tab="effects">Effects</button>
+      <button role="tab" aria-selected="false" data-tab="look">Look</button>
+      <button role="tab" aria-selected="false" data-tab="cut">Beat cut</button>
+      <button role="tab" aria-selected="false" data-tab="export">Export</button>
+    </div>
+
+    <div class="panel" data-panel="recipes">
+      <div><div class="kick">One tap</div><div class="h">Recipes</div>
+      <p class="note">Each recipe sets the look, the effects and when they hit. Tap one, press play. Tweak anything after in Effects and Look.</p></div>
+      <div class="rec" id="recipes"></div>
+    </div>
+
+    <div class="panel" data-panel="effects" hidden>
+      <div><div class="kick">Built from code, not packs</div><div class="h">Effects</div>
+      <p class="note">“On hits” fires at the yellow marks. “Whole clip” runs the entire time. Find hits automatically from the clip's audio, or tap + Hit while it plays.</p></div>
+      <div class="row"><button class="b" id="autoHits">Find hits in the audio</button><button class="b" id="clearHits">Clear hits</button></div>
+      <div class="field"><span>How long each hit lasts</span><input type="range" id="hitLen" min="0.1" max="2" step="0.05" value="0.5" aria-label="Hit length"></div>
+      <div id="fxList"></div>
+    </div>
+
+    <div class="panel" data-panel="look" hidden>
+      <div><div class="kick">Color</div><div class="h">Look</div></div>
+      <div class="looks" id="looks"></div>
+      <div class="field"><span>Strength</span><input type="range" id="lookAmt" min="0" max="1" step="0.01" value="1"></div>
+      <div class="field"><span>Match a still you love</span>
+        <div class="row"><label class="b" for="refIn">Choose a still</label><button class="b" id="clearMatch">Clear</button></div>
+        <input type="file" id="refIn" accept="image/*" hidden>
+        <p class="note">Pick a frame from any film or photo. Billo Forge matches your clip's color and contrast to it.</p></div>
+    </div>
+
+    <div class="panel" data-panel="cut" hidden>
+      <div><div class="kick">Billo Cadence</div><div class="h">Beat cut</div>
+      <p class="note">Add a song and a few clips. Billo Forge finds the tempo and the kick drum, then cuts your clips to it. Effects and looks still apply.</p></div>
+      <div class="row"><label class="b" for="songIn">Add a song</label><label class="b" for="clipsIn">Add clips</label></div>
+      <input type="file" id="songIn" accept="audio/*,video/*" hidden><input type="file" id="clipsIn" accept="video/*" multiple hidden>
+      <div class="clips" id="clipList"></div>
+      <div class="field"><span>Cut style</span><select id="cutRecipe"></select></div>
+      <p class="note" id="cutRule"></p>
+      <div class="row"><button class="b pri" id="buildCut" disabled>Build the cut</button><button class="b" id="leaveCut" hidden>Back to single clip</button></div>
+      <div class="row"><button class="b" id="edlBtn" disabled>Download EDL</button><button class="b" id="cutJson" disabled>Download cut list</button></div>
+      <p class="note">EDL opens in Premiere, Resolve and Final Cut.</p>
+    </div>
+
+    <div class="panel" data-panel="export" hidden>
+      <div><div class="kick">Export</div><div class="h">Make the file</div>
+      <p class="note">Export plays the project once in real time and records it, sound included.</p></div>
+      <div class="field"><span>Size</span><select id="exSize">
+        <option value="720">720p (vertical 720×1280 or wide 1280×720)</option>
+        <option value="1080">1080p (Basic)</option>
+        <option value="src">Source size (Basic)</option></select></div>
+      <div class="field"><span>Shape</span><select id="exShape"><option value="auto">Same as the clip</option><option value="v">Vertical 9:16</option><option value="w">Wide 16:9</option><option value="s">Square 1:1</option></select></div>
+      <div class="lock" id="exLock" hidden>Free exports stop at 720p and end with a 2-second BilloTech card. <a href="/billotech/pro/">Basic is $8 a month</a>: full size, no card, commercial use.</div>
+      <div class="progress" aria-hidden="true"><i id="exBar"></i></div>
+      <div class="row"><button class="b pri" id="exGo">Export now</button><button class="b" id="exStop" hidden>Stop</button></div>
+      <div class="row" id="exDone" hidden><button class="b" id="exSave">Save to this device</button><button class="b" id="exDrive">Snap to Google Drive</button></div>
+      <p class="note">Your file stays yours. BilloTech never uploads your footage. <a href="/billotech/license/">License</a></p>
+    </div>
+  </aside>
+</main>
+
+<dialog id="acct"><div class="in">
+  <div class="kick">BilloTech account</div><div class="h" id="acctH">Make a free account</div>
+  <p class="note" id="acctP">An account syncs small project files and unlocks your plan everywhere. No password: you get a key. Keep it like a password.</p>
+  <div id="acctNew"><div class="field"><span>Name</span><input id="acHandle" autocomplete="nickname"></div>
+    <div class="field"><span>Email (optional, use the one you'll pay with)</span><input id="acEmail" type="email" autocomplete="email"></div></div>
+  <div id="acctKey" hidden><p class="note">Your key. Copy it now, it is shown once.</p><div class="key" id="acKey"></div></div>
+  <div class="field" id="acctHave"><span>Already have a key?</span><input id="acPaste" placeholder="bt_…"></div>
+  <div class="row"><button class="b pri" id="acGo">Create account</button><button class="b" id="acUse">Use my key</button><button class="b" id="acClose">Close</button></div>
+</div></dialog>
+
+<dialog id="picker"><div class="in"><div class="kick" id="pkK">Open</div><div class="h" id="pkH">Your projects</div><div class="clips" id="pkList"></div><div class="row"><button class="b" id="pkClose">Close</button></div></div></dialog>
+<input type="file" id="projIn" accept=".billo,.json,application/json" hidden>
+
+<script src="./gl.js"></script>
+<script src="./beat.js"></script>
+<script src="./cloud.js"></script>
+<script src="./forge.js"></script>
+</body>
+</html>
