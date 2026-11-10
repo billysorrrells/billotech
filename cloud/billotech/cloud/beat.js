@@ -1,4 +1,4 @@
-/* Copyright (c) 2026 Billy Sorrells Entertainment LLC · BilloTech Source License 1.0 (free for personal and school use; paid work needs a BilloTech subscription) · billysorrells.com/billotech/license */
+/* Copyright (c) 2026 Billy Sorrells Entertainment LLC · BilloTech Source License 1.1 (free for personal and school use; paid client work needs BilloTech Pro) · billysorrells.com/billotech/license */
 /* Billo Forge · Beat — hits, kicks, tempo and Cadence cut lists, in the browser.
    Same maths as billo_fx.py cadence: spectral flux onsets, low-band kicks, autocorrelation tempo with a parabolic refine. */
 (function () {

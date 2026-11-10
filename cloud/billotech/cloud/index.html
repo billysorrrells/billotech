@@ -168,18 +168,19 @@ dialog input{background:var(--p2);color:var(--tx);border:1px solid var(--ln2);pa
       <p class="note" id="cutRule"></p>
       <div class="row"><button class="b pri" id="buildCut" disabled>Build the cut</button><button class="b" id="leaveCut" hidden>Back to single clip</button></div>
       <div class="row"><button class="b" id="edlBtn" disabled>Download EDL</button><button class="b" id="cutJson" disabled>Download cut list</button></div>
-      <p class="note">EDL opens in Premiere, Resolve and Final Cut.</p>
+      <p class="note">EDL opens in Premiere, Resolve and Final Cut. Free.</p>
     </div>
 
     <div class="panel" data-panel="export" hidden>
       <div><div class="kick">Export</div><div class="h">Make the file</div>
       <p class="note">Export plays the project once in real time and records it, sound included.</p></div>
       <div class="field"><span>Size</span><select id="exSize">
-        <option value="720">720p (vertical 720×1280 or wide 1280×720)</option>
-        <option value="1080">1080p (Basic)</option>
-        <option value="src">Source size (Basic)</option></select></div>
+        <option value="1080">1080p (vertical 1080×1920 or wide 1920×1080)</option>
+        <option value="720">720p (smaller file)</option>
+        <option value="src">Same size as the clip</option></select></div>
       <div class="field"><span>Shape</span><select id="exShape"><option value="auto">Same as the clip</option><option value="v">Vertical 9:16</option><option value="w">Wide 16:9</option><option value="s">Square 1:1</option></select></div>
-      <div class="lock" id="exLock" hidden>Free exports stop at 720p and end with a 2-second BilloTech card. <a href="/billotech/pro/">Basic is $8 a month</a>: full size, no card, commercial use.</div>
+      <label class="row" style="font-size:14px;gap:10px"><input type="checkbox" id="exCredit" style="accent-color:var(--teal);width:18px;height:18px"> Add a 2-second “Made with BilloTech” card at the end (optional, thank you)</label>
+      <p class="note">Free means free: full size, no watermark. <a href="/billotech/pro/">Pro</a> adds the things that cost us money to run, like long renders on our machines.</p>
       <div class="progress" aria-hidden="true"><i id="exBar"></i></div>
       <div class="row"><button class="b pri" id="exGo">Export now</button><button class="b" id="exStop" hidden>Stop</button></div>
       <div class="row" id="exDone" hidden><button class="b" id="exSave">Save to this device</button><button class="b" id="exDrive">Snap to Google Drive</button></div>

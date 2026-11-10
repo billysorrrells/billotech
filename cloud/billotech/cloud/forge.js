@@ -1,4 +1,4 @@
-/* Copyright (c) 2026 Billy Sorrells Entertainment LLC · BilloTech Source License 1.0 (free for personal and school use; paid work needs a BilloTech subscription) · billysorrells.com/billotech/license */
+/* Copyright (c) 2026 Billy Sorrells Entertainment LLC · BilloTech Source License 1.1 (free for personal and school use; paid client work needs BilloTech Pro) · billysorrells.com/billotech/license */
 /* Billo Forge — BilloTech Cloud editor. Drop a clip, pick a recipe, export. All processing happens in this browser. */
 (function () {
   "use strict";
@@ -345,7 +345,6 @@
   function leaveCut(silent) { if (S.mode !== "cut") return; pause(); S.mode = "single"; S.src = S.clip ? (S.clip.url ? "video" : "demo") : null; $("#leaveCut").hidden = true; if (!silent) { setPreviewSize(); drawLane(); } }
   $("#leaveCut").onclick = function () { leaveCut(); };
   $("#edlBtn").onclick = function () {
-    if (!B.isPaid()) { toast('EDL export is part of Basic. <a href="/billotech/pro/">$8 a month</a>.'); return; }
     B.saveDevice(S.title.replace(/[^\w\- ]+/g, "") + ".edl", window.ForgeBeat.edl(S.cut.plan, S.cut.clips.map(function (c) { return c.name; }), S.title.toUpperCase()), "text/plain");
   };
   $("#cutJson").onclick = function () { B.saveDevice(S.title.replace(/[^\w\- ]+/g, "") + ".cut.json", JSON.stringify(S.cut.plan, null, 1)); };
@@ -457,7 +456,7 @@
     $("#exBar").style.width = Math.min(100, t / (d || 1) * 100) + "%";
     var ended = S.mode === "cut" ? t >= d - .03 : (S.src === "video" ? video.ended || t >= d - .03 : t >= d - .05);
     if (ended && !exCard) {
-      if (!B.isPaid()) { exCard = true; exEndAt = performance.now() + 2000; pause(); }
+      if ($("#exCredit").checked) { exCard = true; exEndAt = performance.now() + 2000; pause(); }
       else stopExport();
     }
   }
@@ -475,7 +474,6 @@
   $("#exGo").onclick = function () {
     if (!S.src && S.mode !== "cut") { toast("Load a clip, the demo, or build a beat cut first."); return; }
     var size = $("#exSize").value;
-    if (size !== "720" && !B.isPaid()) { $("#exLock").hidden = false; toast('1080p and source size are part of Basic. <a href="/billotech/pro/">$8 a month</a>.'); return; }
     var mime = pickMime(); if (!mime) { toast("This browser can't record video. Use Chrome, Edge or Firefox."); return; }
     var d = srcDims(), long = size === "720" ? 1280 : size === "1080" ? 1920 : Math.max(d[0] || 1920, d[1] || 1080);
     exSize = sizeFor(long, $("#exShape").value, d[0], d[1]);
@@ -503,9 +501,8 @@
   // ---------- plan ----------
   B.on(function (c) {
     var p = c.plan.plan, pill = $("#planPill");
-    pill.textContent = { free: "Free", basic: "Basic", premium: "Premium", schools: "Schools" }[p] || p;
+    pill.textContent = { free: "Free", basic: "Pro", premium: "Pro+", schools: "Schools", enterprise: "Enterprise" }[p] || p;
     pill.className = "plan" + (p === "free" ? " free" : "");
-    $("#exLock").hidden = B.isPaid();
     $("#saveDrive").title = B.driveReady() ? "" : "Google Drive saving is switching on soon";
     status(c.account ? "Signed in as <b>" + esc(c.account.handle) + "</b> · " + pill.textContent + " plan." : (S.src ? $("#status").innerHTML : "Ready. <b>Free</b> for personal use. <a href=\"/billotech/pro/\">Plans</a>"));
   });

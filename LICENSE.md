@@ -1,6 +1,6 @@
-# BilloTech Source License 1.0
+# BilloTech Source License 1.1
 
-Version 1.0 · 9 November 2026
+Version 1.1 · 10 November 2026
 
 **Licensor:** Billy Sorrells Entertainment LLC ("BSE"), Houston, Texas, doing business as BilloTech.
 **Software:** the BilloTech tools, apps and source code that come with this license, including Billo Forge, Billo FX Forge, Billo Grade and Billo Cadence.
@@ -15,15 +15,15 @@ You may run, copy and change the Software for personal, non-commercial use: your
 Accredited K-12 schools and districts, colleges and universities, and nonprofit youth programs may use the Software free for teaching and student work under a BilloTech Schools license, which BSE grants in writing.
 
 ## 4. Paid work needs a subscription
-Commercial use means using the Software, or anything it makes, in work you are paid for, for a client, to promote a business, or inside a product or service you sell. Commercial use needs an active BilloTech Basic or Premium subscription for each person using the Software. Prices are listed at billysorrells.com/billotech/pro when you subscribe. Basic is $8 a month.
+Commercial use means using the Software, or anything it makes, in work you are paid for, for a client, to promote a business, or inside a product or service you sell. Commercial use needs an active BilloTech Pro or Enterprise plan for each person using the Software. Prices are listed at billysorrells.com/billotech/pro when you subscribe. Pro is $8 a month.
 
 ## 5. What you make is yours
-You own the videos, images, audio and project files you make with the Software. BSE claims no rights in them. Free-plan exports carry a short BilloTech end card. You may cut it only while you hold a paid plan.
+You own the videos, images, audio and project files you make with the Software. BSE claims no rights in them.
 
 ## 6. What you may not do
 - Sell, rent, sublicense or redistribute the Software or a changed version of it.
 - Offer the Software, or a product built from its code, as a hosted service for others.
-- Remove license notices, or get around a plan limit or the free-plan end card.
+- Remove license notices, or get around a plan limit.
 - Use the BilloTech, Billo or BSE names, logos or marks, except to say truthfully that your work was made with BilloTech.
 
 ## 7. Changes you send

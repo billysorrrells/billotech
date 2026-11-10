@@ -1,4 +1,4 @@
-/* Copyright (c) 2026 Billy Sorrells Entertainment LLC · BilloTech Source License 1.0 (free for personal and school use; paid work needs a BilloTech subscription) · billysorrells.com/billotech/license */
+/* Copyright (c) 2026 Billy Sorrells Entertainment LLC · BilloTech Source License 1.1 (free for personal and school use; paid client work needs BilloTech Pro) · billysorrells.com/billotech/license */
 /* BilloCloud — the shared account, plan and save layer for BilloTech apps.
    Save rule: projects live with the person. Save to your device or snap to your own Google Drive;
    small project files can also sync to your BilloTech account. BilloTech never holds your media.

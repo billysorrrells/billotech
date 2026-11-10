@@ -1,4 +1,4 @@
-/* Copyright (c) 2026 Billy Sorrells Entertainment LLC · BilloTech Source License 1.0 (free for personal and school use; paid work needs a BilloTech subscription) · billysorrells.com/billotech/license */
+/* Copyright (c) 2026 Billy Sorrells Entertainment LLC · BilloTech Source License 1.1 (free for personal and school use; paid client work needs BilloTech Pro) · billysorrells.com/billotech/license */
 /* Billo Forge · GL — every Edit Forge effect and look as one WebGL pass.
    Ported from billo_fx.py (numpy) so the browser and the command line make the same picture.
    Runs on WebGL1 so it works on school Chromebooks and old laptops. */
