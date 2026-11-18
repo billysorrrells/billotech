@@ -1,0 +1,99 @@
+{
+  "_howto": [
+    "THIS FILE IS THE INTEL STORE. Edit it, push, done — /billotech/intel/ rebuilds itself.",
+    "",
+    "Add a product: copy a block, change the fields, set `live` to true.",
+    "Take one down: set `live` to false. Nothing else to touch.",
+    "",
+    "`checkout` is a Square payment-link URL (square.link/u/XXXX). Leave it empty",
+    "and the card shows a 'reserve by email' state instead of a dead button — so a",
+    "half-wired product can never take someone's money and fail to deliver.",
+    "",
+    "Square is the Billo OS rail (same as /billotech/pro/). Create a one-time",
+    "payment link per paid product in Square, paste its square.link URL here.",
+    "",
+    "tier: free | paid | service | license"
+  ],
+
+  "store": {
+    "name": "Location Intel",
+    "kicker": "BilloTech · Capture & sell",
+    "tagline": "Forensic location analysis for your own data.",
+    "support_email": "billysorrells@gmail.com",
+    "rail": "Square"
+  },
+
+  "products": [
+    {
+      "id": "bse-extract",
+      "live": true,
+      "tier": "free",
+      "name": "BSE Extract",
+      "blurb": "One file. AirDrop it to a Mac, double-click, and it pulls your message history and a GPS track out of your own photos onto the Desktop.",
+      "price_label": "Free",
+      "checkout": "",
+      "download": "https://hq.billysorrells.com/downloads/BSE-Extract.command",
+      "format": ".command · 35 KB · macOS",
+      "highlights": [
+        "Single self-contained file — no install, no dependencies, no repo",
+        "Reads the Messages database and photo EXIF, on your machine only",
+        "Handles the 2001 Apple epoch and the attributedBody blob that break naive exporters",
+        "Zero network calls — readable in any text editor before you run it"
+      ],
+      "note": "Needs Full Disk Access, which macOS prompts for. That prompt is the OS confirming a human consented — not a bug to route around."
+    },
+    {
+      "id": "location-intel",
+      "live": true,
+      "tier": "paid",
+      "name": "Location Intel Toolkit",
+      "blurb": "The engine. Every other location tool draws the dot; this one states the probability the dot is real, and flags when it isn't.",
+      "price_label": "$49",
+      "checkout": "",
+      "format": "ZIP · Python 3.9+ · zero dependencies",
+      "highlights": [
+        "Containment: the probability the true position was inside a place, from the fix's accuracy radius",
+        "Verified against the Rayleigh closed form, the 68% platform convention, and Monte Carlo",
+        "Anchor/halo model that splits real destinations from the activity orbiting them",
+        "Flags mislocated anchors, gap-inflated dwell, duplicate timestamps, impossible speeds",
+        "Reads Google Takeout, Timeline JSON, iOS exports, GeoJSON and CSV",
+        "Runs entirely offline. Same input always gives the same result — no AI in the engine."
+      ],
+      "note": "Includes BSE Extract and the full documented method."
+    },
+    {
+      "id": "timeline-audit",
+      "live": true,
+      "tier": "service",
+      "name": "Forensic Timeline Audit",
+      "blurb": "Send your export. Get back a written audit of what the record actually supports — and what it does not.",
+      "price_label": "$299",
+      "checkout": "",
+      "format": "Report (HTML + PDF) · 5 business days",
+      "highlights": [
+        "Every visit scored: clean, suspect, or indeterminate",
+        "Mislabelled places identified and checked against public listings",
+        "Impossible transitions, drive-bys and parked-car 'driving' segments surfaced",
+        "Plain-English write-up of the limits of your own data"
+      ],
+      "note": "An audit of your own records. Not legal advice, and not an expert-witness engagement."
+    },
+    {
+      "id": "commercial-license",
+      "live": true,
+      "tier": "license",
+      "name": "Commercial License",
+      "blurb": "Use the engine inside client work, an internal tool, or a product you ship.",
+      "price_label": "$499",
+      "checkout": "",
+      "format": "Licence + priority email support",
+      "highlights": [
+        "Deploy in commercial and client-facing work",
+        "Redistribute inside your own compiled product",
+        "Priority email support",
+        "Perpetual for the version purchased"
+      ],
+      "note": "The personal toolkit licence covers your own data only."
+    }
+  ]
+}
