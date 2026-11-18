@@ -1,0 +1,14 @@
+{
+ "system": "Billo Glass",
+ "version": "2.0.0",
+ "files": {
+  "billo-glass.css": {
+   "sha256": "7f12d58a0e81ff5b725b27e90d09278132c42e9d9a72d389eed9bc2a9b1ce39a",
+   "bytes": 11339
+  },
+  "tokens.json": {
+   "sha256": "c3bd0204f70c5cb773bb3c9f3b3a4c220d3b2f32a719f05207ec3eb63dc4b0b9",
+   "bytes": 5622
+  }
+ }
+}

@@ -1,0 +1,35 @@
+{
+ "product": "Billo Sound Studio",
+ "version": "3.0.0",
+ "path": "/billotech/apps/sound-studio/",
+ "files": {
+  "index.html": {
+   "sha256": "ea3b3ac92fa3639d064ed72bb3e146814b5d229d6daa1cb5ac869e18278f11da",
+   "bytes": 62180
+  },
+  "demo.json": {
+   "sha256": "ff8c4f24d9fd686ac1b0016dcb05085361c6e2301f90eed8d10a59dceb41cec5",
+   "bytes": 33372
+  },
+  "audio/808.mp3": {
+   "sha256": "2ee8c12708728f9e2f8624b4f4d9dcf4f0be66df0371365d902339dfa5eb0f51",
+   "bytes": 2591861
+  },
+  "audio/drums.mp3": {
+   "sha256": "c9ec20e0402d6762e469264dcbd95b6ceb4e5223b87dc77eaed31db4eb183020",
+   "bytes": 2591861
+  },
+  "audio/guitars.mp3": {
+   "sha256": "104af8a08cf584d122c9d8b0e9d1b8aa38823056aa0be02e385ed51f0edf4a49",
+   "bytes": 2591861
+  },
+  "audio/keys.mp3": {
+   "sha256": "a9ac6e82d16e85c577df9c6e82a22174c223e69a93df3e0a410f64dbb2dde968",
+   "bytes": 2591861
+  },
+  "audio/talkbox.mp3": {
+   "sha256": "ffa8b7c949ecfee4b0b25c7ed64f8720da94fa90da7b92638b42028610e8250a",
+   "bytes": 2591861
+  }
+ }
+}

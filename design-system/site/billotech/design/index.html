@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en" data-skin="glass">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Billo Design System · Billo Glass 2.0 · BilloTech</title>
+<meta name="description" content="Billo Glass 2.0: one design system for billysorrells.com, BilloTech and Billo OS. Two skins, one set of roles, versioned and locked.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Inter+Tight:wght@700;800;900&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/billo-glass/2.0.0/billo-glass.css">
+<style>
+/* Page layout only. Every color, font, radius and shadow comes from the system (var(--b-*)). */
+body{margin:0}
+.hero{position:relative;overflow:hidden;padding:120px 0 64px}
+.hero>.b-wrap{position:relative;z-index:1}
+.hero::before{content:"";position:absolute;z-index:0;inset:-30% -10% auto -10%;height:120%;background:var(--b-brand-light);opacity:.28;filter:blur(90px);pointer-events:none;animation:drift 14s var(--b-ease) infinite alternate}
+@keyframes drift{to{transform:translate3d(6%,8%,0) scale(1.08)}}
+.hero .b-lede{margin-top:var(--b-s4)}
+.row{display:flex;gap:var(--b-s3);flex-wrap:wrap;align-items:center}
+.stats{display:flex;gap:var(--b-s6);flex-wrap:wrap;margin-top:var(--b-s6)}
+.stats b{display:block;font:800 30px var(--b-font-display);letter-spacing:-.02em}
+.stats span{color:var(--b-label-3);font-size:var(--b-size-sm)}
+section{padding:72px 0 0;position:relative}
+.sub{color:var(--b-label-2);max-width:62ch;margin-top:var(--b-s3);font-size:var(--b-size-lg)}
+.ab{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:var(--b-s4);margin-top:var(--b-s5)}
+.skinbox{padding:var(--b-s5);border-radius:var(--b-r-xl);border:1px solid var(--b-rim);display:flex;flex-direction:column;gap:var(--b-s4);position:relative;overflow:hidden}
+.skinbox.chosen{box-shadow:var(--b-glow)}
+.mini{display:grid;grid-template-columns:1fr 1fr;gap:var(--b-s3);padding:var(--b-s4)}
+.knobs{display:flex;gap:var(--b-s4);align-items:center;flex-wrap:wrap}
+.kn{display:flex;flex-direction:column;align-items:center;gap:6px}
+.kn output{font:600 11px var(--b-font-mono);color:var(--b-label)}
+.gal{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:var(--b-s4);margin-top:var(--b-s5)}
+.gal .b-panel,.gal .b-glass{padding:var(--b-s4);display:flex;flex-direction:column;gap:var(--b-s3)}
+.sw{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:var(--b-s2);margin-top:var(--b-s4)}
+.sw div{border-radius:var(--b-r-md);border:1px solid var(--b-hair);overflow:hidden;background:var(--b-surface-solid)}
+.sw i{display:block;height:46px}
+.sw p{margin:0;padding:8px 10px;font:500 10.5px var(--b-font-mono);color:var(--b-label-2);word-break:break-all}
+.sw p b{display:block;color:var(--b-label);font-size:11.5px}
+table{width:100%;border-collapse:collapse;font-size:var(--b-size-sm)}
+th,td{text-align:left;padding:10px 8px;border-bottom:1px solid var(--b-hair)}
+th{font:600 10.5px var(--b-font-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--b-label-3)}
+td a{color:var(--b-label)}
+.bar{height:6px;border-radius:var(--b-r-pill);background:color-mix(in srgb,var(--b-label) 8%,transparent);overflow:hidden;min-width:80px}
+.bar u{display:block;height:100%;background:var(--b-danger)}
+.scroll{overflow-x:auto}
+pre{margin:0;padding:var(--b-s4);border-radius:var(--b-r-md);background:var(--b-surface-solid);border:1px solid var(--b-hair);overflow-x:auto;font:500 12.5px/1.6 var(--b-font-mono);color:var(--b-label-2)}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:var(--b-s3);margin-top:var(--b-s5)}
+.steps .b-panel{padding:var(--b-s4)}
+.steps b{display:block;font:800 var(--b-size-lg) var(--b-font-display);margin:6px 0 4px}
+.steps p{margin:0;color:var(--b-label-2);font-size:var(--b-size-sm)}
+footer{padding:72px 0 48px;color:var(--b-label-3);font-size:var(--b-size-sm)}
+@media(max-width:640px){.b-nav .crumb{display:none}.stats{gap:var(--b-s4)}}
+</style>
+</head>
+<body class="b-root">
+<div class="b-wrap" style="position:sticky;top:12px;z-index:50">
+<nav class="b-nav b-glass" aria-label="Billo Design System">
+  <a href="/billotech/" style="font:800 17px var(--b-font-display);color:var(--b-label);text-decoration:none">Billo<span style="color:var(--b-accent)">Tech</span></a>
+  <span class="crumb b-label">Design System</span>
+  <span style="flex:1"></span>
+  <span class="b-chip b-chip--ok" id="ver">2.0.0</span>
+  <div class="b-seg" role="group" aria-label="Skin: A Glass or B Studio"><button data-skin="glass" aria-pressed="true">A</button><button data-skin="studio" aria-pressed="false">B</button></div>
+</nav>
+</div>
+
+<header class="hero"><div class="b-wrap">
+  <span class="b-kicker">Billo Glass 2.0 · design system</span>
+  <h1 class="b-h1" style="margin-top:14px;max-width:12ch">One look. Every page. <span class="b-grad">Upgrade it once.</span></h1>
+  <p class="b-lede">Every BilloTech page draws from the same roles and parts. A skin changes the values under them, so the whole site moves together, and every release is versioned so any page can roll back by changing one number.</p>
+  <div class="row" style="margin-top:26px"><a class="b-btn b-btn--pri" href="#pick">Pick the skin</a><a class="b-btn" href="#audit">See the audit</a><a class="b-btn" href="#how">How it works</a></div>
+  <div class="stats"><div><b>2</b><span>skins, same roles</span></div><div><b id="sRoles">32</b><span>roles every page uses</span></div><div><b id="sPages">18</b><span>live pages audited</span></div><div><b id="sRaw">982</b><span>hard-coded colors to retire</span></div></div>
+</div></header>
+
+<main class="b-wrap">
+<section id="pick">
+  <span class="b-kicker">A or B</span>
+  <h2 class="b-h2" style="margin-top:10px">Pick the skin for the whole site.</h2>
+  <p class="sub">Both run on the same roles and the same parts, live, side by side. The switch at the top flips this whole page so you can feel it at full size.</p>
+  <div class="ab" id="ab"></div>
+</section>
+
+<section id="parts">
+  <span class="b-kicker">The parts</span>
+  <h2 class="b-h2" style="margin-top:10px">Built once. Used everywhere.</h2>
+  <p class="sub">Buttons, chips, fields, power lights, knobs, meters and cards. Turn the knobs: they are the same part every BilloTech tool will use.</p>
+  <div class="gal">
+    <div class="b-glass"><span class="b-label">Buttons</span><div class="row"><button class="b-btn b-btn--pri">Primary</button><button class="b-btn">Secondary</button><button class="b-btn b-btn--sm" aria-pressed="true">On</button><button class="b-btn b-btn--sm">Off</button></div></div>
+    <div class="b-glass"><span class="b-label">Status</span><div class="row"><span class="b-chip b-chip--ok">Locked</span><span class="b-chip b-chip--warn">Drift</span><span class="b-chip b-chip--bad">Off brand</span><span class="b-chip">2.0.0</span></div></div>
+    <div class="b-glass"><span class="b-label">Fields</span><input class="b-field" placeholder="Search tools" aria-label="Search tools"><input class="b-range" type="range" aria-label="Level"></div>
+    <div class="b-panel"><span class="b-label">Knobs · drag, scroll or arrow keys</span><div class="knobs" data-knobs="4"></div></div>
+    <div class="b-panel"><span class="b-label">Meters</span><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px"><div class="b-meter" data-meter></div><div class="b-meter" data-meter></div></div></div>
+    <div class="b-panel"><span class="b-label">Power lights</span><div class="row"><button class="b-led" aria-pressed="true" aria-label="EQ"></button><button class="b-led" aria-pressed="true" aria-label="Compressor"></button><button class="b-led" aria-pressed="false" aria-label="Leveler"></button><button class="b-led" aria-pressed="false" aria-label="Heat"></button></div></div>
+  </div>
+</section>
+
+<section id="roles">
+  <span class="b-kicker">The roles</span>
+  <h2 class="b-h2" style="margin-top:10px">Pages name a job, never a color.</h2>
+  <p class="sub">A page asks for <code>accent</code> or <code>label-2</code>. The skin answers. These are the live values for the skin you're looking at.</p>
+  <div class="sw" id="sw"></div>
+</section>
+
+<section id="audit">
+  <span class="b-kicker">Live audit · billysorrells.com</span>
+  <h2 class="b-h2" style="margin-top:10px">Where the site drifts today.</h2>
+  <p class="sub" id="auditNote">Every page below hard-codes its own colors or fonts. That's why an upgrade today means touching each page by hand. Worst first is the migration order.</p>
+  <div class="b-glass scroll" style="padding:var(--b-s4);margin-top:var(--b-s5)"><table><thead><tr><th>Page</th><th>On Billo Glass</th><th>Raw colors</th><th>Fonts set by hand</th><th>Drift</th><th>Status</th></tr></thead><tbody id="aud"></tbody></table></div>
+</section>
+
+<section id="how">
+  <span class="b-kicker">How it works</span>
+  <h2 class="b-h2" style="margin-top:10px">Change one file. Ship every page.</h2>
+  <div class="steps">
+    <div class="b-panel"><span class="b-label">1 · Tokens</span><b>One source file</b><p>Every value lives in <code>tokens.json</code>: raw values, the roles they fill, and each skin.</p></div>
+    <div class="b-panel"><span class="b-label">2 · Build</span><b>Generated, never hand-edited</b><p><code>build.py</code> writes the stylesheet and locks it with a fingerprint. Same version, different output: refused.</p></div>
+    <div class="b-panel"><span class="b-label">3 · Version</span><b>Every release keeps its folder</b><p>Pages load <code>/assets/billo-glass/2.0.0/</code>. Upgrading or rolling back is one number.</p></div>
+    <div class="b-panel"><span class="b-label">4 · Gate</span><b>Lint before ship</b><p><code>lint.py</code> fails any page that hard-codes colors or fonts, and the audit re-reads the live site.</p></div>
+  </div>
+  <div class="b-glass" style="padding:var(--b-s4);margin-top:var(--b-s4)"><div class="row" style="justify-content:space-between"><span class="b-label">Put a page on the system</span><button class="b-btn b-btn--sm" id="copy">Copy</button></div><pre id="snip">&lt;html data-skin="glass"&gt;
+&lt;link rel="stylesheet" href="/assets/billo-glass/2.0.0/billo-glass.css"&gt;
+&lt;body class="b-root"&gt;
+  &lt;nav class="b-nav b-glass"&gt;…&lt;/nav&gt;
+  &lt;h1 class="b-h1"&gt;Title&lt;/h1&gt;
+  &lt;button class="b-btn b-btn--pri"&gt;Go&lt;/button&gt;
+  &lt;div class="b-knob" style="--v:.6"&gt;&lt;/div&gt;
+/* page CSS may only use var(--b-…) */</pre></div>
+</section>
+</main>
+<footer class="b-wrap">Billo Glass 2.0.0 · BilloTech · Billy Sorrells Entertainment LLC · Source: Billo OS <code>brand/billo-glass-2/</code></footer>
+
+<script>
+"use strict";
+const $=s=>document.querySelector(s),root=document.documentElement;
+let store;try{store=localStorage}catch(e){store=null}
+function setSkin(s){root.dataset.skin=s;document.querySelectorAll(".b-nav .b-seg button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.skin===s));document.querySelectorAll(".skinbox").forEach(b=>b.classList.toggle("chosen",b.dataset.for===s));try{store&&store.setItem("billo-skin",s)}catch(e){}swatches()}
+document.querySelectorAll(".b-nav .b-seg button").forEach(b=>b.onclick=()=>setSkin(b.dataset.skin));
+/* knobs: CSS part, value in --v */
+function knob(el,v,label,fmt){el.className="b-knob";el.tabIndex=0;el.setAttribute("role","slider");el.setAttribute("aria-label",label);const out=document.createElement("output");el.after(out);
+ const set=x=>{v=Math.max(0,Math.min(1,x));el.style.setProperty("--v",v);out.textContent=fmt(v);el.setAttribute("aria-valuenow",Math.round(v*100))};set(v);
+ let d=null;el.addEventListener("pointerdown",e=>{el.setPointerCapture(e.pointerId);d={y:e.clientY,v}});el.addEventListener("pointermove",e=>{if(d)set(d.v+(d.y-e.clientY)*(e.shiftKey?.0015:.006))});el.addEventListener("pointerup",()=>d=null);
+ el.addEventListener("wheel",e=>{e.preventDefault();set(v-Math.sign(e.deltaY)*.03)},{passive:false});el.addEventListener("keydown",e=>{const k={ArrowUp:.04,ArrowRight:.04,ArrowDown:-.04,ArrowLeft:-.04}[e.key];if(k){e.preventDefault();set(v+k)}});el.addEventListener("dblclick",()=>set(.5))}
+const KN=[["Input",.55,v=>Math.round(v*30)+" dB"],["Attack",.25,v=>(0.1*Math.pow(300,v)).toFixed(1)+" ms"],["Release",.45,v=>Math.round(30*Math.pow(40,v))+" ms"],["Mix",.8,v=>Math.round(v*100)+"%"]];
+function knobRow(host,n){for(let i=0;i<n;i++){const w=document.createElement("div");w.className="kn";const k=document.createElement("div");w.appendChild(k);const l=document.createElement("span");l.className="b-label";l.textContent=KN[i%4][0];w.appendChild(l);host.appendChild(w);knob(k,KN[i%4][1],KN[i%4][0],KN[i%4][2]);w.appendChild(l)}}
+/* A/B boxes: each renders the same mini studio in its own skin */
+const SK=[["glass","A · Glass","Frosted glass over black, the purple-to-teal brand light, rounded corners that nest. Today's Billo Glass, tightened into one system."],["studio","B · Studio","Graphite and brushed metal, tighter corners, cream VU faces with red needles. The hardware look, same teal and purple on every control."]];
+const AB=$("#ab");SK.forEach(([k,name,about])=>{const d=document.createElement("div");d.className="skinbox";d.dataset.skin=k;d.dataset.for=k;d.style.background="var(--b-bg)";d.style.color="var(--b-label)";
+ d.innerHTML=`<div class="row" style="justify-content:space-between"><span class="b-kicker">${name}</span><button class="b-btn b-btn--sm b-btn--pri">Use ${name.split(" ")[0]}</button></div><p style="margin:0;color:var(--b-label-2)">${about}</p>
+ <div class="b-glass mini"><div class="b-meter" data-meter></div><div class="b-meter" data-meter></div><div style="grid-column:1/-1" class="knobs" data-k></div><div class="row" style="grid-column:1/-1"><button class="b-led" aria-pressed="true" aria-label="On"></button><span class="b-chip b-chip--ok">Locked</span><button class="b-btn b-btn--sm">Bypass</button></div></div>`;
+ AB.appendChild(d);knobRow(d.querySelector("[data-k]"),3);d.querySelector(".b-btn--pri").onclick=()=>{setSkin(k);$("#pick").scrollIntoView({behavior:"smooth"})}});
+knobRow(document.querySelector("[data-knobs]"),4);
+document.querySelectorAll(".b-led").forEach(b=>b.addEventListener("click",()=>b.setAttribute("aria-pressed",b.getAttribute("aria-pressed")!=="true")));
+/* meters move with a simple program-like signal */
+const meters=[...document.querySelectorAll("[data-meter]")];let t0=performance.now();
+(function tick(t){requestAnimationFrame(tick);if(matchMedia("(prefers-reduced-motion:reduce)").matches)return;const s=(t-t0)/1000;meters.forEach((m,i)=>{const v=.45+.22*Math.sin(s*1.7+i)+.12*Math.sin(s*7.3+i*2)+.06*Math.random();m.style.setProperty("--v",Math.max(0,Math.min(1,v)).toFixed(3));m.dataset.hot=v>.88?"1":"0"})})(t0);
+/* roles: read the computed values for the current skin */
+let ROLES=[];
+function swatches(){const cs=getComputedStyle(root),S=$("#sw");if(!ROLES.length)return;S.innerHTML=ROLES.map(r=>{const v=cs.getPropertyValue("--b-"+r).trim();const isColor=!/px$|^none$|^cubic|^\d/.test(v);return `<div><i style="background:${isColor?"var(--b-"+r+")":"var(--b-surface-solid)"}"></i><p><b>${r}</b>${v.replace(/</g,"").slice(0,64)}</p></div>`}).join("")}
+fetch("/assets/billo-glass/2.0.0/tokens.json").then(r=>r.json()).then(t=>{ROLES=Object.keys(t.skins.glass.roles).filter(r=>!/^r-|^blur|^shadow|^glow|knob/.test(r));$("#sRoles").textContent=Object.keys(t.skins.glass.roles).length;$("#ver").textContent=t.version;swatches()}).catch(()=>{});
+/* audit */
+fetch("audit.json",{cache:"no-store"}).then(r=>r.json()).then(a=>{const rows=a.pages.slice().sort((x,y)=>(y.raw_colors+y.fonts*3)-(x.raw_colors+x.fonts*3));const mx=Math.max(...rows.map(r=>r.raw_colors+r.fonts*3));
+ $("#sPages").textContent=a.totals.pages;$("#sRaw").textContent=a.totals.raw_colors;$("#auditNote").textContent=`Read from the live site on ${a.date}: ${a.totals.pages} pages, ${a.totals.raw_colors} hard-coded colors, ${a.totals.font_decls} fonts set by hand, ${a.totals.not_linked} pages not on Billo Glass at all. Worst first is the migration order.`;
+ $("#aud").innerHTML=rows.map(r=>{const d=r.raw_colors+r.fonts*3,st=r.pass?["ok","On system"]:(!r.linked_1x?["bad","Off brand"]:["warn","Drift"]);return `<tr><td><a href="${r.path}">${r.title.replace(/</g,"")}</a><div class="b-label" style="margin-top:2px">${r.path}</div></td><td>${r.linked_1x?"1.0":"No"}</td><td>${r.raw_colors}</td><td>${r.fonts}</td><td><div class="bar"><u style="width:${Math.round(d/mx*100)}%"></u></div></td><td><span class="b-chip b-chip--${st[0]}">${st[1]}</span></td></tr>`}).join("")}).catch(()=>{$("#auditNote").textContent="Audit file not reachable here."});
+$("#copy").onclick=async()=>{try{await navigator.clipboard.writeText($("#snip").textContent);$("#copy").textContent="Copied"}catch(e){$("#copy").textContent="Select and copy"}setTimeout(()=>$("#copy").textContent="Copy",1600)};
+let saved=null;try{saved=store&&store.getItem("billo-skin")}catch(e){}setSkin(saved==="studio"?"studio":"glass");
+</script>
+</body>
+</html>

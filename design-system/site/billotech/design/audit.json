@@ -1,0 +1,175 @@
+{
+ "date": "2026-11-18",
+ "source": "live billysorrells.com via audit.sql",
+ "budget_raw_colors": 8,
+ "pages": [
+  {
+   "path": "/",
+   "title": "Billy Sorrells \u2014 Comedian, Actor, Producer",
+   "raw_colors": 7,
+   "fonts": 0,
+   "roles": 0,
+   "linked_1x": true,
+   "pass": false
+  },
+  {
+   "path": "/billotech/",
+   "title": "BilloTech \u2014 Billo OS",
+   "raw_colors": 114,
+   "fonts": 32,
+   "roles": 0,
+   "linked_1x": true,
+   "pass": false
+  },
+  {
+   "path": "/billotech/apps/clip/",
+   "title": "Billo Clip",
+   "raw_colors": 35,
+   "fonts": 0,
+   "roles": 0,
+   "linked_1x": true,
+   "pass": false
+  },
+  {
+   "path": "/billotech/apps/lesson-planner/",
+   "title": "Billo Lesson Planner",
+   "raw_colors": 36,
+   "fonts": 6,
+   "roles": 0,
+   "linked_1x": false,
+   "pass": false
+  },
+  {
+   "path": "/billotech/apps/live/",
+   "title": "Billo Live",
+   "raw_colors": 37,
+   "fonts": 0,
+   "roles": 0,
+   "linked_1x": true,
+   "pass": false
+  },
+  {
+   "path": "/billotech/apps/roast/",
+   "title": "Billo Roast Room",
+   "raw_colors": 34,
+   "fonts": 2,
+   "roles": 0,
+   "linked_1x": false,
+   "pass": false
+  },
+  {
+   "path": "/billotech/apps/sound-lab/",
+   "title": "Billo Sound Lab",
+   "raw_colors": 14,
+   "fonts": 0,
+   "roles": 0,
+   "linked_1x": true,
+   "pass": false
+  },
+  {
+   "path": "/billotech/apps/sound-studio/",
+   "title": "Billo Sound Studio",
+   "raw_colors": 181,
+   "fonts": 1,
+   "roles": 0,
+   "linked_1x": true,
+   "pass": false
+  },
+  {
+   "path": "/billotech/apps/studio-session/",
+   "title": "Mutant Studio Session",
+   "raw_colors": 23,
+   "fonts": 0,
+   "roles": 0,
+   "linked_1x": false,
+   "pass": false
+  },
+  {
+   "path": "/billotech/apps/voice/",
+   "title": "Billo Voice",
+   "raw_colors": 17,
+   "fonts": 0,
+   "roles": 0,
+   "linked_1x": true,
+   "pass": false
+  },
+  {
+   "path": "/billotech/dispatch/",
+   "title": "Billo Dispatch",
+   "raw_colors": 126,
+   "fonts": 30,
+   "roles": 0,
+   "linked_1x": false,
+   "pass": false
+  },
+  {
+   "path": "/billotech/free/",
+   "title": "BilloTech Free",
+   "raw_colors": 63,
+   "fonts": 28,
+   "roles": 0,
+   "linked_1x": true,
+   "pass": false
+  },
+  {
+   "path": "/billotech/games/",
+   "title": "Billo Games",
+   "raw_colors": 23,
+   "fonts": 8,
+   "roles": 0,
+   "linked_1x": true,
+   "pass": false
+  },
+  {
+   "path": "/billotech/garage/",
+   "title": "BilloTech Garage",
+   "raw_colors": 81,
+   "fonts": 34,
+   "roles": 0,
+   "linked_1x": true,
+   "pass": false
+  },
+  {
+   "path": "/billotech/skills/",
+   "title": "Billo Skill Wall",
+   "raw_colors": 78,
+   "fonts": 33,
+   "roles": 0,
+   "linked_1x": true,
+   "pass": false
+  },
+  {
+   "path": "/shop/",
+   "title": "Shop",
+   "raw_colors": 2,
+   "fonts": 0,
+   "roles": 0,
+   "linked_1x": true,
+   "pass": false
+  },
+  {
+   "path": "/tickets/",
+   "title": "Tickets & Dates",
+   "raw_colors": 82,
+   "fonts": 43,
+   "roles": 0,
+   "linked_1x": true,
+   "pass": false
+  },
+  {
+   "path": "/videos/",
+   "title": "The Vault",
+   "raw_colors": 29,
+   "fonts": 12,
+   "roles": 0,
+   "linked_1x": true,
+   "pass": false
+  }
+ ],
+ "totals": {
+  "pages": 18,
+  "raw_colors": 982,
+  "font_decls": 229,
+  "not_linked": 4
+ }
+}

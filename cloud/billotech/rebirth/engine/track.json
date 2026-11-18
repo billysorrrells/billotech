@@ -1,0 +1,40 @@
+{
+ "bpm": 83.0,
+ "key": "E minor",
+ "bars": 60,
+ "seconds": 185.1,
+ "lufs": -9.0,
+ "peak_db": -1.0,
+ "crest_db": 10.2,
+ "stereo_width": 0.285,
+ "sections": [
+  {
+   "name": "intro",
+   "bars": 4
+  },
+  {
+   "name": "hook",
+   "bars": 8
+  },
+  {
+   "name": "verse1",
+   "bars": 16
+  },
+  {
+   "name": "hook",
+   "bars": 8
+  },
+  {
+   "name": "verse2",
+   "bars": 16
+  },
+  {
+   "name": "hook",
+   "bars": 8
+  },
+  {
+   "name": "screwed outro",
+   "bars": 4
+  }
+ ]
+}
