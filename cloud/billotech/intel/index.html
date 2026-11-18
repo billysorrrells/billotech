@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Location Intel · BilloTech</title>
+<meta name="description" content="Forensic location analysis for your own data. Every other tool draws the dot; this states the probability the dot is real. Runs offline, on your machine. Part of the BilloTech stack.">
+<meta property="og:title" content="Location Intel · BilloTech">
+<meta property="og:description" content="Forensic location analysis for your own data. Runs offline. Same input, same result.">
+<link rel="icon" href="/billotech/apps/mark.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Outfit:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/billotech/apps/app.css"><link rel="stylesheet" href="/billotech/site.css">
+<style>
+[hidden]{display:none!important}
+/* local-only helpers, on the locked tokens */
+.readout{border:1px solid var(--ln2);background:var(--p1);padding:18px;font:12.5px/1.7 "JetBrains Mono",monospace;margin-top:22px}
+.readout .row{display:flex;justify-content:space-between;gap:16px;border-bottom:1px solid var(--ln);padding:7px 0}
+.readout .row:last-child{border-bottom:0}
+.readout .v{color:var(--tx)} .readout .v.g{color:var(--teal)} .readout .v.w{color:var(--warn)}
+.readout .bar{height:6px;background:#000;border:1px solid var(--ln2);min-width:120px}
+.readout .bar i{display:block;height:100%;background:var(--teal)}
+.sub-note{color:var(--dim);font-size:13px;margin-top:9px}
+.sub-note a{color:var(--teal)}
+.hot-tag{font:10.5px "JetBrains Mono",monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--teal);border:1px solid var(--teal);padding:2px 7px;margin-left:8px;vertical-align:middle}
+</style>
+</head>
+<body>
+<header class="ab">
+  <a class="ab-mark" href="/billotech/"><img src="/billotech/apps/mark.svg" alt=""><span class="ab-name">Billo<em>Tech</em></span></a>
+  <div class="ab-doc"><span class="ab-state">Location Intel · Capture &amp; sell</span></div>
+  <div class="ab-acts">
+    <a class="b" href="/billotech/pro/">Plans</a>
+    <a class="b" href="/billotech/tiers/">What's free</a>
+    <a class="b pri" href="/billotech/cloud/">Open the toolkit</a>
+  </div>
+</header>
+
+<main class="pg">
+  <section class="sec hero">
+    <div class="kick">BilloTech · Capture &amp; sell</div>
+    <h1>Know where the data<br><em>actually puts you.</em></h1>
+    <p class="lede">Location Intel is the forensic cell of the stack. Every other
+    location tool draws the dot on a map. This one states the probability the dot
+    is real — and says plainly when the record can't carry the claim on it. It
+    runs on your own export, in your own hands. Your data never leaves your
+    machine, and the same input always gives the same result.</p>
+  </section>
+
+  <section class="sec" id="products">
+    <div class="kick">The tools</div><h2 class="h2">Pick your depth</h2>
+    <p class="lede">Start free — the extractor costs nothing and shows you what
+    your own data holds. The engine is the paid piece.</p>
+    <div class="grid" id="grid"></div>
+    <p class="sub-note">Checkout runs through Square, the same rail as
+    <a href="/billotech/pro/">BilloTech Plans</a>. One-time payment, instant
+    delivery by email.</p>
+  </section>
+
+  <section class="sec" id="how">
+    <div class="kick">Three steps</div><h2 class="h2">How it works</h2>
+    <div class="steps">
+      <div class="step"><span class="n">STEP 1 · EXTRACT</span>
+        <h3 style="font:400 22px/1 Anton,Impact,sans-serif;text-transform:uppercase;margin:0">Pull your own data</h3>
+        <p class="msg">Run the free extractor, or drop in a Google Takeout / Timeline export. It reads your message history and the GPS track hidden in your photos — on your machine, nothing uploaded.</p>
+      </div>
+      <div class="step"><span class="n">STEP 2 · ANALYSE</span>
+        <h3 style="font:400 22px/1 Anton,Impact,sans-serif;text-transform:uppercase;margin:0">Score every place</h3>
+        <p class="msg">The engine carries each fix's accuracy radius into every number, finds the places you return to, and separates real destinations from drive-bys.</p>
+      </div>
+      <div class="step"><span class="n">STEP 3 · READ</span>
+        <h3 style="font:400 22px/1 Anton,Impact,sans-serif;text-transform:uppercase;margin:0">See what holds up</h3>
+        <p class="msg">Open the offline dashboard. Each visit is marked clean, suspect, or indeterminate — with the containment probability behind it, in writing.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="output">
+    <div class="kick">What you actually get</div><h2 class="h2">Numbers that carry their own error</h2>
+    <div class="cols">
+      <div>
+        <h3>Not a prettier map</h3>
+        <p>A naive tool says "214 hours at home." This says 214 hours of counted
+        presence, and flags that some raw dwell spans a data gap too long to
+        trust — so you know what not to lean on.</p>
+      </div>
+      <div>
+        <h3>Device vs person</h3>
+        <p>The dot is a device's best guess. Containment is the probability the
+        real position sat inside the place. The halo ratio splits the time you
+        were there from the activity orbiting nearby.</p>
+      </div>
+      <div>
+        <h3>It refuses to overclaim</h3>
+        <p>Every verdict is SUPPORTED, CONTRADICTED, or UNSUPPORTED. Absence of
+        evidence is never dressed up as evidence of absence. A run ID and
+        SHA-256 manifest make the same export reproduce the same report.</p>
+      </div>
+    </div>
+    <div class="readout" aria-label="sample anchor report">
+      <div class="row"><span>anchor report · home base</span><span class="v">37 distinct days</span></div>
+      <div class="row"><span>counted dwell</span><span class="v">214.6 h</span></div>
+      <div class="row"><span>containment (true position inside)</span><span class="v g">0.94</span></div>
+      <div class="row"><span>&nbsp;</span><span class="v"><span class="bar"><i style="width:94%"></i></span></span></div>
+      <div class="row"><span>halo ratio (orbit vs core)</span><span class="v">0.31</span></div>
+      <div class="row"><span>median fix accuracy</span><span class="v">18 m</span></div>
+      <div class="row"><span>flags</span><span class="v w">gap-inflated dwell</span></div>
+      <div class="row"><span>verdict</span><span class="v g">SUPPORTED</span></div>
+    </div>
+  </section>
+
+  <section class="sec" id="method">
+    <div class="legal">
+      <div class="kick">The standard</div>
+      <h3>Read the code. Trust the number.</h3>
+      <p>Digital-forensics guidance on location evidence is blunt about it:
+      accuracy radii, confidence scores, and the gap between <em>device
+      presence</em> and <em>person presence</em> must always be disclosed, never
+      assumed away. That sentence is, line for line, what this engine
+      implements.</p>
+      <p>It is source-readable and deterministic — no AI in the engine, so the
+      same export always produces the same report. It analyses data you already
+      lawfully possess; you are responsible for how you obtain and use it. It is
+      not legal advice and not an expert-witness engagement.</p>
+    </div>
+  </section>
+</main>
+
+<footer class="pg foot">
+  <span>BilloTech · Billy Sorrells Entertainment LLC · Houston</span>
+  <span><a href="/billotech/">BilloTech</a> · <a href="/billotech/pro/">Plans</a> · <a href="/billotech/license/">License</a> · <a href="/billotech/cloud/">Open Billo Forge</a></span>
+</footer>
+
+<script>
+"use strict";
+(function(){
+  var MAIL="billysorrells@gmail.com";
+  function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]});}
+  var FALLBACK=[
+    {id:"bse-extract",live:true,tier:"free",name:"BSE Extract",price_label:"Free",checkout:"",download:"https://hq.billysorrells.com/downloads/BSE-Extract.command",format:".command · 35 KB · macOS",blurb:"One file. AirDrop it to a Mac, double-click, and it pulls your message history and a GPS track out of your own photos onto the Desktop.",highlights:["Single self-contained file — no install, no dependencies","Reads the Messages database and photo EXIF, on your machine only","Zero network calls — readable in any text editor before you run it"],note:"Needs Full Disk Access, which macOS prompts for."},
+    {id:"location-intel",live:true,tier:"paid",name:"Location Intel Toolkit",price_label:"$49",checkout:"",format:"ZIP · Python 3.9+ · zero dependencies",blurb:"The engine. Every other location tool draws the dot; this one states the probability the dot is real, and flags when it isn't.",highlights:["Containment via the fix's accuracy radius, verified three ways","Anchor/halo model that splits destinations from passing-by","Reads Google Takeout, Timeline JSON, iOS exports, GeoJSON and CSV","Runs offline. Same input always gives the same result."],note:"Includes BSE Extract and the full documented method."},
+    {id:"timeline-audit",live:true,tier:"service",name:"Forensic Timeline Audit",price_label:"$299",checkout:"",format:"Report (HTML + PDF) · 5 business days",blurb:"Send your export. Get back a written audit of what the record actually supports — and what it does not.",highlights:["Every visit scored: clean, suspect, or indeterminate","Mislabelled places checked against public listings","Plain-English write-up of the limits of your own data"],note:"An audit of your own records. Not legal advice."},
+    {id:"commercial-license",live:true,tier:"license",name:"Commercial License",price_label:"$499",checkout:"",format:"Licence + priority email support",blurb:"Use the engine inside client work, an internal tool, or a product you ship.",highlights:["Deploy in commercial and client-facing work","Redistribute inside your own compiled product","Perpetual for the version purchased"],note:"The personal toolkit licence covers your own data only."}
+  ];
+  var ORDER={free:0,paid:1,service:2,license:3};
+
+  function cta(p){
+    if(p.tier==="free"&&p.download){
+      return '<a class="b" href="'+esc(p.download)+'" download>Download free</a>';
+    }
+    if(p.checkout){
+      return '<a class="b pri" href="'+esc(p.checkout)+'" target="_blank" rel="noopener">Get it · '+esc(p.price_label)+'</a>';
+    }
+    // No Square link wired yet — never render a button that takes money and fails.
+    var subj=encodeURIComponent("Location Intel — "+(p.name||""));
+    return '<a class="b" href="mailto:'+MAIL+'?subject='+subj+'">Reserve · email</a>';
+  }
+
+  function card(p){
+    var hot=p.tier==="paid";
+    var soon=p.tier!=="free"&&!p.checkout;
+    return '<div class="card'+(hot?" hot":"")+'">'
+      +'<h3>'+esc(p.name)+(hot?'<span class="hot-tag">Most complete</span>':"")+'</h3>'
+      +'<div class="price">'+esc(p.price_label)+'</div>'
+      +'<p class="mono" style="font-size:11px;color:var(--dim)">'+esc(p.format||"")+'</p>'
+      +'<p class="tag">'+esc(p.blurb)+'</p>'
+      +'<ul>'+(p.highlights||[]).map(function(h){return "<li>"+esc(h)+"</li>";}).join("")+'</ul>'
+      +(p.note?'<p class="msg">'+esc(p.note)+'</p>':"")
+      +cta(p)
+      +(soon?'<p class="msg" style="margin-top:8px;color:var(--warn)">Checkout opening soon — email to reserve your copy.</p>':"")
+      +'</div>';
+  }
+
+  function render(list){
+    list=(list||[]).filter(function(p){return p.live;});
+    list.sort(function(a,b){return (ORDER[a.tier]==null?9:ORDER[a.tier])-(ORDER[b.tier]==null?9:ORDER[b.tier]);});
+    document.getElementById("grid").innerHTML=list.map(card).join("");
+  }
+
+  render(FALLBACK);
+  fetch("products.json").then(function(r){return r.ok?r.json():null;}).then(function(d){
+    if(d&&d.products&&d.products.length){render(d.products);}
+  }).catch(function(){ /* fallback already rendered */ });
+})();
+</script>
+</body>
+</html>
