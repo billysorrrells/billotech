@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>3D Shot Board · Kehlin × Billy</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Oswald:wght@400;600&family=JetBrains+Mono&display=swap">
+<style>
+:root{--grad:linear-gradient(90deg,#A855F7,#7C3AED 45%,#22D3EE);--bg:#07080B;--panel:#0D0D10;--line:#24242C;--text:#E9E7DF;--mute:#8a8575}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Oswald,sans-serif;height:100vh;display:grid;grid-template-rows:auto 1fr auto}
+header{display:flex;gap:.6rem;align-items:center;padding:.6rem .9rem;border-bottom:1px solid var(--line);flex-wrap:wrap}
+header b{font-family:Anton;letter-spacing:.03em;font-size:1.3rem}
+select,button{background:#141418;color:var(--text);border:1px solid #33333E;border-radius:9px;padding:.45rem .7rem;font-family:Oswald;letter-spacing:.06em;text-transform:uppercase;font-size:.75rem;cursor:pointer}
+button.go{background:var(--grad);border-color:#22D3EE;color:#fff}
+main{display:grid;grid-template-columns:1fr 340px;min-height:0}
+#stage{position:relative;min-height:0}#stage canvas{display:block;width:100%;height:100%}
+#sub{position:absolute;left:50%;bottom:22px;transform:translateX(-50%);max-width:80%;text-align:center;background:rgba(0,0,0,.6);padding:.4rem .8rem;border-radius:8px;font-family:Oswald;font-size:1.05rem}
+#slate{position:absolute;left:14px;top:12px;font-family:'JetBrains Mono';font-size:.75rem;color:#22D3EE;background:rgba(0,0,0,.5);padding:.35rem .55rem;border-radius:8px}
+aside{border-left:1px solid var(--line);overflow:auto;padding:.6rem}
+.shot{border:1px solid var(--line);border-radius:10px;padding:.5rem .6rem;margin-bottom:.45rem;cursor:pointer;background:var(--panel)}
+.shot.on{border-color:#22D3EE;box-shadow:0 0 16px rgba(168,85,247,.35)}
+.shot h4{margin:0;font-size:.82rem;letter-spacing:.06em}.shot p{margin:.2rem 0 0;font-family:system-ui;font-size:.78rem;color:#cfcabd}
+.shot small{font-family:'JetBrains Mono';color:var(--mute);font-size:.68rem}
+footer{border-top:1px solid var(--line);padding:.5rem .9rem}
+#tl{position:relative;height:46px;background:#0B0B0E;border-radius:8px;overflow:hidden;cursor:pointer}
+#tl .seg{position:absolute;top:0;bottom:22px;border-right:1px solid #07080B;background:linear-gradient(90deg,rgba(168,85,247,.35),rgba(34,211,238,.25));font-size:.6rem;padding:2px 4px;overflow:hidden;white-space:nowrap}
+#tl .sfx{position:absolute;bottom:2px;height:16px;background:#22D3EE33;border-left:2px solid #22D3EE;font-size:.55rem;padding:0 3px;font-family:'JetBrains Mono';white-space:nowrap}
+#tl .ph{position:absolute;top:0;bottom:0;width:2px;background:#fff;box-shadow:0 0 8px #A855F7}
+.legend{display:flex;gap:.8rem;flex-wrap:wrap;font-size:.7rem;color:#cfcabd;margin-top:.4rem}.legend i{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:4px;vertical-align:-1px}
+</style><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.0/dist/umd/supabase.js"></script>
+<script src="room-work.js"></script>
+<style>
+.pchips{display:flex;gap:.35rem;flex-wrap:wrap}.pchips button{padding:.4rem .6rem}.pchips button.on{background:var(--grad);border-color:#22D3EE;color:#fff}
+.tools{display:flex;gap:.35rem;align-items:center;flex-wrap:wrap}.tools select{max-width:260px;font-family:"JetBrains Mono";text-transform:none;font-size:.68rem}
+#save{font-family:"JetBrains Mono";font-size:.68rem;color:var(--mute)}#save.saved{color:#22D3EE}#save.device{color:#F2B13C}
+button:disabled{opacity:.35;cursor:default}
+#ed{border:1px solid #22D3EE55;border-radius:10px;padding:.55rem;margin:.3rem 0 .7rem;background:#0B0B0E}
+#ed label{display:block;font-size:.62rem;letter-spacing:.1em;color:var(--mute);margin:.35rem 0 .1rem}
+#ed input,#ed textarea{width:100%;background:#141418;color:var(--text);border:1px solid #33333E;border-radius:7px;padding:.35rem .45rem;font-family:system-ui;font-size:.8rem}
+#ed textarea{min-height:64px;resize:vertical}#ed .row{display:flex;gap:.3rem;flex-wrap:wrap;margin-top:.5rem}#ed .row button{padding:.35rem .5rem;font-size:.65rem}
+.empty{font-family:system-ui;font-size:.85rem;color:#cfcabd;line-height:1.5}
+</style>
+</head><body>
+<header><b>3D SHOT BOARD</b>
+<div class="pchips" id="pchips"></div>
+<button class="go" id="play">▶ Play animatic</button><button id="stop">■</button><span id="clock" style="font-family:'JetBrains Mono';font-size:.8rem">0.0s</span>
+<span class="tools" style="margin-left:auto"><button id="undo" title="Undo (⌘Z)">↶</button><button id="redo" title="Redo (⇧⌘Z)">↷</button><select id="hist" title="Every edit, saved"></select><span id="save">opening…</span></span></header>
+<main><div id="stage"><div id="slate"></div><div id="sub"></div></div><aside id="list"></aside></main>
+<footer><div id="tl"></div><div class="legend" id="legend"></div></footer>
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js"}}</script>
+<script type="module">
+import * as THREE from 'three';
+// ---------------- shot lists (data, editable) ----------------
+const P={
+ bf:{set:'street',cast:{H1:['Hero One · gold hoodie',0xE8B54A],H2:['Hero Two · cream puffer',0xF3E6C8],H3:['Hero Three · gold tracksuit',0xD4A017],BOT:['Gucchi robot',0x9AA7B0],PRA:['Pradroid cab',0x5A7BD6],HUNT:['Y.S. Hell · Louie V-9000 · Die-Or',0x8A8F98],MC:['Billy · MC (real footage)',0xA855F7]},
+ shots:[
+  {n:'1 · Cold open / the swarm',d:6,loc:'EXT. CITY STREET — NIGHT',lens:'24mm, low dolly back',cam:[[0,1.2,9],[0,1.6,5]],look:[0,1,0],act:{H1:[[-1,0,4],[-1,0,-2]],H2:[[0,0,4.5],[0,0,-1.5]],H3:[[1,0,4],[1,0,-2]],HUNT:[[0,0,9],[0,0,4]]},vo:'NARRATOR: Yeah, we\'re running from robots. In a commercial. For a hoodie. Peak cinema.',sfx:'swarm whine + sub drop',gen:'robots/drones generated · heroes live'},
+  {n:'2 · Hero One vs. Gucchi',d:6,loc:'EXT. STREET CORNER — NIGHT',lens:'35mm, slow push · 120fps head pop',cam:[[3,1.5,4],[1.6,1.4,2.4]],look:[0,1.2,0],act:{H1:[[-0.6,0,0],[-0.4,0,0]],BOT:[[0.8,0,0],[0.8,0,0]]},vo:'HERO ONE: You\'re Gucchi? Cute. You\'re a knockoff of a knockoff.',sfx:'metal clang + slow-mo pop',gen:'robot generated · Hero One live',pop:'BOT'},
+  {n:'3 · Hero Two & the Pradroid',d:6,loc:'INT. PRADROID CAB → EXT. STREET',lens:'21mm interior, freeze frame on leap',cam:[[0,1.3,2.2],[2.5,0.8,2]],look:[0,1,0],act:{H2:[[0,0,0],[2,0,0.5]],PRA:[[0,0,-0.2],[-1.5,0,-0.2]]},vo:'HERO TWO: Sir? SIR, your robot is trying to charge me surge pricing.',sfx:'door lock thunk · freeze-frame hit',gen:'cab interior generated · Hero Two live on green'},
+  {n:'4 · Hero Three & the hunt pack',d:7,loc:'EXT. ALLEY — NIGHT',lens:'50mm long-lens chase, handheld',cam:[[0,1.4,-6],[0,1.4,-2]],look:[0,1.2,4],act:{H3:[[0,0,-3],[0,0,3]],HUNT:[[0,0,-7],[0,0,0]]},vo:'HERO THREE: Seven hundred dollars for a belt?! For a BELT?!',sfx:'stomps + whoosh on duck',gen:'robots generated · Hero Three live'},
+  {n:'5 · Showroom reveal',d:5,loc:'INT. CREME GAWDS SHOWROOM — NIGHT',lens:'24mm slow dolly-in',cam:[[0,1.7,8],[0,1.5,4]],look:[0,1.2,0],act:{H1:[[-1,0,3],[-1,0,1]],H2:[[0,0,3.2],[0,0,1.2]],H3:[[1,0,3],[1,0,1]],HUNT:[[0,0,6],[0,0,4.6]]},vo:'NARRATOR: The robots can\'t cross. The markup doesn\'t work in here.',sfx:'music drops out · room tone',gen:'live showroom'},
+  {n:'6 · The look + tagline',d:6,loc:'INT. SHOWROOM — CONTINUOUS',lens:'50mm push to close',cam:[[0,1.5,5],[0,1.5,2.4]],look:[0,1.4,0],act:{H1:[[-0.9,0,0],[-0.9,0,0]],H2:[[0,0,0.2],[0,0,0.2]],H3:[[0.9,0,0],[0.9,0,0]],MC:[[2.2,0,0.3],[1.7,0,0.3]]},vo:'ALL: Creme Gawds over everything. · BILLY: Buy the hoodie. I\'m legally required to say it.',sfx:'beat back in',gen:'all live · Billy real footage only'},
+  {n:'7 · Title / CTA',d:4,loc:'END CARD',lens:'locked off',cam:[[0,1.5,6],[0,1.5,6]],look:[0,1.5,0],act:{},vo:'NARRATOR: Friday. The price drops. Unlike everything else.',sfx:'logo hit',gen:'Creme Gawds logo · BLACK FRIDAY 11.27',card:true}]},
+ whip:{set:'car',cast:{WHIP:['Whip (real photos only)',0xC084FC],GUY:['Guy · Mr. Booty Sniffer',0x22D3EE]},
+ shots:[
+  {n:'1 · Pull up',d:5,loc:"EXT. WHIP'S HOUSE — NIGHT",lens:'wide establishing, slow push',cam:[[6,2.5,6],[4,2,4]],look:[0,0.8,0],act:{WHIP:[[-0.45, 0, 0],[-0.45, 0, 0]],GUY:[[0.45, 0, 0],[0.45, 0, 0]]},vo:'(car rolls up, engine idles)',sfx:'tires on gravel · engine idle',gen:'house + car generated or practical',car:true},
+  {n:'2 · Windshield two-shot',d:7,loc:'INT. CAR — NIGHT',lens:'35mm, dash mount',cam:[[0,1.2,2.6],[0,1.2,2.3]],look:[0,1,0],act:{WHIP:[[-0.45, 0, 0],[-0.45, 0, 0]],GUY:[[0.45, 0, 0],[0.45, 0, 0]]},vo:'GUY: For a first date I really had fun, Whip. · WHIP: Yes, and you were the perfect gentleman, I must say.',sfx:'room tone · light R&B low (Sipping instrumental under)',gen:'live in car',car:true},
+  {n:'3 · OTS on Guy · the confession',d:5,loc:'INT. CAR — NIGHT',lens:'50mm OTS',cam:[[-1.2,1.3,1],[-1.1,1.3,0.9]],look:[0.45,1.1,0],act:{WHIP:[[-0.45, 0, 0],[-0.45, 0, 0]],GUY:[[0.45, 0, 0],[0.45, 0, 0]]},vo:"GUY: I'm not gone lie, Whip. I'm a little freakier than your average guy.",sfx:'music dips',gen:'live in car',car:true},
+  {n:'4 · OTS on Whip · the answer',d:6,loc:'INT. CAR — NIGHT',lens:'50mm OTS, reverse',cam:[[1.2,1.3,1],[1.1,1.3,0.9]],look:[-0.45,1.1,0],act:{WHIP:[[-0.45, 0, 0],[-0.45, 0, 0]],GUY:[[0.45, 0, 0],[0.45, 0, 0]]},vo:"WHIP: I'm not gone lie, I like me a lil freak every now and then. But that's only if I get to know you.",sfx:'room tone',gen:'live in car',car:true},
+  {n:'5 · Guy single',d:3,loc:'INT. CAR — NIGHT',lens:'85mm single, slight push',cam:[[-0.3,1.25,1.4],[-0.25,1.25,1.2]],look:[0.45,1.15,0],act:{WHIP:[[-0.45, 0, 0],[-0.45, 0, 0]],GUY:[[0.45, 0, 0],[0.45, 0, 0]]},vo:"GUY: Well, let's get to the knowing.",sfx:'—',gen:'live in car',car:true},
+  {n:'6 · Whip single · #1',d:4,loc:'INT. CAR — NIGHT',lens:'85mm single',cam:[[0.3,1.25,1.4],[0.25,1.25,1.2]],look:[-0.45,1.15,0],act:{WHIP:[[-0.45, 0, 0],[-0.45, 0, 0]],GUY:[[0.45, 0, 0],[0.45, 0, 0]]},vo:"WHIP: Number one. What's your idea of being freakier?",sfx:'—',gen:'live in car',car:true},
+  {n:'7 · Guy · the hesitation',d:5,loc:'INT. CAR — NIGHT',lens:'85mm, hold',cam:[[-0.3,1.25,1.2],[-0.3,1.25,1.15]],look:[0.45,1.15,0],act:{WHIP:[[-0.45, 0, 0],[-0.45, 0, 0]],GUY:[[0.45, 0, 0],[0.45, 0, 0]]},vo:"GUY: OK. If I tell you this, promise you won't look at me different.",sfx:'music out',gen:'live in car',car:true},
+  {n:'8 · Whip leans back · hand up',d:4,loc:'INT. CAR — NIGHT',lens:'35mm, quick whip-pan to her',cam:[[0,1.2,2.3],[0.6,1.25,1.4]],look:[-0.45,1.1,0],act:{WHIP:[[-0.45, 0, 0],[-0.6, 0, -0.15]],GUY:[[0.45, 0, 0],[0.45, 0, 0]]},vo:"WHIP: Wait a minute now. I'm not into that pegging stuff.",sfx:'whoosh on the pan',gen:'live in car',car:true},
+  {n:'9 · Guy · the reveal',d:5,loc:'INT. CAR — NIGHT',lens:'50mm slow push-in',cam:[[0.05,1.3,2.0],[0.2,1.25,1.25]],look:[0.45,1.15,0],act:{WHIP:[[-0.45, 0, 0],[-0.45, 0, 0]],GUY:[[0.45, 0, 0],[0.45, 0, 0]]},vo:"GUY: Hell no, that's not how I move. But I'm really into booty sniffing.",sfx:'record scratch on "sniffing"',gen:'live in car',car:true},
+  {n:'10 · Close on Whip · the beat',d:4,loc:'INT. CAR — NIGHT',lens:'85mm close, hold one beat long',cam:[[0.9,1.25,0.9],[0.8,1.25,0.8]],look:[-0.45,1.15,0],act:{WHIP:[[-0.45, 0, 0],[-0.45, 0, 0]],GUY:[[0.45, 0, 0],[0.45, 0, 0]]},vo:'WHIP: Booty sniffing. What the hell.',sfx:'dead silence',gen:'live in car',car:true},
+  {n:'11 · Two-shot · roses',d:6,loc:'INT. CAR — NIGHT',lens:'35mm dash two-shot',cam:[[0,1.2,2.4],[0,1.2,2.2]],look:[0,1,0],act:{WHIP:[[-0.45, 0, 0],[-0.45, 0, 0]],GUY:[[0.45, 0, 0],[0.45, 0, 0]]},vo:"GUY: See, I knew you was gone trip. · WHIP: Nah, I'm actually good, 'cause my booty smell like roses.",sfx:'music back in low',gen:'live in car',car:true},
+  {n:'12 · OTS on Whip · trust',d:8,loc:'INT. CAR — NIGHT',lens:'50mm OTS',cam:[[1.2,1.3,1],[1.05,1.3,0.85]],look:[-0.45,1.1,0],act:{WHIP:[[-0.45, 0, 0],[-0.45, 0, 0]],GUY:[[0.45, 0, 0],[0.45, 0, 0]]},vo:"GUY: Good to know, 'cause you can't trust a big booty and a smile these days. · WHIP: Well, you can trust this one. And don't get too comfortable, Mr. Booty Sniffer. That won't be happening anytime soon.",sfx:'—',gen:'live in car',car:true},
+  {n:'13 · Guy laughs it off',d:4,loc:'INT. CAR — NIGHT',lens:'85mm single',cam:[[-0.3,1.25,1.3],[-0.3,1.25,1.25]],look:[0.45,1.15,0],act:{WHIP:[[-0.45, 0, 0],[-0.45, 0, 0]],GUY:[[0.45, 0, 0],[0.45, 0, 0]]},vo:"GUY: (laughs) I'm good. I know your type. I'll just keep my nose to myself for now.",sfx:'laugh',gen:'live in car',car:true},
+  {n:'14 · Hand on the door',d:6,loc:'INT. CAR — NIGHT',lens:'35mm, low on the door handle, tilt up',cam:[[-1.0,0.9,0.8],[-1.0,1.25,0.9]],look:[-0.45,1.0,0],act:{WHIP:[[-0.45, 0, 0],[-0.7, 0, 0.05]],GUY:[[0.45, 0, 0],[0.45, 0, 0]]},vo:"WHIP: Well, it was nice going out with you. I really needed that. Thanks. · GUY: It's all good. I'll call you tomorrow.",sfx:'door latch',gen:'live in car',car:true},
+  {n:'15 · Half out · the last question',d:6,loc:'INT./EXT. CAR — NIGHT',lens:'35mm two-shot from her side',cam:[[-1.8,1.4,0.8],[-1.6,1.4,0.6]],look:[0,1.1,0],act:{WHIP:[[-0.9, 0, 0.1],[-1.0, 0, 0.1]],GUY:[[0.45, 0, 0],[0.45, 0, 0]]},vo:"WHIP: Question. How does a stanky ass smell? These chicks really be out here stinky. · GUY: Fortunately I don't have any horror stories, but I heard it can get ugly out here.",sfx:'door open chime',gen:'live in car',car:true},
+  {n:'16 · Goodnight · walk to the porch',d:6,loc:"EXT. WHIP'S HOUSE — NIGHT",lens:'wide, slow pull-out, porch light pops',cam:[[3,1.8,5],[4.5,2.2,6.5]],look:[-2,1,-1],act:{WHIP:[[-1.0, 0, 0.1],[-3.4, 0, -2.2]],GUY:[[0.45, 0, 0],[0.45, 0, 0]]},vo:'(they laugh) WHIP: Goodnight. · (she walks up to the porch; he waits till she is inside)',sfx:'door shut · laugh tail · Sipping hook in',gen:'house + porch practical',car:true}]}
+};
+// ---------------- scene ----------------
+const stage=document.getElementById('stage');const R=new THREE.WebGLRenderer({antialias:true});R.setPixelRatio(Math.min(2,devicePixelRatio));stage.appendChild(R.domElement);
+const S=new THREE.Scene();S.background=new THREE.Color(0x07080B);S.fog=new THREE.Fog(0x07080B,12,30);
+const C=new THREE.PerspectiveCamera(55,1,0.1,100);
+S.add(new THREE.HemisphereLight(0x8899ff,0x110011,0.6));const key=new THREE.DirectionalLight(0xffd9a0,1.2);key.position.set(3,6,4);S.add(key);
+const rim=new THREE.PointLight(0x22D3EE,6,12);rim.position.set(-3,3,-3);S.add(rim);
+const grid=new THREE.GridHelper(40,40,0x7C3AED,0x1D1D24);S.add(grid);
+const floor=new THREE.Mesh(new THREE.PlaneGeometry(40,40),new THREE.MeshStandardMaterial({color:0x0D0D10,roughness:.4,metalness:.3}));floor.rotation.x=-Math.PI/2;floor.position.y=-0.01;S.add(floor);
+let props=new THREE.Group();S.add(props);
+function label(t){const c=document.createElement('canvas');c.width=512;c.height=96;const g=c.getContext('2d');g.fillStyle='rgba(0,0,0,.6)';g.fillRect(0,0,512,96);g.font='bold 40px Oswald, sans-serif';g.fillStyle='#fff';g.textAlign='center';g.fillText(t,256,62);const s=new THREE.Sprite(new THREE.SpriteMaterial({map:new THREE.CanvasTexture(c),transparent:true}));s.scale.set(1.6,.3,1);return s}
+function figure(name,color,robot){const g=new THREE.Group();const m=new THREE.MeshStandardMaterial({color,roughness:robot?.25:.6,metalness:robot?.85:.1});
+ const h=robot?2.4:1.75;const body=new THREE.Mesh(new THREE.CapsuleGeometry(robot?.38:.26,h-0.9,6,12),m);body.position.y=h/2;g.add(body);
+ const head=new THREE.Mesh(robot?new THREE.BoxGeometry(.45,.4,.4):new THREE.SphereGeometry(.17,20,16),m);const top=h/2+(h-0.9)/2+(robot?.38:.26);const hy=top+(robot?.2:.15);head.position.y=hy;head.name='head';head.userData.y=hy;g.add(head);
+ if(robot){const eye=new THREE.Mesh(new THREE.BoxGeometry(.3,.06,.05),new THREE.MeshBasicMaterial({color:0xff2244}));eye.position.set(0,h+0.07,.21);g.add(eye)}
+ const l=label(name);l.position.y=h+0.75;g.add(l);return g}
+function setDress(kind){props.clear();
+ if(kind==='car'){const body=new THREE.Mesh(new THREE.BoxGeometry(2.1,0.9,4.2),new THREE.MeshStandardMaterial({color:0x111114,metalness:.9,roughness:.25,transparent:true,opacity:.35}));body.position.set(0,0.75,0);props.add(body);
+  for(const x of[-.45,.45]){const seat=new THREE.Mesh(new THREE.BoxGeometry(.55,.7,.6),new THREE.MeshStandardMaterial({color:0x2a1145}));seat.position.set(x,.55,-.25);props.add(seat)}
+  const house=new THREE.Mesh(new THREE.BoxGeometry(5,3,4),new THREE.MeshStandardMaterial({color:0x1D1D24}));house.position.set(-5,1.5,-4);props.add(house);
+  const porch=new THREE.PointLight(0xffc070,4,8);porch.position.set(-3,2.2,-2);props.add(porch)}
+ else{for(let i=-3;i<=3;i++){for(const s of[-1,1]){const b=new THREE.Mesh(new THREE.BoxGeometry(2.5,4+Math.abs(i)%3*2,2.5),new THREE.MeshStandardMaterial({color:0x141418}));b.position.set(s*5.5,b.geometry.parameters.height/2,i*4);props.add(b);
+   const neon=new THREE.Mesh(new THREE.BoxGeometry(.05,.6,1.6),new THREE.MeshBasicMaterial({color:i%2?0xA855F7:0x22D3EE}));neon.position.set(s*4.22,2.5,i*4);props.add(neon)}}}}
+let actors={},proj,shots,T=0,playing=false,total=0,last=0;
+function build(){shots=proj.shots||[];for(const a of Object.values(actors))S.remove(a);actors={};
+ for(const [k,[n,c]] of Object.entries(proj.cast)){const a=figure(n,c,['BOT','PRA','HUNT'].includes(k));a.visible=false;S.add(a);actors[k]=a}
+ setDress(proj.set);total=Math.max(0.1,shots.reduce((s,x)=>s+(+x.d||0),0));T=Math.min(Math.max(0,T),total-0.01);
+ document.getElementById('list').innerHTML=shots.map((s,i)=>`<div class="shot" data-i="${i}"><h4>${s.n} <small>· ${s.d}s</small></h4><p><b>${s.loc}</b><br>${s.vo}</p><small>LENS ${s.lens}<br>SOUND ${s.sfx}<br>MAKE ${s.gen}</small></div>`).join('');
+ document.querySelectorAll('.shot').forEach(el=>el.onclick=()=>{SEL=+el.dataset.i;T=startOf(SEL)+0.01;render();editor()});editor();
+ let x=0;document.getElementById('tl').innerHTML=shots.map(s=>{const w=s.d/total*100,h=`<div class="seg" style="left:${x}%;width:${w}%">${s.n}</div><div class="sfx" style="left:${x}%">${s.sfx}</div>`;x+=w;return h}).join('')+'<div class="ph" id="ph"></div>';
+ document.getElementById('legend').innerHTML=Object.values(proj.cast).map(([n,c])=>`<span><i style="background:#${c.toString(16).padStart(6,'0')}"></i>${n}</span>`).join('');render()}
+function startOf(i){return shots.slice(0,i).reduce((s,x)=>s+x.d,0)}
+const lerp=(a,b,t)=>a.map((v,i)=>v+(b[i]-v)*t);const ease=t=>t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2;
+function render(){if(!shots.length){document.getElementById('sub').textContent='No shots yet';R.render(S,C);return}let i=0,acc=0;while(i<shots.length-1&&T>=acc+shots[i].d){acc+=shots[i].d;i++}const s=shots[i],t=Math.min(1,(T-acc)/s.d),e=ease(t);
+ C.position.set(...lerp(s.cam[0],s.cam[1],e));C.lookAt(...s.look);
+ for(const [k,a] of Object.entries(actors)){const p=s.act[k];a.visible=!!p&&!s.card;if(p){a.position.set(...lerp(p[0],p[1],e));a.lookAt(C.position.x,0,C.position.z);
+   const run=(p[0][2]!==p[1][2]||p[0][0]!==p[1][0]);a.position.y=run?Math.abs(Math.sin(T*9))*0.12:0;
+   const hd=a.getObjectByName('head');if(s.pop===k&&t>.55){hd.position.y=hd.userData.y+(t-.55)*5;hd.rotation.x=(t-.55)*12}else{hd.position.y=hd.userData.y;hd.rotation.x=0}}}
+ document.getElementById('sub').textContent=s.card?'CREME GAWDS · BLACK FRIDAY 11.27':s.vo;
+ document.getElementById('slate').textContent=`SHOT ${s.n} · ${s.lens}`;
+ document.querySelectorAll('.shot').forEach((el,j)=>el.classList.toggle('on',j===i));
+ document.getElementById('clock').textContent=T.toFixed(1)+'s / '+total+'s';const ph=document.getElementById('ph');if(ph)ph.style.left=(T/total*100)+'%';
+ R.render(S,C)}
+function size(){const w=stage.clientWidth,h=stage.clientHeight;R.setSize(w,h);C.aspect=w/h;C.updateProjectionMatrix();render()}
+function tick(now){if(!playing)return;const dt=(now-last)/1000;last=now;T+=dt;if(T>=total){T=total-0.01;playing=false;document.getElementById('play').textContent='▶ Play animatic'}render();requestAnimationFrame(tick)}
+document.getElementById('play').onclick=()=>{playing=!playing;document.getElementById('play').textContent=playing?'❚❚ Pause':'▶ Play animatic';if(playing){if(T>=total-0.02)T=0;last=performance.now();requestAnimationFrame(tick)}};
+document.getElementById('stop').onclick=()=>{playing=false;T=0;document.getElementById('play').textContent='▶ Play animatic';render()};
+document.getElementById('tl').onclick=e=>{const r=e.currentTarget.getBoundingClientRect();T=(e.clientX-r.left)/r.width*total;render()};
+let SEL=0,W=null,CUR=null;
+const RP={whip:['kfx-whip-101','Whip · Ep 101 "First Date"'],bf:['kfx-bf-armageddon','Creme Gawds · Black Friday'],armageddon:['kfx-armageddon','Armageddon'],onenight:['kfx-onenight','One Night At…']};
+const $=id=>document.getElementById(id);const clone=o=>JSON.parse(JSON.stringify(o));
+async function starter(id){ // no 3D pass yet: block one shot per beat from the script room
+ let beats=[];try{const sb=window.supabase&&window.supabase.createClient('https://hnzekejoaamsnmtqtwie.supabase.co','sb_publishable_51ybFNizblfWMqL_qdekcg_kZT7nXHy',{auth:{persistSession:true}});
+  const {data}=await sb.from('room_projects').select('beats,outline').eq('id',RP[id][0]).maybeSingle();beats=(data&&((data.beats&&data.beats.length?data.beats:data.outline)||[]))||[]}catch(e){}
+ if(!beats.length)beats=[{title:'Opening',text:'Add the first beat'}];
+ return {set:'street',cast:{A:['Lead',0xE8B54A],B:['Second lead',0x22D3EE]},shots:beats.map((b,i)=>({n:`${i+1} · ${b.title||b.heading||'Beat '+(i+1)}`,d:5,loc:'TBD',lens:'35mm',cam:[[0,1.5,6],[0,1.5,4.5]],look:[0,1.2,0],act:{A:[[-0.8,0,0],[-0.8,0,0]],B:[[0.8,0,0],[0.8,0,0]]},vo:(b.text||'').slice(0,220),sfx:'—',gen:'blocking only'}))}}
+function chips(){ $('pchips').innerHTML=Object.entries(RP).map(([k,[,t]])=>`<button data-p="${k}" class="${k===CUR?'on':''}">${t}</button>`).join('');
+ $('pchips').querySelectorAll('[data-p]').forEach(b=>b.onclick=()=>open(b.dataset.p))}
+function status(st){$('save').textContent={saved:`saved to binder · step ${W?W.head:0}`,saving:'saving…',device:`saved on this device · step ${W?W.head:0}`}[st]||st;$('save').className=st}
+function tools(){$('undo').disabled=!W.canUndo();$('redo').disabled=!W.canRedo();
+ $('hist').innerHTML=W.history.slice().reverse().map(e=>`<option value="${e.seq}" ${e.seq===W.head?'selected':''}>${e.seq===W.head?'● ':''}${e.seq} · ${e.label}</option>`).join('')}
+async function open(id){CUR=id;chips();T=0;SEL=0;history.replaceState(null,'','?p='+id);
+ const seed=P[id]?clone(P[id]):await starter(id);
+ W=RoomWork({project:RP[id][0],kind:'board3d',title:RP[id][1],seed,onstatus:status,onchange:st=>{proj=clone(st);build();tools()}});
+ window.__rwActive=W;await W.open()}
+function commit(label){W.commit(label,proj)}
+const F=[['n','Shot'],['d','Seconds'],['loc','Location'],['lens','Lens / move'],['vo','Dialogue'],['sfx','Sound'],['gen','Make']];
+function editor(){let ed=$('ed');if(!ed){ed=document.createElement('div');ed.id='ed';$('list').prepend(ed)}
+ const sh=shots[SEL];if(!sh){ed.innerHTML='<div class="empty">No shots. <button id="addfirst">+ Add a shot</button></div>';const a=$('addfirst');if(a)a.onclick=()=>{proj.shots.push({n:'1 · New shot',d:5,loc:'',lens:'35mm',cam:[[0,1.5,6],[0,1.5,4.5]],look:[0,1.2,0],act:{},vo:'',sfx:'',gen:''});commit('Add shot')};return}
+ ed.innerHTML=`<div style="font-size:.7rem;letter-spacing:.12em;color:#22D3EE">EDIT · SHOT ${SEL+1} OF ${shots.length}</div>`+F.map(([k,l])=>`<label>${l}</label>${k==='vo'?`<textarea data-f="${k}"></textarea>`:`<input data-f="${k}" ${k==='d'?'type="number" min="1" max="30" step="0.5"':''}>`}`).join('')+
+  `<div class="row"><button data-a="up">↑</button><button data-a="down">↓</button><button data-a="dup">⧉ Duplicate</button><button data-a="add">+ After</button><button data-a="del">✕ Delete</button></div>`;
+ ed.querySelectorAll('[data-f]').forEach(el=>{const k=el.dataset.f;el.value=sh[k]??'';el.onchange=()=>{sh[k]=k==='d'?Math.max(1,+el.value||1):el.value;commit(`Shot ${SEL+1} · ${k==='d'?'length '+sh.d+'s':F.find(f=>f[0]===k)[1].toLowerCase()}`)}});
+ ed.querySelectorAll('[data-a]').forEach(b=>b.onclick=()=>{const a=b.dataset.a,L=proj.shots;
+  if(a==='up'&&SEL>0){[L[SEL-1],L[SEL]]=[L[SEL],L[SEL-1]];SEL--;commit(`Move shot up`)}
+  else if(a==='down'&&SEL<L.length-1){[L[SEL+1],L[SEL]]=[L[SEL],L[SEL+1]];SEL++;commit(`Move shot down`)}
+  else if(a==='dup'){L.splice(SEL+1,0,clone(L[SEL]));SEL++;commit(`Duplicate shot ${SEL}`)}
+  else if(a==='add'){const n=clone(L[SEL]);n.n=`${SEL+2} · New shot`;n.vo='';n.sfx='';L.splice(SEL+1,0,n);SEL++;commit('Add shot')}
+  else if(a==='del'){if(!confirmDel())return;L.splice(SEL,1);SEL=Math.max(0,SEL-1);commit('Delete shot')}})}
+function confirmDel(){return true} /* deletes are undoable, so no blocking dialog */
+$('undo').onclick=()=>W.undo();$('redo').onclick=()=>W.redo();$('hist').onchange=e=>W.jump(+e.target.value);
+const q=new URLSearchParams(location.search).get('p');
+addEventListener('resize',size);open(RP[q]?q:'whip').then(size);
+</script></body></html>
