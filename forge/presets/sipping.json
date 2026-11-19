@@ -1,0 +1,16 @@
+{
+  "name": "SIPPING",
+  "artist": "Whip ft. Lil Jeremy",
+  "bpm": 148.5,
+  "stems": [
+    {"file": "WHIP MAIN.mp3",    "role": "lead", "target_lufs": -18, "pan": 0.0,  "verb": 0.12, "delay": 0.08},
+    {"file": "Hook 2.mp3",       "role": "lead", "target_lufs": -19, "pan": 0.0,  "verb": 0.15, "delay": 0.06},
+    {"file": "WHIPS STACKS.mp3", "role": "dbl",  "target_lufs": -26, "pan": 0.0,  "verb": 0.10},
+    {"file": "Hook Dubs 1.mp3",  "role": "dbl",  "target_lufs": -27, "pan": -0.7, "verb": 0.12},
+    {"file": "Hook Dubs 2.mp3",  "role": "dbl",  "target_lufs": -27, "pan": 0.7,  "verb": 0.12, "haas_ms": 9},
+    {"file": "Hook Dubs 3.mp3",  "role": "dbl",  "target_lufs": -28, "pan": -0.4, "verb": 0.12, "haas_ms": 13},
+    {"file": "Hook Dubs 4.mp3",  "role": "dbl",  "target_lufs": -28, "pan": 0.4,  "verb": 0.12},
+    {"file": "ADLIBS 1.wav",     "role": "ad",   "target_lufs": -24, "pan": 0.35, "verb": 0.25, "delay": 0.22},
+    {"file": "UGH.mp3",          "role": "ad",   "target_lufs": -26, "pan": -0.3, "verb": 0.20, "delay": 0.15}
+  ]
+}
