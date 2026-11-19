@@ -128,7 +128,7 @@ Also true. A dealership let a chatbot talk to customers, and somebody got it to 
 Billy stares. The funk cue scratches to a stop.
 
 **BILLY (V.O.)**
-That was the moment. I'm a roast comic. I came up under Ali Siddiq. I been roasted by people who got *no* teeth. And this machine handed me a knock-knock joke with an emoji. I said, nah.
+That was the moment. I'm a roast comic. I came up under Ali Siddiq. I been roasted by people who got *no* teeth. And this machine handed me a chicken-crossed-the-road joke. With an emoji. I said, nah.
 
 > Back to present, full color. Claude is in the passenger seat, eating Billy's gas-station chicken.
 
