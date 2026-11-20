@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Production Line · BilloTech</title>
+<meta name="description" content="Script to screen in one line: write, punch up, table read, lock refs, animatic, render, sound, cut, Render Wall, ship.">
+<link rel="stylesheet" href="../apps/app.css">
+<style>
+main{max-width:1080px;margin:0 auto;padding:22px 16px 80px}
+.top{display:flex;gap:16px;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;border-bottom:1px solid var(--ln2);padding-bottom:16px}
+.top h1{font:400 46px/1 Anton,Impact,sans-serif;text-transform:uppercase;margin:6px 0}
+.proj{border:1px solid var(--ln2);background:linear-gradient(135deg,#041714,#0D0D10 55%);padding:18px;margin-top:16px}
+.proj h2{font:400 32px/1 Anton,Impact,sans-serif;text-transform:uppercase;margin:4px 0 8px}
+.meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.meta .pill{white-space:normal;line-height:1.4}
+.line{display:grid;grid-template-columns:repeat(5,1fr);gap:0;margin-top:16px;border:1px solid var(--ln2)}
+.ph{padding:14px;border-right:1px solid var(--ln);border-bottom:1px solid var(--ln);background:var(--p1);cursor:pointer;position:relative;min-height:128px;text-decoration:none;display:block}
+.ph:hover{background:var(--p3)}
+.ph .n{font:11px "JetBrains Mono",monospace;color:var(--dim)}
+.ph b{display:block;font:400 22px/1.05 Anton,Impact,sans-serif;text-transform:uppercase;margin:6px 0 4px}
+.ph .t{font-size:12.5px;color:var(--dim)}
+.ph .pill{position:absolute;top:12px;right:12px}
+.ph.done .pill{color:var(--teal)}.ph.now{background:#06231c;outline:2px solid var(--teal);outline-offset:-2px}.ph.now .pill{color:#fff;background:var(--teal);border-color:var(--teal);color:var(--ink)}
+.ph.next .pill{color:var(--warn)}.ph.locked{opacity:.55}.ph.locked .pill{color:var(--dim)}
+.bar{height:4px;background:var(--p3);margin-top:12px}.bar i{display:block;height:100%;background:var(--teal)}
+.detail{border:1px solid var(--ln2);border-top:0;padding:16px;background:var(--p2)}
+.eps{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:16px}
+.ep{border:1px solid var(--ln2);padding:14px;background:var(--p1)}
+.ep b{font:400 20px Anton,Impact,sans-serif;text-transform:uppercase;display:block;margin:4px 0}
+.script{margin-top:16px;border:1px solid var(--ln2);background:#050507;padding:18px;max-height:70vh;overflow:auto;font:14px/1.6 "JetBrains Mono",monospace;white-space:pre-wrap}
+.script h2,.script h3{font-family:Anton,Impact,sans-serif;text-transform:uppercase;color:var(--teal);font-weight:400}
+@media(max-width:900px){.line{grid-template-columns:repeat(2,1fr)}.eps{grid-template-columns:1fr}.top h1{font-size:34px}}
+</style></head>
+<body>
+<header class="ab">
+ <a class="ab-mark" href="../pro/"><img src="../apps/mark.svg" alt=""><span class="ab-name">BILLO<em>TECH</em></span></a>
+ <div class="ab-doc"><span class="ab-state">Production Line · script to screen</span></div>
+ <div class="ab-acts"><a class="b pri" href="../voice/natural/">Billo Voice</a></div>
+</header>
+<main>
+ <div class="top">
+  <div><div class="kick">BilloTech · Production Line</div><h1>Script to screen. One line.</h1>
+  <p class="dimt" style="max-width:640px;margin:0">Every project moves through the same ten stations. Each station is a BilloTech tool and shows its hand-off for the next one. Nobody redoes work, and every finished piece lands on the Render Wall.</p></div>
+  <select id="pick" class="b"></select>
+ </div>
+ <section class="proj" id="proj"></section>
+ <div class="line" id="line"></div>
+ <div class="detail" id="detail"></div>
+ <div class="eps" id="eps"></div>
+ <div class="script" id="script">Loading script…</div>
+</main>
+<script>
+const PROJECTS=[{slug:'tokens',label:'Billy & Claude: Tokens'}];
+const $=id=>document.getElementById(id), esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+$('pick').innerHTML=PROJECTS.map(p=>`<option value="${p.slug}">${esc(p.label)}</option>`).join('');
+$('pick').onchange=()=>load($('pick').value);
+function md(t){return esc(t).replace(/^### (.*)$/gm,'<h3>$1</h3>').replace(/^## (.*)$/gm,'<h2>$1</h2>').replace(/^# (.*)$/gm,'<h2>$1</h2>').replace(/\*\*(.+?)\*\*/g,'<b>$1</b>').replace(/\*(.+?)\*/g,'<i>$1</i>')}
+async function load(slug){
+  const base=`projects/${slug}/`,P=await (await fetch(base+'project.json')).json();
+  const done=P.phases.filter(p=>p.status==='done').length;
+  $('proj').innerHTML=`<div class="kick">${esc(P.code)} · ${esc(P.format)}</div><h2>${esc(P.title)}</h2><p>${esc(P.logline)}</p>
+   <div class="meta"><span class="pill">Narrator · ${esc(P.narrator)}</span><span class="pill">Grammar · ${esc(P.director_grammar)}</span><span class="pill">Test pass · ${P.budget.test_pass_480p_credits} credits @ 480p</span></div>
+   <div class="bar"><i style="width:${done/P.phases.length*100}%"></i></div><div class="mono dimt" style="font-size:11px;margin-top:6px">${done} of ${P.phases.length} stations done</div>`;
+  $('line').innerHTML=P.phases.map((p,i)=>`<div class="ph ${p.status}" data-i="${i}" tabindex="0"><span class="pill">${p.status==='now'?'you are here':esc(p.status)}</span><span class="n">${String(i+1).padStart(2,'0')}</span><b>${esc(p.name)}</b><span class="t">${esc(p.tool)}</span></div>`).join('');
+  const show=i=>{const p=P.phases[i];$('detail').innerHTML=`<div class="kick">Station ${i+1} · ${esc(p.name)}</div><p style="margin:6px 0 10px">${esc(p.next)}</p><a class="b pri" href="${esc(p.url)}">Open ${esc(p.tool)}</a>`};
+  [...$('line').children].forEach(el=>{el.onclick=()=>show(+el.dataset.i);el.onkeydown=e=>{if(e.key==='Enter')show(+el.dataset.i)}});
+  show(Math.max(0,P.phases.findIndex(p=>p.status==='now')));
+  $('eps').innerHTML=P.episodes.map(e=>`<div class="ep"><span class="kick">EP ${e.n} · ${esc(e.status)}</span><b>${esc(e.title)}</b><span class="dimt">${esc(e.device)}</span></div>`).join('');
+  try{$('script').innerHTML=md(await (await fetch(base+P.script)).text())}catch(e){$('script').textContent='Script not found.'}
+}
+load(PROJECTS[0].slug);
+</script>
+</body></html>

@@ -1,0 +1,211 @@
+CREME GAWDS
+"BLACK FRIDAY: ARMAGEDDON"
+Draft 3.1 · Billy Sorrells
+Concept by Kehlin Farooq
+
+[[ROOM: Draft 3.1 from Billy, 19 Nov. Trailer pass on top of Draft 3 (Draft 3 is locked in versions). New: the robots tell the legend, three chapter cards, Hero One's fight is one unbroken take, a cut that speeds up into a 360 hero spin, then one full second of black and silence before the showroom button. Same open items: Seth clears the parody brand names, Billy is real footage only, Kehlin OKs the "owes me money" line or we use the alt. Runtime ~58 s with the stinger.]]
+
+[[TRAILER STUDY: from what the Bad Boys and John Wick trailers are known for, NOT measured from the files (YouTube blocks server downloads). Real numbers come from forge/billo_trailer_dna.py run on Billy's Mac; when they land, the cut lengths below get swapped for the measured ones.]]
+
+WHAT WE TOOK FROM THE TRAILERS
+
+JOHN WICK (the legend):
+- The hero barely talks. Other people tell you how dangerous he is, and they're scared while they say it. Our version: the luxury robots tell the legend of three guys who have never paid retail.
+- Chapter cards. White type on black, hard in, hard out, a low boom under each one.
+- The fight is one take. No cutting to hide the stunts, the camera circles at waist height and you feel every hit. No music under the fight.
+- Neon night: magenta and cyan.
+
+BAD BOYS (the buddies):
+- The 360: camera low on the ground, circling the heroes while they rise into frame, orange sun flaring behind them.
+- Banter buttons: every action beat ends on two guys arguing about something small.
+- Hot orange highlights, teal shadows.
+
+TRAILER CUT (both):
+- Cuts speed up toward the end, landing on the drums: kick, then snare, then every hi-hat.
+- Then everything stops. One full second of black, no sound. The joke lands in the silence.
+
+FADE IN:
+
+SHOT 1 — COLD OPEN / THE SWARM  (5s)
+
+EXT. CITY STREET - NIGHT
+
+[MANN: wet asphalt, 85mm compressing the swarm, handheld at shoulder height. BAD BOYS grade: hot orange highs, teal shadows.]
+
+Three heroes in gold-and-cream CREME GAWDS SPRINT. Behind them: a SWARM of designer robots and camera drones.
+
+FREEZE FRAME on HERO ONE mid-stride.
+
+NARRATOR (V.O.)
+(flat, deadpan)
+Record scratch. Freeze frame. Yep, that's us. You're probably wondering how three grown men ended up running from a handbag.
+
+SHOT 2 — THE LEGEND  (6s)
+
+INT. LUXURY BOT HQ - NIGHT
+
+[WICK: locked wide, one cold top light, magenta and cyan neon. No score. Room tone. One ice cube settles in a glass nobody is drinking.]
+
+GUCCHI, PRADROID and the HUNT PACK around a marble table. Nobody looks at anybody.
+
+PRADROID
+Those three. You know who they are?
+
+GUCCHI
+Nobody knows.
+
+PRADROID
+They have never paid retail. Not once. Not even at the airport.
+
+GUCCHI
+...Then who are they?
+
+PRADROID
+They're the reason we have a clearance rack.
+
+CARD: CHAPTER ONE · RETAIL  (1.5s, low boom)
+
+SHOT 3 — HERO ONE VS. GUCCHI  (9s, ONE TAKE)
+
+EXT. STREET CORNER - NIGHT
+
+[WICK: one unbroken shot. Camera orbits the fight at waist height. Real hits, no music. BRUCKHEIMER button: drop to 120 fps on the head pop.]
+
+GUCCHI
+Your outfit is... retail.
+
+HERO ONE
+(mid-fight, not slowing down)
+Your outfit is a payment plan.
+
+He turns to camera WHILE STILL FIGHTING.
+
+HERO ONE (CONT'D)
+Relax. That's not the real one. The real one has lawyers.
+
+POP. Gucchi's head arcs in slow motion into a trash can. Swish.
+
+NARRATOR (V.O.)
+Legal made us say that. Twice.
+
+CARD: CHAPTER TWO · TIP INCLUDED  (1.5s, low boom)
+
+SHOT 4 — HERO TWO & THE PRADROID  (5s)
+
+INT. PRADROID CAB → EXT. STREET
+
+[MANN: locked dash cam, city light sliding on glass.]
+
+PRADROID
+Your fare tonight is four thousand dollars. Plus tip.
+
+HERO TWO
+For four miles?
+
+PRADROID
+The seat is leather.
+
+HERO TWO
+The seat is CRYING.
+
+He kicks the door and leaps. FREEZE FRAME mid-air.
+
+HERO TWO (CONT'D)
+(to camera, frozen)
+Do not try this. I'm a professional. I'm also uninsured.
+
+CARD: CHAPTER THREE · PRICE UPON REQUEST  (1.5s, low boom)
+
+SHOT 5 — HERO THREE & THE HUNT PACK  (6s)
+
+EXT. ALLEY - NIGHT
+
+[MANN: long lens through chain-link and steam. BRUCKHEIMER: car flips behind him, slow motion.]
+
+Y.S. HELL
+Seven-hundred-dollar BELT.
+
+LOUIE V-9000
+Twelve-hundred-dollar SLIDES.
+
+DIE-OR
+Price available... upon request.
+
+HERO THREE
+If you gotta ASK, you got ROBBED!
+
+A car FLIPS and EXPLODES behind him. He doesn't look back. Then he does.
+
+HERO THREE (CONT'D)
+Who approved the car? We don't have car money!
+
+SHOT 6 — THE RAMP + THE 360  (5s)
+
+EXT. STREET - NIGHT (MONTAGE)
+
+[TRAILER RAMP: shots shrink 1 s, 0.75, 0.5, 0.33, then 4 frames each, hitting the kick, then the snare, then every hi-hat. Lands on the BAD BOYS 360: low camera circles the three as they rise into frame, orange flare behind.]
+
+HERO ONE
+We shop together.
+
+HERO TWO
+We drop together.
+
+HERO THREE
+We split the receipt together.
+
+HERO ONE
+...No we don't.
+
+SMASH TO BLACK. ONE FULL SECOND. NO SOUND.
+
+SHOT 7 — SHOWROOM REVEAL → HERO WALK  (7s)
+
+INT. CREME GAWDS SHOWROOM - NIGHT
+
+[Out of the silence: BRUCKHEIMER golden backlight through the door, dolly in through haze. FEIGE: the crest over the threshold.]
+
+The robots SLAM into an invisible wall at the door.
+
+GUCCHI'S HEAD (O.S.)
+(muffled, from the trash can)
+We can't go in there. Everything's... fairly priced.
+
+Beat drops back in. The three walk to lens in slow motion, gold flash behind them.
+
+ALL THREE
+Creme Gawds over everything.
+
+BILLY (the MC, real footage) leans into frame.
+
+BILLY
+Including this commercial. Which I'm in. Because Kehlin owes me money.
+(beat)
+Buy the hoodie. Then he can pay me.
+
+[ALT if Kehlin passes: "Including this commercial. Which I'm in. For exposure. Apparently that's a currency now."]
+
+HARD CUT TO SILENCE.
+
+SHOT 8 — END CARD  (4s)
+
+CREME GAWDS logo. BLACK FRIDAY 11.27
+
+NARRATOR (V.O.)
+Friday. The price drops. Unlike that car.
+
+POST-CREDIT STINGER  (6s)
+
+INT. SHOWROOM - LATER
+
+[FEIGE: the tease. MANN: one practical light, everything else black.]
+
+Footsteps. A FOURTH FIGURE in cream steps into the single light. We never see the face.
+
+FOURTH FIGURE
+They dropped the price... without me?
+
+NARRATOR (V.O.)
+The Creme Gawds will return. Probably Monday. Cyber Monday.
+
+FADE OUT.

@@ -1,0 +1,13 @@
+[  0.0] The cloud just got up to 40 times faster at browser tasks with this free AI browser on GitHub.
+[  4.5] It's called Obscura, and this isn't another Chrome wrapper.
+[  7.1] It is actually your own browser.
+[  8.6] And that matters because most AI agents are still basically opening up Chrome in the background,
+[ 12.1] which means sites can detect and block them pretty easily.
+[ 15.1] But Obscura was built specifically for agents, so it can run way more efficiently.
+[ 18.8] In one benchmark, it reportedly got through 40 pages in the time that Chrome handled just three.
+[ 23.2] The craziest part is you don't need to rebuild your whole setup.
+[ 25.7] You basically just plug it into cloud, keep using the same exact prompts,
+[ 28.5] and have your browser tasks run through Obscura instead of Chrome.
+[ 31.2] So if you're doing things like lead scraping, checking directories, or running browser agents overnight,
+[ 35.2] this can make a massive difference for you.
+[ 36.8] And it's completely free on GitHub, so just comment browser, and I'll send you the full setup.
