@@ -1,0 +1,14 @@
+{
+  "trailers": {
+    "bad_boys": [
+      {"title": "Bad Boys", "year": 1995, "part": 1, "youtube_url": "https://www.youtube.com/results?search_query=Bad+Boys+1995+official+trailer"},
+      {"title": "Bad Boys II", "year": 2003, "part": 2, "youtube_url": "https://www.youtube.com/results?search_query=Bad+Boys+II+2003+official+trailer"},
+      {"title": "Bad Boys for Life", "year": 2020, "part": 3, "youtube_url": "https://www.youtube.com/results?search_query=Bad+Boys+for+Life+2020+official+trailer"}
+    ],
+    "john_wick": [
+      {"title": "John Wick", "year": 2014, "part": 1, "youtube_url": "https://www.youtube.com/watch?v=2AUmvWm5ZDQ"},
+      {"title": "John Wick: Chapter 2", "year": 2017, "part": 2, "youtube_url": "https://www.youtube.com/watch?v=ChpLV9AMqm4"},
+      {"title": "John Wick: Chapter 3 – Parabellum", "year": 2019, "part": 3, "youtube_url": "https://www.youtube.com/watch?v=M7XM597XO94"}
+    ]
+  }
+}
