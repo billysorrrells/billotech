@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # BILLO GRAB — install on the Mac / EMF hub. Free. Runs at http://127.0.0.1:8765 (Style Lab at /).
 set -euo pipefail
-HERE="$(cd "$(dirname "$0")" && pwd)"; PY=$(command -v python3)
+HERE="$(cd "$(dirname "$0")" && pwd)"; PY="${PY:-$( [ -x /opt/homebrew/bin/python3 ] && echo /opt/homebrew/bin/python3 || command -v python3 )}"
 command -v ffmpeg >/dev/null || { command -v brew >/dev/null && brew install ffmpeg || { echo "Install ffmpeg first"; exit 1; }; }
 command -v deno >/dev/null || { command -v brew >/dev/null && brew install deno || true; }   # yt-dlp's YouTube JS solver
 $PY -m pip install --user -U "yt-dlp[default,curl-cffi]" gallery-dl bgutil-ytdlp-pot-provider 2>/dev/null \
