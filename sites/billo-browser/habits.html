@@ -1,0 +1,83 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Billo Habits — what you actually do</title>
+<style>
+:root{--ink:#141310;--gold:#c9a84c;--line:#e6e0d4;--bg:#f8f6f1;--dim:#8a8378}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:13.5px/1.5 -apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif}
+.wrap{max-width:1100px;margin:0 auto;padding:20px 20px 60px}
+.top{display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--line);padding-bottom:12px}
+.bm{font-weight:800;letter-spacing:.16em;font-size:12px}.bm b{color:var(--gold)}
+.pill{font:10px ui-monospace,Menlo,monospace;border:1px solid var(--line);border-radius:99px;padding:4px 10px;color:var(--dim)}
+.pill.ok{border-color:#b39752;color:#8a6d1f}
+h1{font-family:'Bebas Neue',Impact,sans-serif;font-size:44px;margin:18px 0 4px;text-transform:uppercase;line-height:.95}
+h1 em{color:var(--gold);font-style:normal}
+h2{font:10px ui-monospace,Menlo,monospace;letter-spacing:.22em;text-transform:uppercase;color:var(--dim);margin:28px 0 8px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px}
+.stat{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+.stat b{display:block;font-size:24px;letter-spacing:-.02em}.stat span{font:9.5px ui-monospace,Menlo,monospace;color:var(--dim);letter-spacing:.1em;text-transform:uppercase}
+.bar{display:flex;align-items:center;gap:10px;padding:5px 0;font-size:12px}
+.bar .lbl{width:230px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bar .track{flex:1;height:10px;background:#eae4d6;border-radius:99px;overflow:hidden}
+.bar .fill{height:100%;background:linear-gradient(90deg,#c9a84c,#e8c764)}
+.bar .v{width:70px;text-align:right;font:10.5px ui-monospace,Menlo,monospace;color:var(--dim)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:820px){.grid2{grid-template-columns:1fr}.bar .lbl{width:140px}}
+.note{color:var(--dim);font-size:12px}
+.foot{margin-top:26px;padding-top:12px;border-top:1px solid var(--line);font:10px ui-monospace,Menlo,monospace;color:var(--dim)}
+</style></head><body><div class="wrap">
+<div class="top"><div class="bm">BILLO<b>·</b>HABITS</div><div class="pill" id="bp">bridge…</div><div class="pill" id="rp">router</div><div class="note" style="margin-left:auto" id="now"></div></div>
+<h1>What you <em>actually</em> do.</h1>
+<p class="note">Collected locally by Billo Browser — page opens, time on page, hours, days. No analytics service, no cookies shipped anywhere.</p>
+
+<div class="stats" id="stats"></div>
+
+<h2>Where your time goes (last 30 days)</h2>
+<div id="domains"><p class="note">no data yet — browse for a few minutes in Billo Browser.</p></div>
+
+<div class="grid2">
+  <div><h2>Peak hours</h2><div id="hours"></div></div>
+  <div><h2>Recent days</h2><div id="days"></div></div>
+</div>
+
+<h2>Insights</h2>
+<div id="insights"><p class="note">insights appear once there's a day of data.</p></div>
+
+<h2>Collectors — what gets mined automatically</h2>
+<div class="stats">
+  <div class="stat"><b>＋ SAVE</b><span>any page → capture vault</span></div>
+  <div class="stat"><b>beacons</b><span>every page · dwell time</span></div>
+  <div class="stat"><b>photos</b><span>local library metadata</span></div>
+  <div class="stat"><b>mail</b><span>log in once → session mining</span></div>
+</div>
+
+<div class="foot"><span id="f">—</span></div>
+</div>
+<script>
+const B='http://127.0.0.1:7788'; const $=id=>document.getElementById(id);
+const fmtS=s=>s>=3600?`${(s/3600).toFixed(1)}h`:`${Math.round(s/60)}m`;
+(async()=>{
+  try{
+    const h=await (await fetch(B+'/api/habits?days=30')).json();
+    $('bp').textContent='bridge ok'; $('bp').className='pill ok';
+    $('f').textContent=`visits recorded: ${h.totals.visits} · tracked minutes: ${h.totals.minutes} · 127.0.0.1:7788`;
+    $('now').textContent=new Date().toLocaleString();
+    $('stats').innerHTML=[[h.totals.visits,'sessions'],[h.totals.minutes,'minutes'],[h.top_domains.length,'domains'],[h.top_domains[0]?h.top_domains[0].domain:'—','top site']]
+      .map(([n,l])=>`<div class="stat"><b>${n}</b><span>${l}</span></div>`).join('');
+    const max=Math.max(1,...h.top_domains.map(d=>d.seconds));
+    $('domains').innerHTML=h.top_domains.length?h.top_domains.map(d=>`<div class="bar"><span class="lbl">${d.domain}</span><span class="track"><span class="fill" style="width:${Math.max(3,100*d.seconds/max)}%"></span></span><span class="v">${fmtS(d.seconds)}</span></div>`).join(''):'<p class="note">none yet.</p>';
+    const hmax=Math.max(1,...h.by_hour.map(x=>x.seconds));
+    $('hours').innerHTML=h.by_hour.length?h.by_hour.map(x=>`<div class="bar"><span class="lbl">${x.hour}:00</span><span class="track"><span class="fill" style="width:${Math.max(3,100*x.seconds/hmax)}%"></span></span><span class="v">${fmtS(x.seconds)}</span></div>`).join(''):'<p class="note">none yet.</p>';
+    const dmax=Math.max(1,...h.by_day.map(x=>x.seconds));
+    $('days').innerHTML=h.by_day.length?h.by_day.slice(0,10).map(x=>`<div class="bar"><span class="lbl">${x.day}</span><span class="track"><span class="fill" style="width:${Math.max(3,100*x.seconds/dmax)}%"></span></span><span class="v">${fmtS(x.seconds)}</span></div>`).join(''):'<p class="note">none yet.</p>';
+    if(h.top_domains.length){
+      const top=h.top_domains[0], sum=h.top_domains.reduce((a,b)=>a+b.seconds,0);
+      const share=Math.round(100*top.seconds/sum);
+      const peak=h.by_hour.slice().sort((a,b)=>b.seconds-a.seconds)[0];
+      $('insights').innerHTML=`<ul style="font-size:13px;color:#4d473d;line-height:1.8">
+        <li><b>${top.domain}</b> takes ${share}% of tracked time.</li>
+        ${peak?`<li>Your peak hour is <b>${peak.hour}:00</b>.</li>`:''}
+        <li>${h.by_day.length} active day(s) in the window.</li>
+      </ul>`;
+    }
+  }catch(e){ $('bp').textContent='bridge offline'; }
+})();
+</script></body></html>

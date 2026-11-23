@@ -1,0 +1,132 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Billo Stream — everything at once</title>
+<style>
+:root{--ink:#141310;--gold:#c9a84c;--line:#e6e0d4;--bg:#f8f6f1;--dim:#8a8378;--pane:#fff}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:13.5px/1.5 -apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif;height:100vh;display:flex;flex-direction:column;overflow:hidden}
+.top{display:flex;align-items:center;gap:12px;padding:10px 14px;background:#fdfcf9;border-bottom:1px solid var(--line)}
+.bm{font-weight:800;letter-spacing:.16em;font-size:11px}.bm b{color:var(--gold)}
+.pill{font:10px ui-monospace,Menlo,monospace;letter-spacing:.08em;border:1px solid var(--line);border-radius:99px;padding:4px 10px;color:var(--dim)}
+.pill.ok{border-color:#b39752;color:#8a6d1f}
+.search{margin-left:auto;display:flex;gap:6px}
+.search input{width:320px;height:32px;border:1px solid var(--line);border-radius:9px;padding:0 10px;font-size:12.5px;outline:none;background:#fff}
+.body{flex:1;display:grid;grid-template-columns:150px 1fr;min-height:0}
+.rail{background:#fdfcf9;border-right:1px solid var(--line);overflow-y:auto;padding:10px 8px}
+.rail h4{font:9px ui-monospace,Menlo,monospace;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);margin:14px 6px 6px}
+.rail a{display:block;padding:6px 8px;border-radius:8px;text-decoration:none;color:var(--ink);font-size:12px}
+.rail a:hover{background:#f4efe2;color:#8a6d1f}
+.stream{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:8px;padding:8px;min-height:0}
+.pane{background:var(--pane);border:1px solid var(--line);border-radius:12px;display:flex;flex-direction:column;min-height:0;overflow:hidden}
+.ph{display:flex;align-items:center;gap:8px;padding:7px 10px;border-bottom:1px solid var(--line);font:9.5px ui-monospace,Menlo,monospace;letter-spacing:.16em;text-transform:uppercase;color:var(--dim)}
+.ph b{color:var(--ink)}
+.pb{flex:1;min-height:0;overflow:auto;padding:10px}
+iframe{width:100%;height:100%;border:0}
+.row{display:flex;gap:6px;margin-bottom:6px}
+input,select,button,textarea{font:12px -apple-system,sans-serif}
+input[type=text],textarea,select{width:100%;border:1px solid var(--line);border-radius:8px;padding:6px 8px;background:#fff;outline:none}
+button{border:1px solid var(--line);background:#fff;border-radius:8px;padding:6px 10px;cursor:pointer}
+button.primary{background:var(--ink);color:#fff;border-color:var(--ink)}
+.stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px}
+.stat{border:1px solid var(--line);border-radius:9px;padding:7px 9px}
+.stat b{display:block;font-size:16px}.stat span{font:8.5px ui-monospace,Menlo,monospace;color:var(--dim);letter-spacing:.08em;text-transform:uppercase}
+.answer{margin-top:8px;border:1px solid var(--line);border-radius:9px;padding:8px;background:#fdfcf9;font-size:12px;max-height:150px;overflow:auto;white-space:pre-wrap}
+.router table{width:100%;border-collapse:collapse;font-size:11.5px}
+.router td{padding:4px 6px;border-bottom:1px solid #f1ece1}
+.router td:first-child{font:10px ui-monospace,Menlo,monospace;color:var(--dim);text-transform:uppercase}
+.foot{display:flex;gap:14px;padding:6px 14px;background:#fdfcf9;border-top:1px solid var(--line);font:10px ui-monospace,Menlo,monospace;color:var(--dim);letter-spacing:.06em}
+@media(max-width:900px){.stream{grid-template-columns:1fr;grid-template-rows:repeat(4,1fr)}.search input{width:160px}}
+</style></head><body>
+<div class="top">
+  <div class="bm">BILLO<b>·</b>OS <span style="color:#8a8378">STREAM v1</span></div>
+  <div class="pill" id="bridgePill">bridge…</div>
+  <div class="pill" id="routerPill">router…</div>
+  <div class="search"><input id="gq" placeholder="search people, cities, covers…"><button id="gbtn">GO</button></div>
+</div>
+<div class="body">
+  <nav class="rail">
+    <h4>Explore</h4><a href="https://billo-render-wall.netlify.app" target="_blank">Render Wall</a><a href="https://billysorrells.com/billotech" target="_blank">BilloTech</a><a href='/os' target='_blank'>OS Directory</a>
+    <h4>Write</h4><a href="#" data-open="https://chatgpt.com">ChatGPT</a><a href="#" data-open="https://claude.ai">Claude</a><a href="#" data-open="https://chat.deepseek.com">DeepSeek</a>
+    <h4>Design</h4><a href="#" data-pane="style">Style Lab</a><a href="#" data-pane="cad">Billo CAD</a>
+    <h4>Cut &amp; sound</h4><a href="#" data-pane="cut">Billo Cut</a><a href="#" data-pane="clip">Billo Clip</a>
+    <h4>Run the show</h4><a href="#" data-pane="live">Billo Live</a><a href="#" data-pane="dispatch">Dispatch</a>
+    <h4>Office &amp; agents</h4><a href="#" data-pane="app">Workspace app</a><a href="#" data-pane="docs">Docs</a>
+  </nav>
+  <div class="stream">
+    <section class="pane">
+      <div class="ph"><b>Browser</b><span id="paneUrl">os.html</span></div>
+      <div class="row" style="padding:6px 10px 0"><input type="text" id="addr" value="https://billo-browser.netlify.app/os.html"><button class="primary" id="go">Open</button><button id="openNative" title="Open in Billo Browser">↗</button></div>
+      <div class="pb" style="padding:6px 8px 8px"><iframe id="frame" src="os.html"></iframe></div>
+    </section>
+
+    <section class="pane">
+      <div class="ph"><b>AI desk</b><span id="taskPill">cheap</span></div>
+      <div class="pb">
+        <div class="row"><select id="task"><option value="cheap">cheap · local</option><option value="code">code · deepseek</option><option value="research">research · deepseek</option><option value="creative">creative · claude</option><option value="legal">legal · claude</option></select><button class="primary" id="askBtn">Ask</button></div>
+        <textarea id="prompt" rows="4" placeholder="ask whatever — routes to the strongest model for the task"></textarea>
+        <div class="answer" id="answer">answers land here.</div>
+      </div>
+    </section>
+
+    <section class="pane">
+      <div class="ph"><b>Your data</b><span id="dataPill">live</span></div>
+      <div class="pb">
+        <div class="stats" id="stats"></div>
+        <div class="row" style="margin-top:8px"><input type="text" id="sq" placeholder="search contacts…"></div>
+        <div id="results" style="font-size:12px"></div>
+      </div>
+    </section>
+
+    <section class="pane router">
+      <div class="ph"><b>Router</b><span>strengths → models</span></div>
+      <div class="pb">
+        <table id="routerTable"></table>
+        <div style="margin-top:10px;font:9.5px ui-monospace,Menlo,monospace;letter-spacing:.14em;text-transform:uppercase;color:#8a8378">Downloaded router repos</div>
+        <div id="routersList" style="font-size:11.5px;color:#4d473d"></div>
+      </div>
+    </section>
+  </div>
+</div>
+<div class="foot"><span id="fBridge">bridge: —</span><span id="fSsd">scratch: —</span><span id="fCounts">—</span><span style="margin-left:auto">⌘⇧B workbench in Billo Browser</span></div>
+<script>
+const B='http://127.0.0.1:7788';
+const $=id=>document.getElementById(id);
+function openNative(u){ fetch(B+'/api/open?url='+encodeURIComponent(u)).catch(()=>window.open(u,'_blank')); }
+$('go').onclick=()=>{ let u=$('addr').value.trim(); if(!u) return; if(!/^https?:\/\//.test(u)) u='https://'+u; $('frame').src=u; $('paneUrl').textContent=new URL(u).host; };
+$('openNative').onclick=()=>openNative($('addr').value.trim());
+document.querySelectorAll('[data-open]').forEach(a=>a.onclick=e=>{e.preventDefault(); openNative(a.dataset.open);});
+document.querySelectorAll('[data-pane]').forEach(a=>a.onclick=e=>{e.preventDefault(); const m={app:'app.html',docs:'info.html',style:'os.html',cad:'os.html',cut:'os.html',clip:'os.html',live:'os.html',dispatch:'os.html'}; $('frame').src=m[a.dataset.pane]||'os.html'; $('paneUrl').textContent=a.dataset.pane;});
+$('gq').onkeydown=e=>{if(e.key==='Enter'){ searchContacts($('gq').value); }};
+$('gbtn').onclick=()=>searchContacts($('gq').value);
+$('sq').oninput=e=>searchContacts(e.target.value);
+async function searchContacts(q){
+  if(!q||q.length<2){$('results').innerHTML='';return;}
+  try{ const r=await fetch(B+'/api/search?q='+encodeURIComponent(q)); const d=await r.json();
+    $('results').innerHTML=(d.contacts||[]).slice(0,8).map(c=>`<div style="padding:5px 0;border-bottom:1px solid #f1ece1"><b>${c.name||c.email}</b> <span style="color:#8a8378">${c.city||''} ${c.state||''} · ${c.tier||''}</span></div>`).join('')||'<span style="color:#8a8378">no matches</span>';
+  }catch(e){ $('results').innerHTML='<span style="color:#8a8378">bridge offline</span>'; }
+}
+$('askBtn').onclick=async()=>{
+  const q=$('prompt').value.trim(); if(!q) return; const task=$('task').value;
+  $('answer').textContent='routing…'; $('taskPill').textContent=task;
+  try{ const r=await fetch(B+'/api/route?task='+task+'&q='+encodeURIComponent(q)); const d=await r.json();
+    $('answer').textContent=(d.error?('error: '+d.error):(d.text||''))+(d.provider?`\n\n— ${d.provider} · ${d.model||''}`:'');
+  }catch(e){ $('answer').textContent='bridge offline — start billo_serve.py'; }
+};
+(async()=>{
+  try{
+    const s=await (await fetch(B+'/api/stats')).json();
+    $('bridgePill').textContent='bridge ok'; $('bridgePill').className='pill ok';
+    $('fBridge').textContent='bridge: 127.0.0.1:7788';
+    $('fSsd').textContent='scratch: '+(s.ssd_free_gb||'—')+' GB';
+    $('fCounts').textContent=`${(s.master_profiles||0).toLocaleString()} profiles · ${(s.contacts_total||0).toLocaleString()} contacts · ${s.covers||0} covers`;
+    $('stats').innerHTML=[[s.master_profiles,'profiles'],[s.complete_profiles,'complete'],[s.ticket_buyers,'buyers'],[s.contacts_total,'contacts'],[s.covers,'covers'],[s.ssd_free_gb,'GB free']].map(([n,l])=>`<div class="stat"><b>${n==null?'—':Number(n).toLocaleString()}</b><span>${l}</span></div>`).join('');
+  }catch(e){ $('bridgePill').textContent='bridge offline'; }
+  try{
+    const r=await (await fetch(B+'/api/router')).json();
+    $('routerPill').textContent='router: config loaded';
+    $('routerTable').innerHTML=Object.entries(r.tasks||{}).map(([t,v])=>`<tr><td>${t}</td><td><b>${v.model}</b><br><span style="color:#8a8378">${v.why||''}</span></td></tr>`).join('');
+  }catch(e){}
+  try{
+    const rr=await (await fetch(B+'/api/routers')).json();
+    $('routersList').innerHTML=(rr.routers||[]).map(r=>`<div style="padding:3px 0;border-bottom:1px solid #f1ece1"><b>${r.repo}</b> <span style="color:#8a8378">${r.stars}★ · ${r.size_mb} MB</span></div>`).join('');
+  }catch(e){}
+})();
+</script></body></html>

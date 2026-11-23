@@ -412,6 +412,7 @@ $("#refgo").onclick=async()=>{const u=$("#refurl").value.trim();if(!u)return;$("
   try{const{f}=await grabOne(u,"");const ev={target:{files:[f]}};await $("#newref").onchange(ev)}catch(e){$("#astatus").textContent=String(e.message||e).slice(0,300)}};
 fetch(GRAB+"/health").then(r=>r.json()).then(h=>{$("#grabst").textContent=`Billo Grab ready · yt-dlp ${h.yt_dlp||"?"}${h.impersonate?" · stealth":""}${h.cookies?" · your "+h.cookies+" login":""}`}).catch(()=>{$("#grabst").textContent="Billo Grab is off on this computer (links won't pull until it's running). Files still work."});
 setFit(saved.fit||"crop");setSize(saved.size||"9:16");
+{const add=new URLSearchParams(location.search).get("add");if(add){$("#urlin").value=add;setTimeout(()=>{$("#urlgo").click();$("#urlin").scrollIntoView({block:"center"})},600)}}
 window.__sl={go,analyze,addFiles,edl,get plan(){return PLAN},get style(){return STYLE},get assets(){return assets},drawFrame};
 loadStyles();
 </script></body></html>

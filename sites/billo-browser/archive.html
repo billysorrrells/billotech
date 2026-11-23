@@ -1,0 +1,97 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Billo Archive — LOC + Internet Archive, every format</title>
+<style>
+:root{--ink:#141310;--gold:#c9a84c;--line:#e6e0d4;--bg:#f8f6f1;--dim:#8a8378}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:13.5px/1.5 -apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif}
+.wrap{max-width:1180px;margin:0 auto;padding:18px 20px 60px}
+.top{display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--line);padding-bottom:12px}
+.bm{font-weight:800;letter-spacing:.16em;font-size:12px}.bm b{color:var(--gold)}
+.pill{font:10px ui-monospace,Menlo,monospace;border:1px solid var(--line);border-radius:99px;padding:4px 10px;color:var(--dim)}
+.pill.ok{border-color:#b39752;color:#8a6d1f}
+h1{font-family:'Bebas Neue',Impact,sans-serif;font-size:40px;margin:14px 0 2px;text-transform:uppercase;line-height:.95}
+h1 em{color:var(--gold);font-style:normal}
+.tabs{display:flex;gap:6px;margin:14px 0 10px}
+.tabs button{border:1px solid var(--line);background:#fff;border-radius:99px;padding:7px 14px;cursor:pointer;font-size:12px}
+.tabs button.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.search{display:flex;gap:8px}
+.search input{flex:1;height:44px;border:1px solid var(--line);border-radius:12px;padding:0 14px;font-size:14px;outline:none;background:#fff}
+.search button{border:1px solid var(--ink);background:var(--ink);color:#fff;border-radius:12px;padding:0 18px;cursor:pointer;font-weight:600}
+.res{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:10px;margin-top:14px}
+.item{background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px 14px;display:flex;flex-direction:column;gap:6px}
+.item b{font-size:13px;line-height:1.35}
+.item .meta{color:var(--dim);font:10px ui-monospace,Menlo,monospace;letter-spacing:.04em}
+.item .acts{display:flex;gap:6px;flex-wrap:wrap;margin-top:auto}
+.item button,.item a{font:10.5px ui-monospace,Menlo,monospace;border:1px solid var(--line);border-radius:8px;padding:5px 9px;background:#fff;color:var(--ink);text-decoration:none;cursor:pointer}
+.item button.p{background:var(--gold);border-color:var(--gold);font-weight:700}
+.files{margin-top:16px;background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.files h3{margin:0;padding:10px 14px;border-bottom:1px solid var(--line);font:10px ui-monospace,Menlo,monospace;letter-spacing:.18em;text-transform:uppercase;color:var(--dim)}
+.frow{display:flex;align-items:center;gap:10px;padding:8px 14px;border-bottom:1px solid #f4efe5;font-size:12px}
+.frow .ext{font:9.5px ui-monospace,Menlo,monospace;background:#f4efe2;border-radius:6px;padding:2px 7px;min-width:44px;text-align:center}
+.frow .nm{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.frow .sz{color:var(--dim);font:10px ui-monospace,Menlo,monospace}
+.frow button{border:1px solid var(--line);background:#fff;border-radius:8px;padding:4px 9px;cursor:pointer;font-size:11px}
+#toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#141310;color:#f4efe3;
+  font:11.5px ui-monospace,Menlo,monospace;padding:10px 16px;border-radius:10px;opacity:0;transition:.2s;pointer-events:none}
+.muted{color:var(--dim);font-size:12px}
+</style></head><body><div class="wrap">
+<div class="top"><div class="bm">BILLO<b>·</b>ARCHIVE</div><div class="pill" id="bp">bridge…</div><div class="muted" style="margin-left:auto">loc.gov · archive.org · raw downloads</div></div>
+<h1>Every <em>record</em>, every format.</h1>
+<p class="muted">Search Library of Congress and Internet Archive. View it, grab the API, or download the raw file — TIFF/JP2, PDF, OCR text, whole zips — straight to <code>~/BillySorrells/downloads/archive</code>.</p>
+
+<div class="tabs"><button class="on" data-src="loc">Library of Congress</button><button data-src="ia">Internet Archive</button></div>
+<div class="search"><input id="q" placeholder="search — e.g. beta upsilon, houston chronicle 1968, negro league"><button id="go">Search</button></div>
+<div class="res" id="res"></div>
+<div id="drawer"></div>
+<div id="toast"></div>
+</div>
+<script>
+const B='http://127.0.0.1:7788'; const $=id=>document.getElementById(id);
+let src='loc';
+function toast(m){const t=$('toast');t.textContent=m;t.style.opacity=1;clearTimeout(window.__tt);window.__tt=setTimeout(()=>t.style.opacity=0,2600);}
+document.querySelectorAll('.tabs button').forEach(b=>b.onclick=()=>{src=b.dataset.src;document.querySelectorAll('.tabs button').forEach(x=>x.classList.toggle('on',x===b));});
+$('q').addEventListener('keydown',e=>{if(e.key==='Enter')$('go').click();});
+$('go').onclick=async()=>{
+  const q=$('q').value.trim(); if(!q) return;
+  $('res').innerHTML='<p class="muted">searching…</p>'; $('drawer').innerHTML='';
+  try{
+    const d=await (await fetch(`${B}/api/${src}?q=${encodeURIComponent(q)}&n=24`)).json();
+    if(!d.results||!d.results.length){ $('res').innerHTML='<p class="muted">no results</p>'; return; }
+    $('res').innerHTML=d.results.map((r,i)=>{ 
+      const title=(r.title||r.identifier||'').toString().slice(0,160);
+      const meta=src==='loc'?`${r.date||''} · ${r.format||''}`:`${r.mediatype||''} ${r.year||''} · ${(r.downloads||0).toLocaleString()} dl`;
+      const view=src==='loc'?r.url:r.page;
+      return `<div class="item"><b>${title}</b><div class="meta">${meta}</div>
+        <div class="acts">
+          <a href="${view}" target="_blank">View</a>
+          ${src==='ia'?`<button class="p" data-files="${r.identifier}">Files ↓</button>`:''}
+          <button data-api="${src==='loc'?r.api:r.files}">API</button>
+        </div></div>`;
+    }).join('');
+    wire();
+  }catch(e){ $('res').innerHTML='<p class="muted">bridge offline — start billo_serve.py</p>'; }
+};
+function wire(){
+  document.querySelectorAll('[data-files]').forEach(b=>b.onclick=()=>loadFiles(b.dataset.files));
+  document.querySelectorAll('[data-api]').forEach(b=>b.onclick=()=>{navigator.clipboard.writeText(b.dataset.api);toast('API URL copied');});
+}
+async function loadFiles(id){
+  $('drawer').innerHTML='<p class="muted">loading files…</p>';
+  try{
+    const d=await (await fetch(`${B}/api/iafiles?id=${encodeURIComponent(id)}`)).json();
+    const rows=(d.files||[]).map(f=>`<div class="frow"><span class="ext">${(f.ext||'').toUpperCase()}</span>
+      <span class="nm" title="${f.name}">${f.name}</span><span class="sz">${f.size?Math.round(f.size/1024)+' KB':''}</span>
+      <a href="${f.url}" target="_blank" style="font:10.5px ui-monospace,Menlo,monospace;color:#8a6d1f">open</a>
+      <button data-dl="${f.url}" data-name="${f.name}">download raw</button></div>`).join('');
+    $('drawer').innerHTML=`<div class="files"><h3>${id} · ${d.total||0} files</h3>${rows}</div>`;
+    document.querySelectorAll('[data-dl]').forEach(b=>b.onclick=async()=>{
+      const url=b.dataset.dl, name=b.dataset.name;
+      b.textContent='saving…';
+      try{ const r=await (await fetch(`${B}/api/fetch?url=${encodeURIComponent(url)}&name=${encodeURIComponent(name)}`)).json();
+        if(r.ok){ b.textContent='saved ✓'; toast('saved · '+r.path+' · '+Math.round(r.bytes/1024)+' KB'); }
+        else { b.textContent='failed'; toast('error: '+r.error); }
+      }catch(e){ b.textContent='failed'; toast('bridge offline'); }
+    });
+  }catch(e){ $('drawer').innerHTML='<p class="muted">could not load files</p>'; }
+}
+(async()=>{ try{ await fetch(B+'/api/health'); $('bp').textContent='bridge ok'; $('bp').className='pill ok'; }catch(e){ $('bp').textContent='bridge offline'; } })();
+</script></body></html>

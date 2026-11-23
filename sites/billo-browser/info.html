@@ -1,0 +1,135 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Billo Browser — Full Information</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;700;900&family=JetBrains+Mono:wght@400;700&display=swap');
+:root{--ink:#141310;--gold:#c9a84c;--line:#e6e0d4;--bg:#fdfcf9;--dim:#8a8378}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15.5px/1.65 'DM Sans',-apple-system,sans-serif}
+.wrap{max-width:1000px;margin:0 auto;padding:0 24px 60px}
+header{padding:48px 0 24px;border-bottom:1px solid var(--line);margin-bottom:10px}
+.k{font:11px 'JetBrains Mono',monospace;letter-spacing:.32em;text-transform:uppercase;color:var(--dim)}
+h1{font-family:'Bebas Neue',Impact,sans-serif;font-size:clamp(46px,7vw,86px);line-height:.9;margin:10px 0 6px;text-transform:uppercase}
+h1 em{color:var(--gold);font-style:normal}
+h2{font-family:'Bebas Neue',Impact,sans-serif;font-size:30px;letter-spacing:.02em;margin:38px 0 8px;text-transform:uppercase;border-bottom:1px solid var(--line);padding-bottom:6px}
+h3{font-size:15px;margin:22px 0 6px}
+p{color:#4d473d}
+code{font:12.5px 'JetBrains Mono',monospace;background:#f3eee2;padding:1px 5px;border-radius:5px}
+pre{background:#141310;color:#f4efe3;border-radius:14px;padding:16px 18px;overflow:auto;font:12.5px/1.7 'JetBrains Mono',monospace}
+pre b{color:#e8c764}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:13.5px}
+th{text-align:left;font:10px 'JetBrains Mono',monospace;letter-spacing:.16em;text-transform:uppercase;color:var(--dim);padding:8px;border-bottom:1px solid var(--line)}
+td{padding:8px;border-bottom:1px solid #f1ece1;vertical-align:top}
+td code{white-space:nowrap}
+.pill{display:inline-block;font:10px 'JetBrains Mono',monospace;letter-spacing:.08em;text-transform:uppercase;border:1px solid var(--line);border-radius:99px;padding:2px 8px;color:var(--dim)}
+.pill.ok{border-color:#b39752;color:#8a6d1f}
+a{color:var(--ink)}
+footer{margin-top:44px;padding-top:16px;border-top:1px solid var(--line);color:var(--dim);font:11px 'JetBrains Mono',monospace;letter-spacing:.1em;text-transform:uppercase}
+ul{color:#4d473d}
+</style></head><body><div class="wrap">
+<header>
+  <div class="k">Documentation · snapshot 2026-11-23</div>
+  <h1>Billo Browser — <em>all the information</em></h1>
+  <p>Everything about the creator browser: what it is, where it lives, how it works, how to rebuild it, and what it connects to.</p>
+</header>
+
+<h2>1. What it is</h2>
+<p>A browser we own, built in Rust on macOS's WebKit engine. It replaces Chrome for automated and creator work: no shared profile, no menu toggle, no CDP launch flags, no extension store. Its start page is a live dashboard of Billo OS data served by a local bridge.</p>
+<table>
+  <tr><th>Fact</th><th>Value</th></tr>
+  <tr><td>Binary size</td><td>1.6 MB</td></tr>
+  <tr><td>Engine</td><td>WKWebView (Safari-lineage), via <code>wry</code> + <code>tao</code></td></tr>
+  <tr><td>Language</td><td>Rust 1.100 · cargo</td></tr>
+  <tr><td>Chrome dependency</td><td>none</td></tr>
+  <tr><td>Profile</td><td>our own; cookies never touch Chrome</td></tr>
+  <tr><td>Status</td><td><span class="pill ok">running</span></td></tr>
+</table>
+
+<h2>2. Where it lives</h2>
+<table>
+  <tr><th>Piece</th><th>Path</th></tr>
+  <tr><td>Rust app source</td><td><code>~/BillySorrells/tools/billo-browser-rs/</code></td></tr>
+  <tr><td>Binary</td><td><code>target/release/billo_browser</code></td></tr>
+  <tr><td>Toolbar injection</td><td><code>src/toolbar.js</code> (injected into every page)</td></tr>
+  <tr><td>Start page / dashboard</td><td><code>src/newtab.html</code></td></tr>
+  <tr><td>Data bridge</td><td><code>~/BillySorrells/scripts/billo_serve.py</code></td></tr>
+  <tr><td>CLI browser (headless)</td><td><code>~/.local/bin/billo</code> → Playwright Chromium/WebKit</td></tr>
+  <tr><td>CLI engines cache</td><td><code>~/Library/Caches/ms-playwright/</code></td></tr>
+  <tr><td>Model store (SSD)</td><td><code>/Volumes/Monterey OS - Data/BILLO_MODELS/ollama/models</code></td></tr>
+  <tr><td>Scratch (SSD)</td><td><code>/Volumes/Monterey OS - Data/BILLO_SCRATCH/{whisper_tmp,proxies,media_cache,exports,renders,backups}</code></td></tr>
+</table>
+
+<h2>3. How to run it</h2>
+<pre><b># bridge</b>  (serves stats/search/open to the start page and any device that can reach it)
+python3 ~/BillySorrells/scripts/billo_serve.py
+
+<b># browser window</b>
+~/BillySorrells/tools/billo-browser-rs/target/release/billo_browser
+
+<b># rebuild after editing (3 seconds)</b>
+cd ~/BillySorrells/tools/billo-browser-rs && cargo build --release
+
+<b># headless CLI (scrape / screenshot from any model)</b>
+billo text https://site.com
+billo dump https://site.com
+billo shot https://site.com out.png
+billo --engine webkit text https://site.com
+billo session https://site.com        # real window, persistent logins</pre>
+
+<h2>4. Keyboard &amp; toolbar</h2>
+<table>
+  <tr><th>Action</th><th>Key / control</th></tr>
+  <tr><td>Address bar</td><td>⌘L</td></tr>
+  <tr><td>Reload</td><td>⌘R or ⟳ button</td></tr>
+  <tr><td>Back / forward</td><td>⌘[ / ⌘] or ‹ › buttons</td></tr>
+  <tr><td>Escape bar</td><td>Esc</td></tr>
+  <tr><td>Search fallback</td><td>type words → DuckDuckGo</td></tr>
+  <tr><td>Bare domain</td><td><code>site.com</code> auto-prefixes https</td></tr>
+</table>
+
+<h2>5. Bridge API</h2>
+<table>
+  <tr><th>Endpoint</th><th>Returns</th></tr>
+  <tr><td><code>GET /api/health</code></td><td><code>{"ok":true}</code></td></tr>
+  <tr><td><code>GET /api/stats</code></td><td>master_profiles, complete_profiles, ticket_buyers, contacts_total, covers, ssd_free_gb</td></tr>
+  <tr><td><code>GET /api/search?q=term</code></td><td>contacts (name, email, phone, city, segment, tier) + covers</td></tr>
+  <tr><td><code>GET /api/open?url=</code></td><td>opens URL in Billo Browser</td></tr>
+</table>
+<p>Auth: set <code>BILLO_TOKEN</code> → requests need <code>?t=TOKEN</code>. Bind: <code>BILLO_HOST=0.0.0.0</code> only on a private network (Tailscale), never public.</p>
+
+<h2>6. Data it reads</h2>
+<table>
+  <tr><th>Source</th><th>Used for</th></tr>
+  <tr><td><code>BillySorrells/data/bse_omni_master.db</code> → <code>bse_master</code></td><td>profiles, tiers, segments, search</td></tr>
+  <tr><td><code>contacts-master/contacts-master.db</code></td><td>contact totals, search</td></tr>
+  <tr><td><code>BillySorrells/data/covers.db</code></td><td>cover inventory</td></tr>
+  <tr><td><code>/Volumes/Monterey OS - Data</code></td><td>scratch space, model store, backups</td></tr>
+</table>
+
+<h2>7. Troubleshooting</h2>
+<table>
+  <tr><th>Symptom</th><th>Cause</th><th>Fix</th></tr>
+  <tr><td>Start page says “bridge offline”</td><td>bridge not running</td><td><code>python3 ~/BillySorrells/scripts/billo_serve.py</code></td></tr>
+  <tr><td><code>billo</code> says “Executable doesn't exist”</td><td><code>~/Library/Caches</code> was cleared (claude-tmp-route)</td><td><code>~/BillySorrells/tools/billo-browser/.venv/bin/python -m playwright install chromium-headless-shell webkit</code></td></tr>
+  <tr><td>Window won't open</td><td>another instance running</td><td><code>pkill -f billo_browser</code> then relaunch</td></tr>
+  <tr><td>Ollama models missing</td><td>service using old path</td><td><code>launchctl setenv OLLAMA_MODELS "/Volumes/Monterey OS - Data/BILLO_MODELS/ollama/models"</code> then restart Ollama</td></tr>
+  <tr><td>Disk filling up</td><td>Claude <code>vm_bundles</code> (11 GB) re-downloads</td><td>purge <code>~/Library/Application Support/Chromium/vm_bundles</code></td></tr>
+</table>
+
+<h2>8. Why not Chrome</h2>
+<ul>
+  <li>Chrome's profile is personal — automation either touched real logins or needed a password.</li>
+  <li>JS from AppleScript requires a manual menu toggle that can't be set from the shell.</li>
+  <li>CDP is blocked on the default profile in current Chrome builds.</li>
+  <li>Chrome background data reached 9 GB of profiles and 65 GB of code-sign temp clones.</li>
+  <li>One engine means you can't test how a page behaves outside Chromium.</li>
+</ul>
+
+<h2>9. Next planned</h2>
+<ul>
+  <li>MCP server so tool-calling models get the browser natively.</li>
+  <li>Manifest-v3 extension: a “Billo” button inside ChatGPT/Gemini tabs that opens links in this browser or pulls page text through the bridge.</li>
+  <li>Login profile: sign into Drive/Mailgun/Eventbrite once, reuse everywhere.</li>
+  <li>Packaged <code>Billo Browser.app</code> in <code>/Applications</code>.</li>
+</ul>
+
+<footer>Billo Browser · Billy Sorrells Entertainment · documented 2026-11-23</footer>
+</div></body></html>

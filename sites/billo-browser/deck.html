@@ -1,0 +1,138 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Billo Deck — everything landing on you</title>
+<style>
+:root{--ink:#141310;--gold:#c9a84c;--line:#e6e0d4;--bg:#f8f6f1;--dim:#8a8378}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:13.5px/1.5 -apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif}
+.wrap{max-width:1280px;margin:0 auto;padding:18px 20px 60px}
+.top{display:flex;align-items:center;gap:10px;padding:6px 0 14px;border-bottom:1px solid var(--line)}
+.bm{font-weight:800;letter-spacing:.16em;font-size:12px}.bm b{color:var(--gold)}
+.pill{font:10px ui-monospace,Menlo,monospace;letter-spacing:.08em;border:1px solid var(--line);border-radius:99px;padding:4px 10px;color:var(--dim)}
+.pill.ok{border-color:#b39752;color:#8a6d1f}
+h2{font:10px ui-monospace,Menlo,monospace;letter-spacing:.22em;text-transform:uppercase;color:var(--dim);margin:26px 0 8px}
+.board{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+.group{background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px 14px}
+.group b{display:block;font-size:13px;margin-bottom:6px}
+.group .n{font-size:22px;font-weight:800;letter-spacing:-.02em}
+.group ul{list-style:none;margin:8px 0 0;padding:0;font-size:11.5px;color:#4d473d;max-height:120px;overflow:auto}
+.group li{padding:2px 0;border-bottom:1px solid #f4efe5;display:flex;justify-content:space-between}
+.group li span{color:var(--dim);font:10px ui-monospace,Menlo,monospace}
+.strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px}
+.tile{background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px 14px;text-decoration:none;color:var(--ink);display:block}
+.tile b{display:block;font-size:13px}.tile span{color:var(--dim);font-size:11.5px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:860px){.row2{grid-template-columns:1fr}}
+textarea{width:100%;min-height:260px;border:1px solid var(--line);border-radius:12px;padding:12px;font:11.5px ui-monospace,Menlo,monospace;background:#fff;outline:none}
+button{border:1px solid var(--line);background:#fff;border-radius:9px;padding:8px 14px;cursor:pointer;font-size:12px}
+button.primary{background:var(--ink);color:#fff;border-color:var(--ink)}
+.muted{color:var(--dim);font-size:12px}
+.foot{margin-top:26px;padding-top:12px;border-top:1px solid var(--line);font:10px ui-monospace,Menlo,monospace;color:var(--dim);display:flex;gap:16px}
+</style></head><body><div class="wrap">
+<div class="top"><div class="bm">BILLO<b>·</b>DECK</div><div class="pill" id="bp">bridge…</div><div class="pill" id="rp">router…</div><div class="muted" style="margin-left:auto" id="now"></div></div>
+
+<h2>Accounts — everything you're signed into</h2>
+<div class="board" id="board"></div>
+
+<h2>Habits — what you actually do</h2>
+<div class="strip"><a class='tile' href='/habits'><b>Billo Habits</b><span>time per site, peak hours, daily pattern — tracked locally</span></a></div>
+
+<h2>Money — subscriptions &amp; cards</h2>
+<div class="strip" id="money"><a class="tile" href="#intake"><b>Nothing entered yet</b><span>fill the intake below → subscriptions + cards show here</span></a></div>
+
+<div class="row2">
+  <div>
+    <h2>Photos — iCloud library</h2>
+    <div class="strip" id="photos"><div class="tile"><b>checking…</b><span>local library scan</span></div></div>
+  </div>
+  <div>
+    <h2>Games — browser shelf</h2>
+    <div class="strip">
+      <a class="tile" href="https://play.geforcenow.com"><b>GeForce NOW</b><span>GTA6-class titles, browser, no install</span></a>
+      <a class="tile" href="https://www.xbox.com/play"><b>Xbox Cloud</b><span>Game Pass streaming</span></a>
+      <a class="tile" href="https://www.playstation.com/ps-plus/cloud-streaming/"><b>PS Plus Cloud</b><span>console titles in browser</span></a>
+    </div>
+  </div>
+</div>
+
+<h2>Streams — live / upcoming</h2>
+<div class="strip">
+  <a class="tile" href="https://www.instagram.com/dymmpodcast/"><b>IG Live · dymmpodcast</b><span>open in session</span></a>
+  <a class="tile" href="https://www.tiktok.com/@billysorrells/live"><b>TikTok Live</b><span>@billysorrells</span></a>
+  <a class="tile" href="https://www.youtube.com/@billysorrells/streams"><b>YouTube Live</b><span>channel streams</span></a>
+  <a class="tile" href="https://www.twitch.tv/directory"><b>Twitch</b><span>directory</span></a>
+</div>
+
+<h2>Access — read without paying per view</h2>
+<div class="strip">
+  <a class='tile' href='/access'><b>Research access ladder</b><span>library card → archives → RSS → ask the author (no paywall tricks)</span></a>
+  <a class="tile" href="https://houstonlibrary.org/connect-wsj"><b>HPL → WSJ free</b><span>3-day renewal loop</span></a>
+  <a class="tile" href="https://houstonlibrary.org/"><b>HPL databases</b><span>NYT archive, PressReader, NewsBank</span></a>
+</div>
+
+<h2 id="intake">Intake — tell the deck what's yours</h2>
+<div class="row2">
+  <div>
+    <textarea id="intakeText" spellcheck="false"></textarea>
+    <div style="margin-top:8px;display:flex;gap:8px"><button class="primary" id="save">Save intake</button><span class="muted" id="saved"></span></div>
+  </div>
+  <div>
+    <p class="muted">Format: one entry per line, pipe separated.</p>
+    <p class="muted"><b>subscriptions</b><br><code>name | amount | cycle | next charge | keep/cancel</code></p>
+    <p class="muted"><b>cards</b> (last4 only)<br><code>issuer | last4 | expiry | used for</code></p>
+    <p class="muted"><b>games</b><br><code>who | platform | game | browser service</code></p>
+    <p class="muted">The full spec lives in <code>~/BillySorrells/deck/BUILD_PROMPT.md</code> and the blank form in <code>INTAKE.md</code>.</p>
+  </div>
+</div>
+
+<div class="foot"><span id="f1">bridge: —</span><span id="f2">accounts: —</span><span id="f3">captures: —</span><span style="margin-left:auto">local only · no API credits</span></div>
+</div>
+<script>
+const B='http://127.0.0.1:7788'; const $=id=>document.getElementById(id);
+(async()=>{
+  try{
+    const a=await (await fetch(B+'/api/accounts')).json();
+    $('bp').textContent='bridge ok'; $('bp').className='pill ok';
+    $('f1').textContent='bridge: 127.0.0.1:7788'; $('f2').textContent='accounts: '+a.count;
+    const groups={};
+    a.accounts.forEach(x=>{(groups[x.group]=groups[x.group]||[]).push(x);});
+    $('board').innerHTML=Object.entries(groups).sort((x,y)=>y[1].length-x[1].length).map(([g,list])=>`
+      <div class="group"><b>${g}</b><div class="n">${list.length}</div>
+        <ul>${list.slice(0,8).map(x=>`<li>${x.domain}<span>${x.accounts}</span></li>`).join('')}</ul>
+      </div>`).join('');
+    $('now').textContent = a.count+' services · '+new Date().toLocaleTimeString();
+  }catch(e){ $('bp').textContent='bridge offline'; }
+  try{
+    const r=await (await fetch(B+'/api/router')).json(); $('rp').textContent='router: '+Object.keys(r.tasks||{}).length+' routes';
+  }catch(e){}
+  try{
+    const p=await (await fetch(B+'/api/photos')).json();
+    $('photos').innerHTML = p.libraries.length
+      ? p.libraries.map(l=>`<div class="tile"><b>${l.split('/').pop()}</b><span>${l}</span></div>`).join('')
+      : '<div class="tile"><b>No local Photos library</b><span>iCloud Photos lives on icloud.com — open it in Billo Browser to mine metadata</span></div>';
+  }catch(e){}
+  try{
+    const c=await (await fetch(B+'/api/captures?limit=1')).json(); $('f3').textContent='captures: '+c.count;
+  }catch(e){}
+  try{
+    const i=await (await fetch(B+'/api/intake')).json();
+    const lines=[];
+    (i.subscriptions||[]).forEach(s=>lines.push(`sub | ${s.name||''} | ${s.amount||''} | ${s.cycle||''} | ${s.next||''} | ${s.keep||''}`));
+    (i.cards||[]).forEach(c=>lines.push(`card | ${c.issuer||''} | ${c.last4||''} | ${c.expiry||''} | ${c.used||''}`));
+    $('intakeText').value = lines.join('\n') || `sub | Netflix | 0.00 | mo | 2026-12-01 | keep
+card | Chase | 0000 | 08/28 | subs
+game | kids | GeForce NOW | GTA6 | geforce.com`;
+    if((i.subscriptions||[]).length){ $('money').innerHTML=(i.subscriptions||[]).map(s=>`<div class="tile"><b>${s.name}</b><span>$${s.amount||'?'} / ${s.cycle||'mo'} · next ${s.next||'—'}</span></div>`).join(''); }
+  }catch(e){}
+  $('save').onclick=async()=>{
+    const lines=$('intakeText').value.split('\n').map(l=>l.trim()).filter(l=>l&&l.includes('|'));
+    const out={subscriptions:[],cards:[],games:[],accounts:[]};
+    lines.forEach(l=>{const p=l.split('|').map(x=>x.trim());
+      if(p[0]==='sub') out.subscriptions.push({name:p[1],amount:p[2],cycle:p[3],next:p[4],keep:p[5]});
+      if(p[0]==='card') out.cards.push({issuer:p[1],last4:p[2],expiry:p[3],used:p[4]});
+      if(p[0]==='game') out.games.push({who:p[1],platform:p[2],game:p[3],service:p[4]});
+    });
+    await fetch(B+'/api/intake',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(out)});
+    $('saved').textContent='saved ✓';
+    if(out.subscriptions.length){ $('money').innerHTML=out.subscriptions.map(s=>`<div class="tile"><b>${s.name}</b><span>$${s.amount} / ${s.cycle} · next ${s.next||'—'}</span></div>`).join(''); }
+  };
+})();
+</script></body></html>

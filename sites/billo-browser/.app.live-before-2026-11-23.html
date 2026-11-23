@@ -1,0 +1,104 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#fdfcf9">
+<link rel="manifest" href="/manifest.json">
+<link rel="apple-touch-icon" href="/icons/icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<title>Billo OS — your doorway</title>
+<style>
+:root{--ink:#141310;--gold:#c9a84c;--line:#e6e0d4;--bg:#fdfcf9;--dim:#8a8378}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 -apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif;padding-bottom:72px}
+header{position:sticky;top:0;background:rgba(253,252,249,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);padding:14px 18px;display:flex;align-items:center;gap:10px;z-index:10}
+.bm{font-weight:800;letter-spacing:.16em;font-size:12px}
+.bm b{color:var(--gold)}
+.who{margin-left:auto;font:10.5px ui-monospace,Menlo,monospace;color:var(--dim);letter-spacing:.06em}
+main{padding:18px}
+h2{font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--dim);font-family:ui-monospace,Menlo,monospace;margin:26px 0 10px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+a.card{display:block;background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px;text-decoration:none;color:var(--ink)}
+a.card b{display:block;font-size:14.5px;margin-bottom:2px}
+a.card span{color:var(--dim);font-size:12px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(96px,1fr));gap:8px}
+.stat{background:#fff;border:1px solid var(--line);border-radius:12px;padding:10px 12px}
+.stat b{display:block;font-size:19px;letter-spacing:-.02em}
+.stat span{font:9px ui-monospace,Menlo,monospace;color:var(--dim);letter-spacing:.08em;text-transform:uppercase}
+nav{position:fixed;bottom:0;left:0;right:0;display:flex;background:rgba(253,252,249,.96);backdrop-filter:blur(10px);border-top:1px solid var(--line);padding:8px 6px calc(8px + env(safe-area-inset-bottom))}
+nav a{flex:1;text-align:center;text-decoration:none;color:var(--dim);font:10px ui-monospace,Menlo,monospace;letter-spacing:.1em;text-transform:uppercase;padding:6px 0}
+nav a.on{color:var(--ink)}
+nav a i{display:block;font-size:17px;font-style:normal;margin-bottom:2px}
+
+.install{display:none;margin:16px 0 0;padding:12px 14px;border:1px dashed var(--gold);border-radius:12px;font-size:12.5px;color:#6d5a24;background:#fdf8ea}
+.install button{margin-top:8px;border:0;background:var(--gold);color:#141310;border-radius:9px;padding:8px 14px;font-weight:700;font-size:12px}
+</style></head><body>
+
+<header><div class="bm">BILLO<b>·</b>OS</div><div class="who">billo os · this device</div></header>
+<main>
+  <div class="install" id="installBox">Install Billo OS to your home screen — full-screen app, no store.<br><button id="installBtn">Add to home screen</button></div>
+
+  <h2>Your desk</h2>
+  <div class="grid">
+    <a class='card' href='https://billo-browser.netlify.app/os'><b>Billo OS</b><span>directory</span></a>
+    <a class="card" href="https://billo-render-wall.netlify.app"><b>Render Wall</b><span>247 cuts</span></a>
+    <a class="card" href="https://billysorrells.com/billotech"><b>BilloTech</b><span>tools</span></a>
+    <a class="card" href="https://drive.google.com"><b>Drive</b><span>files</span></a>
+  </div>
+
+  <h2>AI desks</h2>
+  <div class="grid">
+    <a class="card" href="https://chatgpt.com"><b>ChatGPT</b><span>openai</span></a>
+    <a class="card" href="https://claude.ai"><b>Claude</b><span>anthropic</span></a>
+    <a class="card" href="https://chat.deepseek.com"><b>DeepSeek</b><span>deepseek</span></a>
+    <a class="card" href="https://gemini.google.com"><b>Gemini</b><span>google</span></a>
+  </div>
+
+  <h2>Your data <span id="conn" style="text-transform:none;letter-spacing:0;color:#b9b2a6"></span></h2>
+  <div class="stats" id="stats"><div class="stat"><b>—</b><span>loading</span></div></div>
+
+  <h2>Creator tools</h2>
+  <div class="grid">
+    <a class="card" href="download/BilloBrowser.apk"><b>Android / TV app</b><span>APK</span></a>
+    <a class='card' href='/info'><b>Documentation</b><span>docs</span></a>
+    <a class="card" href="https://app.mailgun.com"><b>Mailgun</b><span>email</span></a>
+    <a class="card" href="https://github.com/billysorrrells"><b>GitHub</b><span>repos</span></a>
+  </div>
+</main>
+
+<nav>
+  <a class="on" href="#"><i>◈</i>Desk</a>
+  <a href="#ai"><i>✦</i>AI</a>
+  <a href="#data"><i>▦</i>Data</a>
+  <a href="#tools"><i>⚒</i>Tools</a>
+</nav>
+
+<script>
+
+// live data if the local bridge is reachable (same machine), else graceful note
+(async()=>{
+  // the local bridge is http-only; never attempt it from an https page (mixed-content block)
+  const localOK = location.protocol === 'http:' && /^(127\.0\.0\.1|localhost)$/.test(location.hostname);
+  if(!localOK){
+    document.getElementById('conn').textContent=' · snapshot';
+    document.getElementById('stats').innerHTML=[[36280,'profiles'],[1551,'complete'],[4120,'buyers'],[24852,'contacts'],[72,'covers'],['780 GB','scratch']]
+      .map(([n,l])=>`<div class="stat"><b>${n}</b><span>${l}</span></div>`).join('');
+    return;
+  }
+  try{
+    const r=await fetch('http://127.0.0.1:7788/api/stats',{cache:'no-store'});
+    const s=await r.json();
+    document.getElementById('conn').textContent=' · live';
+    document.getElementById('stats').innerHTML=[[s.master_profiles,'profiles'],[s.complete_profiles,'complete'],[s.ticket_buyers,'buyers'],[s.contacts_total,'contacts'],[s.covers,'covers'],[s.ssd_free_gb,'GB free']]
+      .map(([n,l])=>`<div class="stat"><b>${n==null?'—':Number(n).toLocaleString()}</b><span>${l}</span></div>`).join('');
+  }catch(e){
+    document.getElementById('conn').textContent=' · remote (snapshot)';
+    document.getElementById('stats').innerHTML=[[36280,'profiles'],[1551,'complete'],[4120,'buyers'],[24852,'contacts'],[72,'covers'],['780 GB','scratch']]
+      .map(([n,l])=>`<div class="stat"><b>${n}</b><span>${l}</span></div>`).join('');
+  }
+})();
+// PWA install
+let deferred=null;
+window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferred=e;const b=document.getElementById('installBox');b.style.display='block';});
+document.getElementById('installBtn')?.addEventListener('click',async()=>{if(deferred){deferred.prompt();deferred=null;document.getElementById('installBox').style.display='none';}});
+if('serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js').catch(()=>{});
+</script></body></html>
