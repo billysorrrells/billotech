@@ -3,6 +3,7 @@ usage: python3 render.py [card_id ...] [--motion] [--only SIZE]"""
 import json, sys, base64, subprocess, pathlib, asyncio
 from playwright.async_api import async_playwright
 ROOT = pathlib.Path(__file__).resolve().parent.parent
+SIZES_FLYER = {"letter":(2550,3300)}
 SIZES = {"story":(1080,1920),"feed":(1080,1350),"square":(1080,1080),"wide":(1920,1080),"event":(2160,1080),"strip":(1600,500)}
 MOTION = {"story":(1080,1920),"wide":(1920,1080)}
 FPS, DUR = 30, 7.5
@@ -16,7 +17,7 @@ async def main():
         pg=await b.new_page(); await pg.goto((ROOT/'engine/harness.html').as_uri()); await pg.evaluate('ready()')
         for cid in ids:
             card=cards[cid]; out=ROOT/'out'/cid; out.mkdir(parents=True,exist_ok=True)
-            for name,(W,H) in SIZES.items():
+            for name,(W,H) in (SIZES_FLYER if cid.endswith('-letter') else SIZES).items():
                 await pg.evaluate('([c,w,h])=>setup(c,w,h)',[card,W,H])
                 d=await pg.evaluate('frame(99)')
                 y=await pg.evaluate('window.__lastY')

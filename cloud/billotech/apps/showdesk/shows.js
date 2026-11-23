@@ -2,6 +2,7 @@ window.SHOW_DESK={
  "order": [
   "jive-turkeys-21",
   "beast-after-the-feast-2026",
+  "beast-flyer-letter",
   "thanksgiving-week",
   "jokes-and-justice",
   "come-clean-dec"
@@ -42,19 +43,19 @@ window.SHOW_DESK={
     "label": "views on the Jive Turkeys special"
    },
    "cta": "improvtx.com/houston",
-   "bg": "improv-stage-2.png",
+   "bg": "rt-band.jpg",
    "focus": {
     "all": [
      0.5,
-     0.3
+     0.35
     ],
     "wide": [
-     0.55,
+     0.5,
      0.4
     ],
     "strip": [
-     0.55,
-     0.25
+     0.5,
+     0.3
     ]
    },
    "fadeOut": false
@@ -89,15 +90,75 @@ window.SHOW_DESK={
    "lineup": "Monty \u00b7 Ladero \u00b7 Ray",
    "cta": "mocitycomedylounge.com",
    "fine": "Showtime TBA \u00b7 tickets on the MoCity site",
-   "bg": "bt-squad-silhouettes.jpg",
+   "bg": "rt-hell-turkey.jpg",
    "focus": {
     "all": [
      0.5,
-     0.45
+     0.15
+    ],
+    "wide": [
+     0.5,
+     0.3
+    ],
+    "strip": [
+     0.5,
+     0.25
+    ],
+    "letter": [
+     0.5,
+     0.15
     ]
-   },
-   "inset": "billy-headshot-laugh.png",
-   "insetLabel": "Billy Sorrells"
+   }
+  },
+  "beast-flyer-letter": {
+   "show_id": "beast-after-the-feast-2026",
+   "corner": "Thanksgiving night \u00b7 Missouri City",
+   "kicker": "Billy Sorrells presents",
+   "title": [
+    "Beast After",
+    "The Feast"
+   ],
+   "titleGold": [
+    1
+   ],
+   "flag": "You ate. Now laugh it off.",
+   "date": "Thu Nov 26 \u00b7 MoCity Comedy Lounge",
+   "venue": "3760 Cartwright Rd, Missouri City, TX",
+   "times": [
+    {
+     "t": "GA $25",
+     "s": "General admission",
+     "state": "open"
+    },
+    {
+     "t": "VIP $45",
+     "s": "Only 20 seats",
+     "state": "open"
+    }
+   ],
+   "lineupLabel": "Billy Sorrells + the Dirty Sexy Funny squad",
+   "lineup": "Monty \u00b7 Ladero \u00b7 Ray",
+   "cta": "mocitycomedylounge.com",
+   "fine": "Showtime TBA \u00b7 mocitycomedylounge.com \u00b7 281-346-7494",
+   "bg": "rt-hell-turkey.jpg",
+   "focus": {
+    "all": [
+     0.5,
+     0.15
+    ],
+    "wide": [
+     0.5,
+     0.3
+    ],
+    "strip": [
+     0.5,
+     0.25
+    ],
+    "letter": [
+     0.5,
+     0.15
+    ]
+   }
   },
   "thanksgiving-week": {
    "show_id": null,
@@ -131,19 +192,19 @@ window.SHOW_DESK={
     "label": "views on the Jive Turkeys special"
    },
    "cta": "Tickets \u00b7 link in bio",
-   "bg": "bt-neon-turkey.jpg",
+   "bg": "rt-billy-ali.jpg",
    "focus": {
     "all": [
-     0.78,
-     0.4
+     0.3,
+     0.3
     ],
     "wide": [
-     0.7,
-     0.4
+     0.35,
+     0.35
     ],
     "strip": [
-     0.7,
-     0.35
+     0.35,
+     0.3
     ]
    },
    "fadeOut": true
@@ -164,11 +225,19 @@ window.SHOW_DESK={
    "lineupLabel": "With",
    "lineup": "Billy Sorrells",
    "cta": "improvtx.com/houston",
-   "bg": "live-at-the-improv-wide.png",
+   "bg": "billy-headshot-laugh.png",
    "focus": {
     "all": [
-     0.45,
-     0.3
+     0.5,
+     0.15
+    ],
+    "wide": [
+     0.5,
+     0.2
+    ],
+    "strip": [
+     0.5,
+     0.2
     ]
    }
   },
@@ -233,6 +302,13 @@ window.SHOW_DESK={
    "show_date": "2026-12-11",
    "show_time": "8:00 PM",
    "venue": "KBC, Houston"
+  },
+  "beast-flyer-letter": {
+   "show_date": "2026-11-26",
+   "show_time": "Flyer for Eric",
+   "venue": "MoCity Comedy Lounge",
+   "flag": "Letter flyer",
+   "note": "Letter-size flyer (2550x3300) for Eric / MoCity. Showtime still TBA: fill the fine print and re-export."
   }
  },
  "captions": {
@@ -250,6 +326,9 @@ window.SHOW_DESK={
   ],
   "come-clean-dec": [
    "COME CLEAN, the monthly comedy show. Fri Dec 11, 8 PM at KBC in Houston. billysorrells.com"
+  ],
+  "beast-flyer-letter": [
+   "You ate. Now come laugh it off. BEAST AFTER THE FEAST, Thanksgiving night, Thu Nov 26 at MoCity Comedy Lounge in Missouri City. Billy Sorrells and the Dirty Sexy Funny squad: Monty \u00b7 Ladero \u00b7 Ray. GA $25 \u00b7 VIP $45 (only 20). Tickets: mocitycomedylounge.com"
   ]
  },
  "pack": {
@@ -258,32 +337,32 @@ window.SHOW_DESK={
     {
      "href": "pack/jive-turkeys-21/jive-turkeys-21_event_2160x1080.jpg",
      "label": "event \u00b7 2160x1080",
-     "size": "423 KB \u00b7 JPG"
+     "size": "274 KB \u00b7 JPG"
     },
     {
      "href": "pack/jive-turkeys-21/jive-turkeys-21_feed_1080x1350.jpg",
      "label": "feed \u00b7 1080x1350",
-     "size": "303 KB \u00b7 JPG"
+     "size": "203 KB \u00b7 JPG"
     },
     {
      "href": "pack/jive-turkeys-21/jive-turkeys-21_square_1080x1080.jpg",
      "label": "square \u00b7 1080x1080",
-     "size": "253 KB \u00b7 JPG"
+     "size": "180 KB \u00b7 JPG"
     },
     {
      "href": "pack/jive-turkeys-21/jive-turkeys-21_story_1080x1920.jpg",
      "label": "story \u00b7 1080x1920",
-     "size": "376 KB \u00b7 JPG"
+     "size": "254 KB \u00b7 JPG"
     },
     {
      "href": "pack/jive-turkeys-21/jive-turkeys-21_strip_1600x500.jpg",
      "label": "strip \u00b7 1600x500",
-     "size": "176 KB \u00b7 JPG"
+     "size": "115 KB \u00b7 JPG"
     },
     {
      "href": "pack/jive-turkeys-21/jive-turkeys-21_wide_1920x1080.jpg",
      "label": "wide \u00b7 1920x1080",
-     "size": "394 KB \u00b7 JPG"
+     "size": "258 KB \u00b7 JPG"
     },
     {
      "href": "pack/jive-turkeys-21/jive-turkeys-21_story_motion_1080x1920.mp4",
@@ -293,7 +372,7 @@ window.SHOW_DESK={
     {
      "href": "pack/jive-turkeys-21/jive-turkeys-21_wide_motion_1920x1080.mp4",
      "label": "wide \u00b7 motion \u00b7 1920x1080",
-     "size": "2 MB \u00b7 MP4"
+     "size": "1 MB \u00b7 MP4"
     }
    ]
   },
@@ -302,32 +381,32 @@ window.SHOW_DESK={
     {
      "href": "pack/beast-after-the-feast-2026/beast-after-the-feast-2026_event_2160x1080.jpg",
      "label": "event \u00b7 2160x1080",
-     "size": "317 KB \u00b7 JPG"
+     "size": "335 KB \u00b7 JPG"
     },
     {
      "href": "pack/beast-after-the-feast-2026/beast-after-the-feast-2026_feed_1080x1350.jpg",
      "label": "feed \u00b7 1080x1350",
-     "size": "229 KB \u00b7 JPG"
+     "size": "261 KB \u00b7 JPG"
     },
     {
      "href": "pack/beast-after-the-feast-2026/beast-after-the-feast-2026_square_1080x1080.jpg",
      "label": "square \u00b7 1080x1080",
-     "size": "181 KB \u00b7 JPG"
+     "size": "219 KB \u00b7 JPG"
     },
     {
      "href": "pack/beast-after-the-feast-2026/beast-after-the-feast-2026_story_1080x1920.jpg",
      "label": "story \u00b7 1080x1920",
-     "size": "280 KB \u00b7 JPG"
+     "size": "307 KB \u00b7 JPG"
     },
     {
      "href": "pack/beast-after-the-feast-2026/beast-after-the-feast-2026_strip_1600x500.jpg",
      "label": "strip \u00b7 1600x500",
-     "size": "115 KB \u00b7 JPG"
+     "size": "137 KB \u00b7 JPG"
     },
     {
      "href": "pack/beast-after-the-feast-2026/beast-after-the-feast-2026_wide_1920x1080.jpg",
      "label": "wide \u00b7 1920x1080",
-     "size": "307 KB \u00b7 JPG"
+     "size": "318 KB \u00b7 JPG"
     },
     {
      "href": "pack/beast-after-the-feast-2026/beast-after-the-feast-2026_story_motion_1080x1920.mp4",
@@ -341,37 +420,51 @@ window.SHOW_DESK={
     }
    ]
   },
+  "beast-flyer-letter": {
+   "files": [
+    {
+     "href": "pack/beast-flyer-letter/beast-flyer-letter_letter_2550x3300.jpg",
+     "label": "letter \u00b7 2550x3300",
+     "size": "767 KB \u00b7 JPG"
+    },
+    {
+     "href": "pack/beast-flyer-letter/beast-flyer-letter_letter_2550x3300.pdf",
+     "label": "letter \u00b7 PDF",
+     "size": "504 KB \u00b7 PDF"
+    }
+   ]
+  },
   "thanksgiving-week": {
    "files": [
     {
      "href": "pack/thanksgiving-week/thanksgiving-week_event_2160x1080.jpg",
      "label": "event \u00b7 2160x1080",
-     "size": "242 KB \u00b7 JPG"
+     "size": "248 KB \u00b7 JPG"
     },
     {
      "href": "pack/thanksgiving-week/thanksgiving-week_feed_1080x1350.jpg",
      "label": "feed \u00b7 1080x1350",
-     "size": "190 KB \u00b7 JPG"
+     "size": "200 KB \u00b7 JPG"
     },
     {
      "href": "pack/thanksgiving-week/thanksgiving-week_square_1080x1080.jpg",
      "label": "square \u00b7 1080x1080",
-     "size": "160 KB \u00b7 JPG"
+     "size": "169 KB \u00b7 JPG"
     },
     {
      "href": "pack/thanksgiving-week/thanksgiving-week_story_1080x1920.jpg",
      "label": "story \u00b7 1080x1920",
-     "size": "234 KB \u00b7 JPG"
+     "size": "240 KB \u00b7 JPG"
     },
     {
      "href": "pack/thanksgiving-week/thanksgiving-week_strip_1600x500.jpg",
      "label": "strip \u00b7 1600x500",
-     "size": "90 KB \u00b7 JPG"
+     "size": "94 KB \u00b7 JPG"
     },
     {
      "href": "pack/thanksgiving-week/thanksgiving-week_wide_1920x1080.jpg",
      "label": "wide \u00b7 1920x1080",
-     "size": "233 KB \u00b7 JPG"
+     "size": "236 KB \u00b7 JPG"
     },
     {
      "href": "pack/thanksgiving-week/thanksgiving-week_story_motion_1080x1920.mp4",
@@ -390,32 +483,32 @@ window.SHOW_DESK={
     {
      "href": "pack/jokes-and-justice/jokes-and-justice_event_2160x1080.jpg",
      "label": "event \u00b7 2160x1080",
-     "size": "351 KB \u00b7 JPG"
+     "size": "191 KB \u00b7 JPG"
     },
     {
      "href": "pack/jokes-and-justice/jokes-and-justice_feed_1080x1350.jpg",
      "label": "feed \u00b7 1080x1350",
-     "size": "264 KB \u00b7 JPG"
+     "size": "140 KB \u00b7 JPG"
     },
     {
      "href": "pack/jokes-and-justice/jokes-and-justice_square_1080x1080.jpg",
      "label": "square \u00b7 1080x1080",
-     "size": "225 KB \u00b7 JPG"
+     "size": "119 KB \u00b7 JPG"
     },
     {
      "href": "pack/jokes-and-justice/jokes-and-justice_story_1080x1920.jpg",
      "label": "story \u00b7 1080x1920",
-     "size": "301 KB \u00b7 JPG"
+     "size": "182 KB \u00b7 JPG"
     },
     {
      "href": "pack/jokes-and-justice/jokes-and-justice_strip_1600x500.jpg",
      "label": "strip \u00b7 1600x500",
-     "size": "157 KB \u00b7 JPG"
+     "size": "61 KB \u00b7 JPG"
     },
     {
      "href": "pack/jokes-and-justice/jokes-and-justice_wide_1920x1080.jpg",
      "label": "wide \u00b7 1920x1080",
-     "size": "318 KB \u00b7 JPG"
+     "size": "192 KB \u00b7 JPG"
     },
     {
      "href": "pack/jokes-and-justice/jokes-and-justice_story_motion_1080x1920.mp4",

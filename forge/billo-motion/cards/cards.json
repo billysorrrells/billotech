@@ -34,19 +34,19 @@
    "label": "views on the Jive Turkeys special"
   },
   "cta": "improvtx.com/houston",
-  "bg": "improv-stage-2.png",
+  "bg": "rt-band.jpg",
   "focus": {
    "all": [
     0.5,
-    0.3
+    0.35
    ],
    "wide": [
-    0.55,
+    0.5,
     0.4
    ],
    "strip": [
-    0.55,
-    0.25
+    0.5,
+    0.3
    ]
   },
   "fadeOut": false
@@ -81,15 +81,25 @@
   "lineup": "Monty \u00b7 Ladero \u00b7 Ray",
   "cta": "mocitycomedylounge.com",
   "fine": "Showtime TBA \u00b7 tickets on the MoCity site",
-  "bg": "bt-squad-silhouettes.jpg",
+  "bg": "rt-hell-turkey.jpg",
   "focus": {
    "all": [
     0.5,
-    0.45
+    0.15
+   ],
+   "wide": [
+    0.5,
+    0.3
+   ],
+   "strip": [
+    0.5,
+    0.25
+   ],
+   "letter": [
+    0.5,
+    0.15
    ]
-  },
-  "inset": "billy-headshot-laugh.png",
-  "insetLabel": "Billy Sorrells"
+  }
  },
  "thanksgiving-week": {
   "show_id": null,
@@ -123,19 +133,19 @@
    "label": "views on the Jive Turkeys special"
   },
   "cta": "Tickets \u00b7 link in bio",
-  "bg": "bt-neon-turkey.jpg",
+  "bg": "rt-billy-ali.jpg",
   "focus": {
    "all": [
-    0.78,
-    0.4
+    0.3,
+    0.3
    ],
    "wide": [
-    0.7,
-    0.4
+    0.35,
+    0.35
    ],
    "strip": [
-    0.7,
-    0.35
+    0.35,
+    0.3
    ]
   },
   "fadeOut": true
@@ -156,11 +166,19 @@
   "lineupLabel": "With",
   "lineup": "Billy Sorrells",
   "cta": "improvtx.com/houston",
-  "bg": "live-at-the-improv-wide.png",
+  "bg": "billy-headshot-laugh.png",
   "focus": {
    "all": [
-    0.45,
-    0.3
+    0.5,
+    0.15
+   ],
+   "wide": [
+    0.5,
+    0.2
+   ],
+   "strip": [
+    0.5,
+    0.2
    ]
   }
  },
@@ -192,6 +210,56 @@
    "strip": [
     0.5,
     0.18
+   ]
+  }
+ },
+ "beast-flyer-letter": {
+  "show_id": "beast-after-the-feast-2026",
+  "corner": "Thanksgiving night \u00b7 Missouri City",
+  "kicker": "Billy Sorrells presents",
+  "title": [
+   "Beast After",
+   "The Feast"
+  ],
+  "titleGold": [
+   1
+  ],
+  "flag": "You ate. Now laugh it off.",
+  "date": "Thu Nov 26 \u00b7 MoCity Comedy Lounge",
+  "venue": "3760 Cartwright Rd, Missouri City, TX",
+  "times": [
+   {
+    "t": "GA $25",
+    "s": "General admission",
+    "state": "open"
+   },
+   {
+    "t": "VIP $45",
+    "s": "Only 20 seats",
+    "state": "open"
+   }
+  ],
+  "lineupLabel": "Billy Sorrells + the Dirty Sexy Funny squad",
+  "lineup": "Monty \u00b7 Ladero \u00b7 Ray",
+  "cta": "mocitycomedylounge.com",
+  "fine": "Showtime TBA \u00b7 mocitycomedylounge.com \u00b7 281-346-7494",
+  "bg": "rt-hell-turkey.jpg",
+  "focus": {
+   "all": [
+    0.5,
+    0.15
+   ],
+   "wide": [
+    0.5,
+    0.3
+   ],
+   "strip": [
+    0.5,
+    0.25
+   ],
+   "letter": [
+    0.5,
+    0.15
    ]
   }
  }

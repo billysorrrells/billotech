@@ -112,7 +112,7 @@ label.f input:focus,label.f textarea:focus{outline:none;border-color:var(--teal)
 <script>
 (function(){
 const SIZES=[["story",1080,1920,"Story · Reel"],["feed",1080,1350,"Feed 4:5"],["square",1080,1080,"Square"],["wide",1920,1080,"16:9 · YouTube · FB"],["event",2160,1080,"Event page 2:1"],["strip",1600,500,"Site banner"]];
-const PHOTOS=[["improv-stage-2.png","Improv 1","real"],["improv-stage-3.png","Improv 2","real"],["live-at-the-improv-wide.png","Improv wide","real"],["billy-headshot-laugh.png","Headshot","real"],["billy-headshot-suit.png","Headshot 2","real"],["bt-neon-turkey.jpg","Neon turkey","Bad Turkeys"],["bt-squad-silhouettes.jpg","The squad","Bad Turkeys"],["bt-squad-backlit.jpg","Backlit","Bad Turkeys"]];
+const PHOTOS=[["rt-hell-turkey.jpg","Hell Turkey","Bad Turkeys"],["rt-band.jpg","The band","Bad Turkeys"],["rt-billy-ali.jpg","Billy + Ali","Bad Turkeys"],["bt-neon-turkey.jpg","Neon turkey","Bad Turkeys"],["bt-squad-silhouettes.jpg","The squad","Bad Turkeys"],["bt-squad-backlit.jpg","Backlit","Bad Turkeys"],["billy-headshot-laugh.png","Headshot","real"],["billy-headshot-suit.png","Headshot 2","real"]];
 const IMG='img/';
 const D=window.SHOW_DESK, cv=document.getElementById('cv'), ctx=cv.getContext('2d');
 let cur=D.order[0], size='feed', t=BilloMotion.DUR, playing=false, raf=0, t0=0;
@@ -134,7 +134,7 @@ function renderSizes(){const g=$('sizes');g.innerHTML='';SIZES.forEach(([k,w,h,n
 const F=[["kicker","Kicker"],["title","Title (one line each)","lines"],["flag","Flag"],["date","Date line"],["venue","Venue line"],["times","Times / prices (time | label | open or wait)","times"],["lineupLabel","Lineup label"],["lineup","Lineup"],["cta","Call to action / URL"],["fine","Fine print"],["corner","Corner mark"]];
 function renderEdit(){const c=D.cards[cur];const p=$('p-edit');let h='';
  if(D.shows[cur]&&D.shows[cur].note) h+=`<p class="note">${D.shows[cur].note}</p>`;
- h+=`<label class="f"><span>Photo (real photos and Bad Turkeys plates)</span></label><div class="photos">${PHOTOS.map(([f,n,k])=>`<button data-ph="${f}" aria-pressed="${c.bg===f}" style="background-image:url(${IMG+f})" title="${n} · ${k}"><i>${k==='real'?'REAL':'BT'}</i></button>`).join('')}</div>
+ h+=`<label class="f"><span>Background (Bad Turkeys renders + photos)</span></label><div class="photos">${PHOTOS.map(([f,n,k])=>`<button data-ph="${f}" aria-pressed="${c.bg===f}" style="background-image:url(${IMG+f})" title="${n} · ${k}"><i>${k==='real'?'PHOTO':'RENDER'}</i></button>`).join('')}</div>
  <div class="row2"><label class="f"><span>Your own photo</span><input type="file" id="up" accept="image/*"></label><label class="f"><span>Inset photo</span><select id="inset"><option value="">None</option>${PHOTOS.filter(x=>x[2]==='real').map(([f,n])=>`<option value="${f}" ${c.inset===f?'selected':''}>${n}</option>`).join('')}</select></label></div>`;
  F.forEach(([k,lab,kind])=>{let v=c[k];if(kind==='lines')v=(v||[]).join('\n');else if(kind==='times')v=(v||[]).map(x=>`${x.t} | ${x.s} | ${x.state}`).join('\n');else v=v||'';
   h+=`<label class="f"><span>${lab}</span>${kind?`<textarea data-k="${k}" data-kind="${kind}">${v}</textarea>`:`<input data-k="${k}" value="${String(v).replace(/"/g,'&quot;')}">`}</label>`;});
