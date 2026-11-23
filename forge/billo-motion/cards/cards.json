@@ -1,0 +1,198 @@
+{
+ "jive-turkeys-21": {
+  "show_id": "jive-turkeys-21",
+  "corner": "JT21 \u00b7 21st Annual",
+  "kicker": "Ali Siddiq presents",
+  "title": [
+   "The Jive",
+   "Turkeys"
+  ],
+  "flag": "3rd show added \u00b7 5 PM",
+  "date": "Wed Nov 25 \u00b7 Houston Improv",
+  "venue": "7620 Katy Fwy, Houston \u00b7 18+",
+  "times": [
+   {
+    "t": "5:00 PM",
+    "s": "Just added",
+    "state": "open"
+   },
+   {
+    "t": "7:30 PM",
+    "s": "Wait list",
+    "state": "wait"
+   },
+   {
+    "t": "9:45 PM",
+    "s": "Wait list",
+    "state": "wait"
+   }
+  ],
+  "lineup": "Ali Siddiq \u00b7 Seven \u00b7 Terry Grossman \u00b7 Dave Lawson \u00b7 Kier Spates \u00b7 Billy Sorrells",
+  "proof": {
+   "n": 1027458,
+   "final": "1,000,000+",
+   "label": "views on the Jive Turkeys special"
+  },
+  "cta": "improvtx.com/houston",
+  "bg": "improv-stage-2.png",
+  "focus": {
+   "all": [
+    0.5,
+    0.3
+   ],
+   "wide": [
+    0.55,
+    0.4
+   ],
+   "strip": [
+    0.55,
+    0.25
+   ]
+  },
+  "fadeOut": false
+ },
+ "beast-after-the-feast-2026": {
+  "show_id": "beast-after-the-feast-2026",
+  "corner": "Billy Sorrells Entertainment",
+  "kicker": "Thanksgiving night \u00b7 Missouri City",
+  "title": [
+   "Beast After",
+   "The Feast"
+  ],
+  "titleGold": [
+   1
+  ],
+  "flag": "You ate. Now laugh it off.",
+  "date": "Thu Nov 26 \u00b7 MoCity Comedy Lounge",
+  "venue": "3760 Cartwright Rd, Missouri City, TX",
+  "times": [
+   {
+    "t": "GA $25",
+    "s": "General admission",
+    "state": "open"
+   },
+   {
+    "t": "VIP $45",
+    "s": "Only 20 seats",
+    "state": "open"
+   }
+  ],
+  "lineupLabel": "Billy Sorrells + the Dirty Sexy Funny squad",
+  "lineup": "Monty \u00b7 Ladero \u00b7 Ray",
+  "cta": "mocitycomedylounge.com",
+  "fine": "Showtime TBA \u00b7 tickets on the MoCity site",
+  "bg": "bt-squad-silhouettes.jpg",
+  "focus": {
+   "all": [
+    0.5,
+    0.45
+   ]
+  },
+  "inset": "billy-headshot-laugh.png",
+  "insetLabel": "Billy Sorrells"
+ },
+ "thanksgiving-week": {
+  "show_id": null,
+  "corner": "Houston \u00b7 Thanksgiving week",
+  "kicker": "Two nights \u00b7 one week",
+  "title": [
+   "Thanksgiving",
+   "Week"
+  ],
+  "titleGold": [
+   1
+  ],
+  "flag": "Jive Turkeys new 5 PM show",
+  "date": "Wed 11/25 \u00b7 Thu 11/26",
+  "venue": "Houston Improv \u00b7 MoCity Comedy Lounge",
+  "times": [
+   {
+    "t": "WED 11/25",
+    "s": "Jive Turkeys \u00b7 5 PM added",
+    "state": "open"
+   },
+   {
+    "t": "THU 11/26",
+    "s": "Beast After the Feast",
+    "state": "open"
+   }
+  ],
+  "proof": {
+   "n": 1027458,
+   "final": "1,000,000+",
+   "label": "views on the Jive Turkeys special"
+  },
+  "cta": "Tickets \u00b7 link in bio",
+  "bg": "bt-neon-turkey.jpg",
+  "focus": {
+   "all": [
+    0.78,
+    0.4
+   ],
+   "wide": [
+    0.7,
+    0.4
+   ],
+   "strip": [
+    0.7,
+    0.35
+   ]
+  },
+  "fadeOut": true
+ },
+ "jokes-and-justice": {
+  "show_id": "jokes-and-justice",
+  "corner": "Houston Improv",
+  "kicker": "Houston Improv",
+  "title": [
+   "Jokes &",
+   "Justice"
+  ],
+  "titleGold": [
+   1
+  ],
+  "date": "Tue Dec 8 \u00b7 8:00 PM",
+  "venue": "7620 Katy Fwy, Houston",
+  "lineupLabel": "With",
+  "lineup": "Billy Sorrells",
+  "cta": "improvtx.com/houston",
+  "bg": "live-at-the-improv-wide.png",
+  "focus": {
+   "all": [
+    0.45,
+    0.3
+   ]
+  }
+ },
+ "come-clean-dec": {
+  "show_id": "come-clean-dec",
+  "corner": "Monthly comedy show",
+  "kicker": "Billy Sorrells",
+  "title": [
+   "Come",
+   "Clean"
+  ],
+  "titleGold": [
+   1
+  ],
+  "flag": "Monthly comedy show",
+  "date": "Fri Dec 11 \u00b7 8:00 PM",
+  "venue": "KBC \u00b7 Houston",
+  "cta": "billysorrells.com",
+  "bg": "billy-headshot-suit.png",
+  "focus": {
+   "all": [
+    0.5,
+    0.15
+   ],
+   "wide": [
+    0.5,
+    0.2
+   ],
+   "strip": [
+    0.5,
+    0.18
+   ]
+  }
+ }
+}

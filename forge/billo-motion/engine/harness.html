@@ -1,0 +1,19 @@
+<!doctype html><html><head><meta charset="utf-8">
+<style>
+@font-face{font-family:Anton;src:url(../fonts/anton-latin-400-normal.woff2)}
+@font-face{font-family:Outfit;font-weight:400;src:url(../fonts/outfit-latin-400-normal.woff2)}
+@font-face{font-family:Outfit;font-weight:600;src:url(../fonts/outfit-latin-600-normal.woff2)}
+@font-face{font-family:Outfit;font-weight:800;src:url(../fonts/outfit-latin-800-normal.woff2)}
+@font-face{font-family:"JetBrains Mono";font-weight:500;src:url(../fonts/jetbrains-mono-latin-500-normal.woff2)}
+@font-face{font-family:"JetBrains Mono";font-weight:700;src:url(../fonts/jetbrains-mono-latin-700-normal.woff2)}
+body{margin:0;background:#000}
+</style></head><body><canvas id="c"></canvas>
+<script src="billo-motion.js"></script>
+<script>
+const imgs={};
+function load(src){return imgs[src]||(imgs[src]=new Promise((ok,no)=>{const i=new Image();i.onload=()=>ok(i);i.onerror=no;i.src='../assets/'+src;}));}
+async function ready(){await Promise.all(['400 20px Anton','400 20px Outfit','600 20px Outfit','500 20px "JetBrains Mono"','700 20px "JetBrains Mono"'].map(f=>document.fonts.load(f)));return true;}
+let cur=null;
+async function setup(card,W,H){const c=document.getElementById('c');c.width=W;c.height=H;cur={card,W,H,assets:{bg:card.bg?await load(card.bg):null,inset:card.inset?await load(card.inset):null}};return true;}
+function frame(t,type,q){const c=document.getElementById('c');const ctx=c.getContext('2d');ctx.setTransform(1,0,0,1,0,0);const y=BilloMotion.draw(ctx,cur.W,cur.H,t,cur.card,cur.assets);window.__lastY=y;return c.toDataURL(type||'image/png',q||0.95);}
+</script></body></html>

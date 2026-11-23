@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Billo Show Desk · BilloTech</title>
+<meta name="description" content="Every show in one place: postable banners in every size, motion cards, captions and the tools to run the night. Built on Billo Motion, our own code-built motion graphics engine. Free, in your browser.">
+<meta property="og:type" content="website"><meta property="og:site_name" content="Billy Sorrells"><meta property="og:title" content="Billo Show Desk · BilloTech"><meta property="og:description" content="Postable banners in every size, motion cards and captions for every show. Built on Billo Motion.">
+<meta property="og:url" content="https://billysorrells.com/billotech/apps/showdesk/">
+<meta property="og:image" content="https://billysorrells.com/billotech/apps/showdesk/pack/thanksgiving-week/thanksgiving-week_wide_1920x1080.jpg"><meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/billotech/apps/mark.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Outfit:wght@400;500;600;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/billotech/apps/app.css">
+<style>
+[hidden]{display:none!important}
+body{overflow-x:hidden}
+.wrap{display:grid;grid-template-columns:300px minmax(0,1fr) 380px;min-height:calc(100vh - 56px)}
+.col{border-right:1px solid var(--ln);min-width:0;display:flex;flex-direction:column}
+.col:last-child{border-right:0}
+.ch{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px 14px;border-bottom:1px solid var(--ln);min-height:48px}
+.ch .kick{margin:0}.ch small{font:11px "JetBrains Mono",monospace;color:var(--dim);letter-spacing:.06em}
+/* shows */
+.shows{list-style:none;margin:0;padding:0;overflow:auto}
+.shows li{border-bottom:1px solid var(--ln)}
+.shows button{all:unset;box-sizing:border-box;display:grid;grid-template-columns:64px 1fr;gap:12px;width:100%;padding:12px 14px;cursor:pointer}
+.shows button:hover{background:var(--p2)}.shows button[aria-current=true]{background:var(--p3);box-shadow:inset 3px 0 0 var(--teal)}
+.shows .d{font:400 13px/1.05 Anton,Impact,sans-serif;text-transform:uppercase;text-align:center;border:1px solid var(--ln2);padding:7px 0}
+.shows .d b{display:block;font-size:26px;font-weight:400}
+.shows .n{display:block;font:600 15px/1.25 Outfit,sans-serif}.shows .m{display:block;font:11px "JetBrains Mono",monospace;color:var(--dim);letter-spacing:.04em;margin-top:3px}
+.shows .st{display:inline-block;margin-top:6px;font:10px "JetBrains Mono",monospace;letter-spacing:.1em;text-transform:uppercase;padding:2px 6px;border:1px solid var(--teal);color:var(--teal)}
+.shows .st.warn{border-color:var(--warn);color:var(--warn)}
+.src{padding:12px 14px;font:11px/1.6 "JetBrains Mono",monospace;color:var(--dim);border-top:1px solid var(--ln);margin-top:auto}
+/* stage */
+.sizes{display:flex;gap:0;flex-wrap:wrap;border-bottom:1px solid var(--ln)}
+.sizes button{all:unset;cursor:pointer;padding:10px 14px;font:500 11px "JetBrains Mono",monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);border-right:1px solid var(--ln)}
+.sizes button[aria-pressed=true]{color:#000;background:var(--teal)}
+.stage{flex:1;display:grid;place-items:center;padding:22px;background:linear-gradient(rgba(45,214,174,.04) 1px,transparent 1px) 0 0/100% 28px,linear-gradient(90deg,rgba(45,214,174,.04) 1px,transparent 1px) 0 0/28px 100%,#050506;min-height:460px;position:relative}
+.stage canvas{width:auto;height:auto;max-width:100%;max-height:calc(100vh - 230px);box-shadow:0 0 0 1px var(--ln2),0 30px 80px rgba(0,0,0,.6);background:#000}
+.transport{display:flex;align-items:center;gap:10px;padding:10px 14px;border-top:1px solid var(--ln)}
+.transport input[type=range]{flex:1;accent-color:var(--teal)}
+.transport .tc{font:12px "JetBrains Mono",monospace;color:var(--dim);min-width:86px;text-align:right}
+/* right */
+.tabs{display:flex;border-bottom:1px solid var(--ln)}
+.tabs button{all:unset;flex:1;text-align:center;cursor:pointer;padding:12px 6px;font:600 11px Outfit,sans-serif;letter-spacing:.1em;text-transform:uppercase;color:var(--dim)}
+.tabs button[aria-selected=true]{color:var(--tx);box-shadow:inset 0 -2px 0 var(--teal)}
+.pane{overflow:auto;padding:14px;flex:1}
+label.f{display:block;margin:0 0 12px}
+label.f span{display:block;font:500 10.5px "JetBrains Mono",monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);margin-bottom:5px}
+label.f input,label.f textarea,label.f select{width:100%;background:var(--p1);border:1px solid var(--ln2);color:var(--tx);font:14px Outfit,sans-serif;padding:8px 9px;border-radius:0}
+label.f textarea{min-height:64px;resize:vertical;font-family:"JetBrains Mono",monospace;font-size:12px}
+label.f input:focus,label.f textarea:focus{outline:none;border-color:var(--teal)}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.photos{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:12px}
+.photos button{all:unset;cursor:pointer;aspect-ratio:1;background:#111 center/cover no-repeat;border:1px solid var(--ln2);position:relative}
+.photos button[aria-pressed=true]{outline:2px solid var(--teal);outline-offset:1px}
+.photos button i{position:absolute;left:3px;bottom:3px;font:9px "JetBrains Mono",monospace;font-style:normal;background:#000;padding:1px 4px;letter-spacing:.06em}
+.note{font:12px/1.5 Outfit,sans-serif;color:var(--dim);border-left:2px solid var(--warn);padding:6px 10px;margin:0 0 12px}
+.pack a{display:flex;justify-content:space-between;gap:10px;padding:9px 0;border-bottom:1px solid var(--ln);text-decoration:none;font:14px Outfit,sans-serif}
+.pack a:hover{color:var(--teal)}.pack a small{font:11px "JetBrains Mono",monospace;color:var(--dim)}
+.pack h4,.cando h4{font:400 18px Anton,Impact,sans-serif;text-transform:uppercase;margin:16px 0 6px}
+.cap{background:var(--p1);border:1px solid var(--ln2);padding:10px;font:13px/1.55 Outfit,sans-serif;white-space:pre-wrap;margin-bottom:8px}
+.cando a{display:grid;grid-template-columns:38px 1fr;gap:10px;padding:10px 0;border-bottom:1px solid var(--ln);text-decoration:none}
+.cando a:hover b{color:var(--teal)}
+.cando .g{display:grid;place-items:center;width:38px;height:38px;border:1px solid var(--ln2);font:400 14px Anton,Impact,sans-serif;text-transform:uppercase}
+.cando b{font:600 14px Outfit,sans-serif;display:block}.cando span.d{font-size:13px;color:var(--dim);line-height:1.45}
+.toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);background:var(--teal);color:#000;font:600 13px Outfit,sans-serif;padding:10px 16px;z-index:99;display:none}
+@media (max-width:1180px){.wrap{grid-template-columns:240px minmax(0,1fr)}.wrap .col:last-child{grid-column:1/-1;border-top:1px solid var(--ln)}}
+@media (max-width:760px){.wrap{grid-template-columns:1fr}.shows{display:flex;overflow:auto}.shows li{min-width:240px;border-right:1px solid var(--ln)}.src{display:none}}
+</style>
+</head>
+<body>
+<header class="ab">
+  <a class="ab-mark" href="/billotech/#toolkit" aria-label="BilloTech toolkit"><img src="/billotech/apps/mark.svg" alt=""><span class="ab-name">Billo <em>Show Desk</em></span></a>
+  <div class="ab-doc"><span class="ab-state" id="state">Built on Billo Motion v1</span></div>
+  <div class="ab-acts">
+    <button class="b" id="bPlay"><span class="lbl">Play</span> ▶</button>
+    <div class="menu" id="mExp"><button class="b pri" id="bExp">Export ▾</button><div class="dd" role="menu">
+      <button data-x="png">This size (PNG)</button>
+      <button data-x="all">Every size (6 PNGs)</button>
+      <button data-x="motion">Motion card (video, 7.5 s)</button>
+      <button data-x="card">Card data (JSON)</button>
+      <hr><a href="/billotech/apps/direct/">Open Billo Direct</a><a href="/billotech/studio/effectcraft/">Open Billo Motion studio</a>
+    </div></div>
+  </div>
+</header>
+<main class="wrap">
+  <section class="col" aria-label="Shows">
+    <div class="ch"><p class="kick">Shows</p><small id="nShows"></small></div>
+    <ul class="shows" id="shows"></ul>
+    <div class="src">Source: Billo OS · os.shows<br>Banners render from the same card data as the pack below. Change a card here, export, post.</div>
+  </section>
+  <section class="col" aria-label="Preview">
+    <div class="sizes" id="sizes" role="group" aria-label="Size"></div>
+    <div class="stage"><canvas id="cv" width="1080" height="1350" aria-label="Banner preview"></canvas></div>
+    <div class="transport"><button class="b icon" id="bPlay2" aria-label="Play">▶</button><input type="range" id="scrub" min="0" max="7.5" step="0.01" value="7.5" aria-label="Time"><span class="tc" id="tc">7.50 s · still</span></div>
+  </section>
+  <section class="col" aria-label="Edit and post">
+    <div class="tabs" role="tablist">
+      <button role="tab" aria-selected="true" data-p="edit">Edit</button>
+      <button role="tab" aria-selected="false" data-p="post">Post</button>
+      <button role="tab" aria-selected="false" data-p="can">What we can do</button>
+    </div>
+    <div class="pane" id="p-edit"></div>
+    <div class="pane" id="p-post" hidden></div>
+    <div class="pane cando" id="p-can" hidden></div>
+  </section>
+</main>
+<div class="toast" id="toast"></div>
+<script src="billo-motion.js"></script>
+<script src="shows.js"></script>
+<script>
+(function(){
+const SIZES=[["story",1080,1920,"Story · Reel"],["feed",1080,1350,"Feed 4:5"],["square",1080,1080,"Square"],["wide",1920,1080,"16:9 · YouTube · FB"],["event",2160,1080,"Event page 2:1"],["strip",1600,500,"Site banner"]];
+const PHOTOS=[["improv-stage-2.png","Improv 1","real"],["improv-stage-3.png","Improv 2","real"],["live-at-the-improv-wide.png","Improv wide","real"],["billy-headshot-laugh.png","Headshot","real"],["billy-headshot-suit.png","Headshot 2","real"],["bt-neon-turkey.jpg","Neon turkey","Bad Turkeys"],["bt-squad-silhouettes.jpg","The squad","Bad Turkeys"],["bt-squad-backlit.jpg","Backlit","Bad Turkeys"]];
+const IMG='img/';
+const D=window.SHOW_DESK, cv=document.getElementById('cv'), ctx=cv.getContext('2d');
+let cur=D.order[0], size='feed', t=BilloMotion.DUR, playing=false, raf=0, t0=0;
+const cache={};
+const img=(s)=>cache[s]||(cache[s]=new Promise((ok)=>{const i=new Image();i.onload=()=>ok(i);i.onerror=()=>ok(null);i.src=s.startsWith('blob:')?s:IMG+s;}));
+const $=(id)=>document.getElementById(id);
+function toast(m){const e=$('toast');e.textContent=m;e.style.display='block';clearTimeout(toast.h);toast.h=setTimeout(()=>e.style.display='none',2200);}
+async function assets(c){return{bg:c.bg?await img(c.bg):null,inset:c.inset?await img(c.inset):null};}
+async function paint(){const c=D.cards[cur];const s=SIZES.find(x=>x[0]===size);cv.width=s[1];cv.height=s[2];BilloMotion.draw(ctx,s[1],s[2],t,c,await assets(c));$('tc').textContent=t>=BilloMotion.DUR?`${BilloMotion.DUR.toFixed(2)} s · still`:`${t.toFixed(2)} s`;$('scrub').value=t;}
+function play(){if(playing){playing=false;cancelAnimationFrame(raf);setBtn();return;}playing=true;setBtn();t0=performance.now();const loop=async(now)=>{t=Math.min(BilloMotion.DUR,(now-t0)/1000);await paint();if(t<BilloMotion.DUR&&playing)raf=requestAnimationFrame(loop);else{playing=false;setBtn();}};raf=requestAnimationFrame(loop);}
+function setBtn(){$('bPlay').innerHTML=`<span class="lbl">${playing?'Pause':'Play'}</span> ${playing?'❚❚':'▶'}`;$('bPlay2').textContent=playing?'❚❚':'▶';}
+// shows list
+function fmtDay(d){const x=new Date(d+'T12:00:00');return{m:x.toLocaleString('en-US',{month:'short'}),d:x.getDate(),w:x.toLocaleString('en-US',{weekday:'short'})};}
+function renderShows(){const ul=$('shows');ul.innerHTML='';D.order.forEach(id=>{const c=D.cards[id],s=D.shows[id]||{};const f=s.show_date?fmtDay(s.show_date):null;const li=document.createElement('li');
+ li.innerHTML=`<button aria-current="${id===cur}"><span class="d">${f?`${f.w}<b>${f.d}</b>${f.m}`:'WEEK<b>★</b>PROMO'}</span><span><span class="n">${(c.title||[]).join(' ')}</span><span class="m">${s.venue?s.venue.split(',')[0]:'Both nights'}${s.show_time?' · '+s.show_time:''}</span>${s.flag?`<span class="st ${s.flagWarn?'warn':''}">${s.flag}</span>`:''}</span></button>`;
+ li.firstChild.onclick=()=>{cur=id;t=BilloMotion.DUR;renderShows();renderEdit();renderPost();paint();};ul.appendChild(li);});$('nShows').textContent=D.order.length+' cards';}
+function renderSizes(){const g=$('sizes');g.innerHTML='';SIZES.forEach(([k,w,h,n])=>{const b=document.createElement('button');b.setAttribute('aria-pressed',k===size);b.textContent=`${n} · ${w}×${h}`;b.onclick=()=>{size=k;renderSizes();paint();};g.appendChild(b);});}
+// edit pane
+const F=[["kicker","Kicker"],["title","Title (one line each)","lines"],["flag","Flag"],["date","Date line"],["venue","Venue line"],["times","Times / prices (time | label | open or wait)","times"],["lineupLabel","Lineup label"],["lineup","Lineup"],["cta","Call to action / URL"],["fine","Fine print"],["corner","Corner mark"]];
+function renderEdit(){const c=D.cards[cur];const p=$('p-edit');let h='';
+ if(D.shows[cur]&&D.shows[cur].note) h+=`<p class="note">${D.shows[cur].note}</p>`;
+ h+=`<label class="f"><span>Photo (real photos and Bad Turkeys plates)</span></label><div class="photos">${PHOTOS.map(([f,n,k])=>`<button data-ph="${f}" aria-pressed="${c.bg===f}" style="background-image:url(${IMG+f})" title="${n} · ${k}"><i>${k==='real'?'REAL':'BT'}</i></button>`).join('')}</div>
+ <div class="row2"><label class="f"><span>Your own photo</span><input type="file" id="up" accept="image/*"></label><label class="f"><span>Inset photo</span><select id="inset"><option value="">None</option>${PHOTOS.filter(x=>x[2]==='real').map(([f,n])=>`<option value="${f}" ${c.inset===f?'selected':''}>${n}</option>`).join('')}</select></label></div>`;
+ F.forEach(([k,lab,kind])=>{let v=c[k];if(kind==='lines')v=(v||[]).join('\n');else if(kind==='times')v=(v||[]).map(x=>`${x.t} | ${x.s} | ${x.state}`).join('\n');else v=v||'';
+  h+=`<label class="f"><span>${lab}</span>${kind?`<textarea data-k="${k}" data-kind="${kind}">${v}</textarea>`:`<input data-k="${k}" value="${String(v).replace(/"/g,'&quot;')}">`}</label>`;});
+ p.innerHTML=h;
+ p.querySelectorAll('[data-k]').forEach(el=>el.oninput=()=>{const k=el.dataset.k,kind=el.dataset.kind;let v=el.value;
+  if(kind==='lines')v=v.split('\n').filter(Boolean);else if(kind==='times')v=v.split('\n').filter(Boolean).map(l=>{const [a,b,s]=l.split('|').map(x=>(x||'').trim());return{t:a,s:b||'',state:s==='wait'?'wait':'open'};});
+  c[k]=v;paint();});
+ p.querySelectorAll('[data-ph]').forEach(b=>b.onclick=()=>{c.bg=b.dataset.ph;renderEdit();paint();});
+ $('inset').onchange=(e)=>{c.inset=e.target.value||undefined;paint();};
+ $('up').onchange=(e)=>{const f=e.target.files[0];if(!f)return;c.bg=URL.createObjectURL(f);paint();toast('Your photo is in. It stays on your device.');};}
+// post pane
+function renderPost(){const c=D.cards[cur],pk=D.pack[cur]||{};let h='<h4>Captions</h4>';(D.captions[cur]||[]).forEach((x,i)=>h+=`<div class="cap" id="cap${i}">${x}</div><button class="b" data-cp="${i}">Copy</button> `);
+ h+='<h4>Ready-made pack</h4><div class="pack">';(pk.files||[]).forEach(f=>h+=`<a href="${f.href}" download>${f.label}<small>${f.size}</small></a>`);h+='</div>';
+ $('p-post').innerHTML=h;$('p-post').querySelectorAll('[data-cp]').forEach(b=>b.onclick=()=>{navigator.clipboard.writeText($('cap'+b.dataset.cp).textContent);toast('Caption copied');});}
+function renderCan(){let h='<p class="dimt" style="margin:0 0 6px">Everything below runs in the browser and plugs into Billo OS. One desk, every tool for show week.</p>';
+ D.cando.forEach(g=>{h+=`<h4>${g.h}</h4>`;g.items.forEach(i=>h+=`<a href="${i.href}"><span class="g">${i.g}</span><span><b>${i.n}</b><span class="d">${i.d}</span></span></a>`);});$('p-can').innerHTML=h;}
+document.querySelectorAll('.tabs button').forEach(b=>b.onclick=()=>{document.querySelectorAll('.tabs button').forEach(x=>x.setAttribute('aria-selected',x===b));['edit','post','can'].forEach(p=>$('p-'+p).hidden=p!==b.dataset.p);});
+// export
+function dl(blob,name){const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),4000);}
+async function exportSize(k){const s=SIZES.find(x=>x[0]===k);const c=document.createElement('canvas');c.width=s[1];c.height=s[2];BilloMotion.draw(c.getContext('2d'),s[1],s[2],99,D.cards[cur],await assets(D.cards[cur]));return new Promise(r=>c.toBlob(b=>{dl(b,`${cur}_${k}_${s[1]}x${s[2]}.png`);r();},'image/png'));}
+async function exportMotion(){const s=SIZES.find(x=>x[0]===size);const c=document.createElement('canvas');c.width=s[1];c.height=s[2];const x=c.getContext('2d');const a=await assets(D.cards[cur]);
+ const mime=['video/mp4;codecs=avc1','video/mp4','video/webm;codecs=vp9','video/webm'].find(m=>window.MediaRecorder&&MediaRecorder.isTypeSupported(m));if(!mime){toast('This browser cannot record video. Use the ready-made pack.');return;}
+ const st=c.captureStream(30),rec=new MediaRecorder(st,{mimeType:mime,videoBitsPerSecond:12e6}),ch=[];rec.ondataavailable=e=>ch.push(e.data);
+ const done=new Promise(r=>rec.onstop=r);rec.start();$('state').textContent='Recording motion…';const st0=performance.now();
+ await new Promise(r=>{const step=(now)=>{const tt=(now-st0)/1000;BilloMotion.draw(x,s[1],s[2],Math.min(tt,BilloMotion.DUR-0.001),D.cards[cur],a);if(tt<BilloMotion.DUR+0.4)requestAnimationFrame(step);else r();};requestAnimationFrame(step);});
+ rec.stop();await done;dl(new Blob(ch,{type:mime}),`${cur}_${size}_motion.${mime.includes('mp4')?'mp4':'webm'}`);$('state').textContent='Built on Billo Motion v1';}
+document.getElementById('bExp').onclick=(e)=>{e.stopPropagation();$('mExp').classList.toggle('on');};document.addEventListener('click',()=>$('mExp').classList.remove('on'));
+$('mExp').querySelectorAll('[data-x]').forEach(b=>b.onclick=async()=>{const x=b.dataset.x;if(x==='png')await exportSize(size);if(x==='all')for(const s of SIZES)await exportSize(s[0]);if(x==='motion')await exportMotion();if(x==='card')dl(new Blob([JSON.stringify(D.cards[cur],null,1)],{type:'application/json'}),cur+'.json');});
+$('bPlay').onclick=()=>{if(!playing&&t>=BilloMotion.DUR)t=0;play();};$('bPlay2').onclick=$('bPlay').onclick;
+$('scrub').oninput=(e)=>{playing=false;cancelAnimationFrame(raf);setBtn();t=+e.target.value;paint();};
+document.fonts.ready.then(()=>Promise.all(['400 20px Anton','600 20px Outfit','700 20px "JetBrains Mono"','500 20px "JetBrains Mono"'].map(f=>document.fonts.load(f)))).then(()=>{renderShows();renderSizes();renderEdit();renderPost();renderCan();paint();});
+})();
+</script>
+</body>
+</html>
