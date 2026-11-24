@@ -68,6 +68,60 @@ label.f input:focus,label.f textarea:focus{outline:none;border-color:var(--teal)
 @media (max-width:1180px){.wrap{grid-template-columns:240px minmax(0,1fr)}.wrap .col:last-child{grid-column:1/-1;border-top:1px solid var(--ln)}}
 @media (max-width:760px){.wrap{grid-template-columns:1fr}.shows{display:flex;overflow:auto}.shows li{min-width:240px;border-right:1px solid var(--ln)}.src{display:none}}
 </style>
+<script>
+(function(){
+  if (window.__billoBanner) return; window.__billoBanner = 1;
+  function mount(){
+    if (document.getElementById('billo-banner')) return;
+    var a = document.createElement('a');
+    a.id = 'billo-banner';
+    a.href = 'https://billo-browser.netlify.app/os.html';
+    a.target = '_blank';
+    a.rel = 'noopener';
+    a.innerHTML = '<span class="bb-k">NEW</span><span class="bb-t">Billo OS — the browser, the data, the renders</span><span class="bb-a">See how it works →</span>';
+    var s = document.createElement('style');
+    s.textContent = '#billo-banner{display:flex;align-items:center;gap:12px;justify-content:center;text-decoration:none;' +
+      'background:#fdfcf9;color:#141310;border-bottom:1px solid #e6e0d4;padding:10px 16px;' +
+      'font:12px -apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;letter-spacing:.01em;position:relative;z-index:9999}' +
+      '#billo-banner:hover{background:#faf6ea}' +
+      '#billo-banner .bb-k{font:10px ui-monospace,Menlo,monospace;letter-spacing:.18em;background:#c9a84c;color:#141310;padding:3px 8px;border-radius:99px}' +
+      '#billo-banner .bb-t{font-weight:600}' +
+      '#billo-banner .bb-a{color:#8a6d1f;font-weight:600}' +
+      '@media(max-width:640px){#billo-banner .bb-t{display:none}}';
+    (document.head || document.documentElement).appendChild(s);
+    document.body.insertBefore(a, document.body.firstChild);
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', mount);
+  else mount();
+})();
+</script>
+<script>
+(function(){
+  if (window.__billoBanner) return; window.__billoBanner = 1;
+  function mount(){
+    if (document.getElementById('billo-banner')) return;
+    var a = document.createElement('a');
+    a.id = 'billo-banner';
+    a.href = 'https://billo-browser.netlify.app/os.html';
+    a.target = '_blank';
+    a.rel = 'noopener';
+    a.innerHTML = '<span class="bb-k">NEW</span><span class="bb-t">Billo OS — the browser, the data, the renders</span><span class="bb-a">See how it works →</span>';
+    var s = document.createElement('style');
+    s.textContent = '#billo-banner{display:flex;align-items:center;gap:12px;justify-content:center;text-decoration:none;' +
+      'background:#fdfcf9;color:#141310;border-bottom:1px solid #e6e0d4;padding:10px 16px;' +
+      'font:12px -apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;letter-spacing:.01em;position:relative;z-index:9999}' +
+      '#billo-banner:hover{background:#faf6ea}' +
+      '#billo-banner .bb-k{font:10px ui-monospace,Menlo,monospace;letter-spacing:.18em;background:#c9a84c;color:#141310;padding:3px 8px;border-radius:99px}' +
+      '#billo-banner .bb-t{font-weight:600}' +
+      '#billo-banner .bb-a{color:#8a6d1f;font-weight:600}' +
+      '@media(max-width:640px){#billo-banner .bb-t{display:none}}';
+    (document.head || document.documentElement).appendChild(s);
+    document.body.insertBefore(a, document.body.firstChild);
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', mount);
+  else mount();
+})();
+</script>
 </head>
 <body>
 <header class="ab">
