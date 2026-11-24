@@ -1,0 +1,19 @@
+[package]
+name = "billo_remote"
+version = "0.1.0"
+edition = "2021"
+description = "Billo Remote: drive the Billo Browser on Billy's Mac from any phone. Screen stream + taps/keys, token-locked."
+
+[dependencies]
+axum = "0.7"
+tokio = { version = "1", features = ["full"] }
+xcap = "0.7"
+enigo = "0.2"
+image = { version = "0.25", default-features = false, features = ["jpeg"] }
+serde = { version = "1", features = ["derive"] }
+rand = "0.8"
+core-graphics = "0.23"
+
+[profile.release]
+opt-level = 3
+strip = true

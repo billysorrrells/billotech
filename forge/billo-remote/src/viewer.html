@@ -1,0 +1,34 @@
+<!doctype html><html><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>Billo Remote</title>
+<style>
+:root{--ink:#0A0A0B;--bone:#F4F2EC;--teal:#2DD6AE;--ln:#26262b}
+*{box-sizing:border-box}body{margin:0;background:var(--ink);color:var(--bone);font:14px -apple-system,system-ui,sans-serif;display:flex;flex-direction:column;height:100dvh}
+header{display:flex;align-items:center;gap:8px;padding:8px 10px;border-bottom:1px solid var(--ln)}
+header b{font:700 15px system-ui;letter-spacing:.04em}header b em{color:var(--teal);font-style:normal}
+#st{margin-left:auto;font:11px ui-monospace,monospace;color:#9a9a9f}
+#wrap{flex:1;overflow:auto;position:relative;background:#000}
+#scr{display:block;width:100%;height:auto;user-select:none;-webkit-user-drag:none}
+#dot{position:absolute;width:22px;height:22px;margin:-11px 0 0 -11px;border:2px solid var(--teal);border-radius:50%;pointer-events:none;display:none}
+.bar{display:flex;gap:6px;padding:8px;border-top:1px solid var(--ln);flex-wrap:wrap}
+.bar input{flex:1;min-width:140px;background:#141416;border:1px solid var(--ln);color:var(--bone);padding:10px;font-size:16px}
+button{background:#141416;border:1px solid var(--ln);color:var(--bone);padding:10px 12px;font-size:14px}
+button.pri{background:var(--teal);color:#000;border:0;font-weight:700}
+</style></head><body>
+<header><b>Billo <em>Remote</em></b><button id="front">Billo Browser to front</button><button id="zoom">Zoom</button><span id="st">connecting…</span></header>
+<div id="wrap"><img id="scr" alt="Mac screen"><div id="dot"></div></div>
+<div class="bar"><input id="txt" placeholder="Tap a field on the screen, type here, Send" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"><button class="pri" id="send">Send</button><button data-k="enter">Enter</button><button data-k="tab">Tab</button><button data-k="backspace">⌫</button><button data-k="escape">Esc</button><button data-s="-5">▲</button><button data-s="5">▼</button></div>
+<script>
+const K='__TOKEN__',img=document.getElementById('scr'),st=document.getElementById('st'),dot=document.getElementById('dot'),wrap=document.getElementById('wrap');
+const post=(o)=>fetch('/input?k='+K,{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(o)}).then(()=>setTimeout(tick,250));
+let busy=false,n=0,zoom=false;
+function tick(){if(busy)return;busy=true;fetch('/frame?k='+K+'&w='+(zoom?2200:Math.min(1600,Math.round(innerWidth*devicePixelRatio)))+'&t='+Date.now()).then(r=>{if(!r.ok)throw r.status;return r.blob()}).then(b=>{const o=img.src;img.src=URL.createObjectURL(b);if(o.startsWith('blob:'))URL.revokeObjectURL(o);st.textContent='live · '+(++n);}).catch(e=>st.textContent='error '+e).finally(()=>busy=false);}
+setInterval(tick,700);tick();
+img.addEventListener('click',e=>{const r=img.getBoundingClientRect();const x=(e.clientX-r.left)/r.width,y=(e.clientY-r.top)/r.height;dot.style.left=(e.clientX-r.left+wrap.scrollLeft)+'px';dot.style.top=(e.clientY-r.top+wrap.scrollTop)+'px';dot.style.display='block';setTimeout(()=>dot.style.display='none',600);post({t:'click',x,y});});
+document.getElementById('send').onclick=()=>{const t=document.getElementById('txt');if(t.value){post({t:'text',s:t.value});t.value='';}};
+document.getElementById('txt').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();document.getElementById('send').click();}});
+document.querySelectorAll('[data-k]').forEach(b=>b.onclick=()=>post({t:'key',k:b.dataset.k}));
+document.querySelectorAll('[data-s]').forEach(b=>b.onclick=()=>post({t:'scroll',dy:+b.dataset.s}));
+document.getElementById('front').onclick=()=>post({t:'front'});
+document.getElementById('zoom').onclick=()=>{zoom=!zoom;img.style.width=zoom?'220%':'100%';tick();};
+</script></body></html>
