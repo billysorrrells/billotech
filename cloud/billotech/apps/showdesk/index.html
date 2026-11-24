@@ -114,15 +114,25 @@ label.f input:focus,label.f textarea:focus{outline:none;border-color:var(--teal)
 const SIZES=[["story",1080,1920,"Story · Reel"],["feed",1080,1350,"Feed 4:5"],["square",1080,1080,"Square"],["wide",1920,1080,"16:9 · YouTube · FB"],["event",2160,1080,"Event page 2:1"],["strip",1600,500,"Site banner"]];
 const PHOTOS=[["rt-hell-turkey.jpg","Hell Turkey","Bad Turkeys"],["rt-band.jpg","The band","Bad Turkeys"],["rt-billy-ali.jpg","Billy + Ali","Bad Turkeys"],["bt-neon-turkey.jpg","Neon turkey","Bad Turkeys"],["bt-squad-silhouettes.jpg","The squad","Bad Turkeys"],["bt-squad-backlit.jpg","Backlit","Bad Turkeys"],["billy-headshot-laugh.png","Headshot","real"],["billy-headshot-suit.png","Headshot 2","real"]];
 const IMG='img/';
+const PLATES=[["plates/willie-tape-a-jive-5pm.mp4","Willie tape · Jive Turkeys 5 PM","24 s"],["plates/willie-tape-b-beast-mocity.mp4","Willie tape · Beast at Mo City","24 s"]];
 const D=window.SHOW_DESK, cv=document.getElementById('cv'), ctx=cv.getContext('2d');
 let cur=D.order[0], size='feed', t=BilloMotion.DUR, playing=false, raf=0, t0=0;
 const cache={};
-const img=(s)=>cache[s]||(cache[s]=new Promise((ok)=>{const i=new Image();i.onload=()=>ok(i);i.onerror=()=>ok(null);i.src=s.startsWith('blob:')?s:IMG+s;}));
+const isVid=(s)=>/\.(mp4|mov|webm)(\?|$)/i.test(s||'')||(s||'').startsWith('vid:');
+const img=(s)=>cache[s]||(cache[s]=new Promise((ok)=>{
+ if(isVid(s)){const v=document.createElement('video');v.playsInline=true;v.preload='auto';v.crossOrigin='anonymous';v.muted=true;v.onloadeddata=()=>ok(v);v.onerror=()=>ok(null);v.src=s.replace(/^vid:/,'');return;}
+ const i=new Image();i.onload=()=>ok(i);i.onerror=()=>ok(null);i.src=s.startsWith('blob:')?s:IMG+s;}));
+const plateOf=async(c)=>c.bg&&isVid(c.bg)?await img(c.bg):null;
+const plateLen=async(c)=>{const v=await plateOf(c);return v&&isFinite(v.duration)?v.duration:0;};
 const $=(id)=>document.getElementById(id);
 function toast(m){const e=$('toast');e.textContent=m;e.style.display='block';clearTimeout(toast.h);toast.h=setTimeout(()=>e.style.display='none',2200);}
 async function assets(c){return{bg:c.bg?await img(c.bg):null,inset:c.inset?await img(c.inset):null};}
-async function paint(){const c=D.cards[cur];const s=SIZES.find(x=>x[0]===size);cv.width=s[1];cv.height=s[2];BilloMotion.draw(ctx,s[1],s[2],t,c,await assets(c));$('tc').textContent=t>=BilloMotion.DUR?`${BilloMotion.DUR.toFixed(2)} s · still`:`${t.toFixed(2)} s`;$('scrub').value=t;}
-function play(){if(playing){playing=false;cancelAnimationFrame(raf);setBtn();return;}playing=true;setBtn();t0=performance.now();const loop=async(now)=>{t=Math.min(BilloMotion.DUR,(now-t0)/1000);await paint();if(t<BilloMotion.DUR&&playing)raf=requestAnimationFrame(loop);else{playing=false;setBtn();}};raf=requestAnimationFrame(loop);}
+function drawFrame(x,W,H,tt,c,a){if(c.plateOnly&&a.bg&&a.bg.videoWidth){const v=a.bg,sc=Math.max(W/v.videoWidth,H/v.videoHeight),dw=v.videoWidth*sc,dh=v.videoHeight*sc;x.fillStyle='#000';x.fillRect(0,0,W,H);x.drawImage(v,(W-dw)/2,(H-dh)/2,dw,dh);}else BilloMotion.draw(x,W,H,tt,c,a);}
+async function paint(){const c=D.cards[cur];const s=SIZES.find(x=>x[0]===size);if(cv.width!==s[1]||cv.height!==s[2]){cv.width=s[1];cv.height=s[2];}drawFrame(ctx,s[1],s[2],Math.min(t,BilloMotion.DUR),c,await assets(c));$('tc').textContent=t>=BilloMotion.DUR?`${BilloMotion.DUR.toFixed(2)} s · still`:`${t.toFixed(2)} s`;$('scrub').value=t;}
+async function play(){const v=await plateOf(D.cards[cur]);if(playing){playing=false;cancelAnimationFrame(raf);if(v)v.pause();setBtn();return;}
+ const len=Math.max(BilloMotion.DUR,v?await plateLen(D.cards[cur]):0);playing=true;setBtn();
+ if(v){v.currentTime=0;v.muted=false;try{await v.play();}catch(e){v.muted=true;v.play();}}
+ t0=performance.now();const loop=async(now)=>{const el=v?v.currentTime:(now-t0)/1000;t=Math.min(len,el);await paint();if(t<len-0.02&&playing&&!(v&&v.ended))raf=requestAnimationFrame(loop);else{playing=false;if(v)v.pause();setBtn();}};raf=requestAnimationFrame(loop);}
 function setBtn(){$('bPlay').innerHTML=`<span class="lbl">${playing?'Pause':'Play'}</span> ${playing?'❚❚':'▶'}`;$('bPlay2').textContent=playing?'❚❚':'▶';}
 // shows list
 function fmtDay(d){const x=new Date(d+'T12:00:00');return{m:x.toLocaleString('en-US',{month:'short'}),d:x.getDate(),w:x.toLocaleString('en-US',{weekday:'short'})};}
@@ -135,16 +145,20 @@ const F=[["kicker","Kicker"],["title","Title (one line each)","lines"],["flag","
 function renderEdit(){const c=D.cards[cur];const p=$('p-edit');let h='';
  if(D.shows[cur]&&D.shows[cur].note) h+=`<p class="note">${D.shows[cur].note}</p>`;
  h+=`<label class="f"><span>Background (Bad Turkeys renders + photos)</span></label><div class="photos">${PHOTOS.map(([f,n,k])=>`<button data-ph="${f}" aria-pressed="${c.bg===f}" style="background-image:url(${IMG+f})" title="${n} · ${k}"><i>${k==='real'?'PHOTO':'RENDER'}</i></button>`).join('')}</div>
- <div class="row2"><label class="f"><span>Your own photo</span><input type="file" id="up" accept="image/*"></label><label class="f"><span>Inset photo</span><select id="inset"><option value="">None</option>${PHOTOS.filter(x=>x[2]==='real').map(([f,n])=>`<option value="${f}" ${c.inset===f?'selected':''}>${n}</option>`).join('')}</select></label></div>`;
+ <label class="f"><span>Video plates (talking tapes · sound on when you play)</span></label><div class="photos">${PLATES.map(([f,n,d])=>`<button data-pl="${f}" aria-pressed="${c.bg===f}" style="background-image:url(${f.replace('.mp4','.jpg')})" title="${n} · ${d}"><i>PLATE ${d}</i></button>`).join('')}</div>
+ <label class="f" style="display:flex;gap:8px;align-items:center"><input type="checkbox" id="plateOnly" ${c.plateOnly?'checked':''} style="width:auto"><span style="margin:0">Plate only: full screen, no card graphics</span></label>
+ <div class="row2"><label class="f"><span>Your own photo or video</span><input type="file" id="up" accept="image/*,video/*"></label><label class="f"><span>Inset photo</span><select id="inset"><option value="">None</option>${PHOTOS.filter(x=>x[2]==='real').map(([f,n])=>`<option value="${f}" ${c.inset===f?'selected':''}>${n}</option>`).join('')}</select></label></div>`;
  F.forEach(([k,lab,kind])=>{let v=c[k];if(kind==='lines')v=(v||[]).join('\n');else if(kind==='times')v=(v||[]).map(x=>`${x.t} | ${x.s} | ${x.state}`).join('\n');else v=v||'';
   h+=`<label class="f"><span>${lab}</span>${kind?`<textarea data-k="${k}" data-kind="${kind}">${v}</textarea>`:`<input data-k="${k}" value="${String(v).replace(/"/g,'&quot;')}">`}</label>`;});
  p.innerHTML=h;
  p.querySelectorAll('[data-k]').forEach(el=>el.oninput=()=>{const k=el.dataset.k,kind=el.dataset.kind;let v=el.value;
   if(kind==='lines')v=v.split('\n').filter(Boolean);else if(kind==='times')v=v.split('\n').filter(Boolean).map(l=>{const [a,b,s]=l.split('|').map(x=>(x||'').trim());return{t:a,s:b||'',state:s==='wait'?'wait':'open'};});
   c[k]=v;paint();});
- p.querySelectorAll('[data-ph]').forEach(b=>b.onclick=()=>{c.bg=b.dataset.ph;renderEdit();paint();});
+ p.querySelectorAll('[data-ph]').forEach(b=>b.onclick=()=>{c.bg=b.dataset.ph;c.plateOnly=false;renderEdit();paint();});
+ p.querySelectorAll('[data-pl]').forEach(b=>b.onclick=async()=>{c.bg=b.dataset.pl;renderEdit();const v=await img(c.bg);if(v){v.currentTime=1.5;v.onseeked=()=>{v.onseeked=null;paint();};}toast('Plate loaded. Hit Play to hear it.');});
+ $('plateOnly').onchange=(e)=>{c.plateOnly=e.target.checked;paint();};
  $('inset').onchange=(e)=>{c.inset=e.target.value||undefined;paint();};
- $('up').onchange=(e)=>{const f=e.target.files[0];if(!f)return;c.bg=URL.createObjectURL(f);paint();toast('Your photo is in. It stays on your device.');};}
+ $('up').onchange=async(e)=>{const f=e.target.files[0];if(!f)return;const u=URL.createObjectURL(f);c.bg=f.type.startsWith('video')?'vid:'+u:u;if(f.type.startsWith('video')){const v=await img(c.bg);if(v){v.currentTime=0.5;v.onseeked=()=>{v.onseeked=null;paint();};}}else paint();toast('Your file is in. It stays on your device.');};}
 // post pane
 function renderPost(){const c=D.cards[cur],pk=D.pack[cur]||{};let h='<h4>Captions</h4>';(D.captions[cur]||[]).forEach((x,i)=>h+=`<div class="cap" id="cap${i}">${x}</div><button class="b" data-cp="${i}">Copy</button> `);
  h+='<h4>Ready-made pack</h4><div class="pack">';(pk.files||[]).forEach(f=>h+=`<a href="${f.href}" download>${f.label}<small>${f.size}</small></a>`);h+='</div>';
@@ -155,12 +169,14 @@ document.querySelectorAll('.tabs button').forEach(b=>b.onclick=()=>{document.que
 // export
 function dl(blob,name){const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),4000);}
 async function exportSize(k){const s=SIZES.find(x=>x[0]===k);const c=document.createElement('canvas');c.width=s[1];c.height=s[2];BilloMotion.draw(c.getContext('2d'),s[1],s[2],99,D.cards[cur],await assets(D.cards[cur]));return new Promise(r=>c.toBlob(b=>{dl(b,`${cur}_${k}_${s[1]}x${s[2]}.png`);r();},'image/png'));}
-async function exportMotion(){const s=SIZES.find(x=>x[0]===size);const c=document.createElement('canvas');c.width=s[1];c.height=s[2];const x=c.getContext('2d');const a=await assets(D.cards[cur]);
+async function exportMotion(){const s=SIZES.find(x=>x[0]===size);const c=document.createElement('canvas');c.width=s[1];c.height=s[2];const x=c.getContext('2d');const a=await assets(D.cards[cur]);const v=await plateOf(D.cards[cur]);const len=Math.max(BilloMotion.DUR,v?await plateLen(D.cards[cur]):0);
  const mime=['video/mp4;codecs=avc1','video/mp4','video/webm;codecs=vp9','video/webm'].find(m=>window.MediaRecorder&&MediaRecorder.isTypeSupported(m));if(!mime){toast('This browser cannot record video. Use the ready-made pack.');return;}
- const st=c.captureStream(30),rec=new MediaRecorder(st,{mimeType:mime,videoBitsPerSecond:12e6}),ch=[];rec.ondataavailable=e=>ch.push(e.data);
+ const st=c.captureStream(30);let ac=null;
+ if(v){try{ac=new AudioContext();const src=v.__src||(v.__src=ac.createMediaElementSource(v));const dst=ac.createMediaStreamDestination();src.connect(dst);dst.stream.getAudioTracks().forEach(tr=>st.addTrack(tr));}catch(e){}v.muted=false;v.currentTime=0;await v.play();}
+ const rec=new MediaRecorder(st,{mimeType:mime,videoBitsPerSecond:12e6}),ch=[];rec.ondataavailable=e=>ch.push(e.data);
  const done=new Promise(r=>rec.onstop=r);rec.start();$('state').textContent='Recording motion…';const st0=performance.now();
- await new Promise(r=>{const step=(now)=>{const tt=(now-st0)/1000;BilloMotion.draw(x,s[1],s[2],Math.min(tt,BilloMotion.DUR-0.001),D.cards[cur],a);if(tt<BilloMotion.DUR+0.4)requestAnimationFrame(step);else r();};requestAnimationFrame(step);});
- rec.stop();await done;dl(new Blob(ch,{type:mime}),`${cur}_${size}_motion.${mime.includes('mp4')?'mp4':'webm'}`);$('state').textContent='Built on Billo Motion v1';}
+ await new Promise(r=>{const step=(now)=>{const tt=v?v.currentTime:(now-st0)/1000;drawFrame(x,s[1],s[2],Math.min(tt,BilloMotion.DUR-0.001),D.cards[cur],a);if(tt<len+(v?0:0.4)&&!(v&&v.ended))requestAnimationFrame(step);else r();};requestAnimationFrame(step);});
+ rec.stop();if(v)v.pause();if(ac)setTimeout(()=>ac.close(),500);await done;dl(new Blob(ch,{type:mime}),`${cur}_${size}_motion.${mime.includes('mp4')?'mp4':'webm'}`);$('state').textContent='Built on Billo Motion v1';}
 document.getElementById('bExp').onclick=(e)=>{e.stopPropagation();$('mExp').classList.toggle('on');};document.addEventListener('click',()=>$('mExp').classList.remove('on'));
 $('mExp').querySelectorAll('[data-x]').forEach(b=>b.onclick=async()=>{const x=b.dataset.x;if(x==='png')await exportSize(size);if(x==='all')for(const s of SIZES)await exportSize(s[0]);if(x==='motion')await exportMotion();if(x==='card')dl(new Blob([JSON.stringify(D.cards[cur],null,1)],{type:'application/json'}),cur+'.json');});
 $('bPlay').onclick=()=>{if(!playing&&t>=BilloMotion.DUR)t=0;play();};$('bPlay2').onclick=$('bPlay').onclick;

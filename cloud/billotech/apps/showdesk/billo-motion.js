@@ -31,7 +31,7 @@
     return total;
   }
   function cover(ctx, img, x, y, w, h, fx = 0.5, fy = 0.5, zoom = 1) {
-    const iw = img.naturalWidth || img.width, ih = img.naturalHeight || img.height;
+    const iw = img.naturalWidth || img.videoWidth || img.width, ih = img.naturalHeight || img.videoHeight || img.height;
     const s = Math.max(w / iw, h / ih) * zoom;
     const dw = iw * s, dh = ih * s;
     const dx = x + (w - dw) * fx, dy = y + (h - dh) * fy;
