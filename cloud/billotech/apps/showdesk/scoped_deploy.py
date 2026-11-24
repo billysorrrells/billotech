@@ -17,10 +17,10 @@ def live_manifest():
     dep = site['published_deploy']['id']
     files, page = {}, 1
     while True:
-        code, res = D.api('GET', f'/deploys/{dep}/files?page={page}&per_page=1000')
-        if code >= 300 or not res: break
+        code, res = D.api('GET', f'/deploys/{dep}/files?page={page}&per_page=100')
+        if code >= 300: raise SystemExit(f'file list failed on page {page}: {code}')
+        if not res: break
         for f in res: files[f['path']] = f['sha']
-        if len(res) < 1000: break
         page += 1
     return dep, files
 
@@ -30,6 +30,7 @@ def main():
     site_dir, prefixes = os.path.expanduser(args[0]), args[1:]
     live_id, files = live_manifest()
     print(f'live deploy {live_id}: {len(files)} files')
+    if len(files) < 1400: raise SystemExit(f'SAFETY STOP: live manifest has only {len(files)} files; refusing to deploy')
     mine = {}
     for root, _, names in os.walk(site_dir):
         for n in names:
