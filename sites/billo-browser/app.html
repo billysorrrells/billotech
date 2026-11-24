@@ -64,6 +64,28 @@ nav a i{display:block;font-size:17px;font-style:normal;margin-bottom:2px}
 .rules div{break-inside:avoid;margin-bottom:6px}.rules b{color:var(--ink)}
 [hidden]{display:none!important}
 .add{display:flex;gap:6px;margin-top:8px}.add input{flex:1;height:38px;border:1px solid var(--line);border-radius:10px;padding:0 10px;font-size:14px}
+
+/* Billo Browser workspace */
+:root{--bg:#f6f4ef;--ink:#211d17;--dim:#625a50;--line:#ddd5c8}
+body{background:radial-gradient(ellipse at 16% 0%,#f4e5cf,transparent 48rem),linear-gradient(145deg,#fdfbf8,#eeebe5);background-attachment:fixed}
+header{background:rgba(251,247,239,.8);backdrop-filter:blur(22px) saturate(145%)}
+main{max-width:1400px;margin:auto;padding:clamp(14px,3vw,38px)}
+.cmd{position:relative;top:auto;background:transparent;padding-top:0}
+.cmd input,a.card,.signin,.stat,.list{background:rgba(255,255,255,.72)}
+a.card:hover{border-color:#aa8a56}
+nav{z-index:12;background:rgba(252,249,243,.87);backdrop-filter:blur(20px) saturate(145%)}
+:focus-visible{outline:2px solid #876329;outline-offset:3px}
+.studio{scroll-margin-top:85px;border:1px solid rgba(255,255,255,.9);border-radius:25px;padding:clamp(12px,2.4vw,24px);background:rgba(255,255,255,.56);box-shadow:0 16px 48px rgba(58,44,22,.12);backdrop-filter:blur(20px) saturate(135%)}
+.studio h1{margin:0;font-size:clamp(25px,4vw,40px);line-height:1.12;letter-spacing:-.06em}
+.studio-bar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:14px 0 12px}
+.studio-group{display:flex;gap:4px;padding:4px;border:1px solid var(--line);border-radius:16px;background:rgba(232,224,211,.51);max-width:100%}
+.studio-button,.studio-link{font-family:inherit;font-size:13px;font-weight:650;color:var(--ink);padding:9px 11px;border:1px solid transparent;border-radius:11px;background:transparent;cursor:pointer;text-decoration:none;white-space:nowrap}
+.studio-button[aria-pressed=true]{background:#fffdf9;border-color:#e3d9ca;box-shadow:0 2px 5px #38291a18}
+.studio-link{border-color:var(--line);background:rgba(255,255,255,.55)}
+.studio-viewport{width:100%;margin:auto;aspect-ratio:16/9;min-height:360px;max-height:77vh}
+.studio-viewport.vertical{aspect-ratio:9/16;max-width:calc(77vh * 9 / 16)}
+.studio-frame{display:block;width:100%;height:100%;border:1px solid var(--line);border-radius:16px;background:#fff}
+@media(max-width:560px){header{flex-wrap:wrap}.who{display:none}.studio-viewport{min-height:450px}.studio-viewport.vertical{max-width:100%}.studio-bar{gap:6px}.studio-button,.studio-link{padding:8px}}
 </style>
 <link rel="preconnect" href="https://hnzekejoaamsnmtqtwie.supabase.co">
 </head>
@@ -78,6 +100,25 @@ nav a i{display:block;font-size:17px;font-style:normal;margin-bottom:2px}
     <div class="msg" id="qmsg"></div>
   </div>
   <div class="install" id="installBox">Install Billo OS to your home screen — full-screen app, no store.<br><button id="installBtn">Add to home screen</button></div>
+
+  <section class="studio" id="production" aria-labelledby="production-title">
+    <h1 id="production-title">Production desk</h1>
+    <div class="studio-bar">
+      <div class="studio-group" role="group" aria-label="Production tools">
+        <button class="studio-button" type="button" data-tool="wall" aria-pressed="true">Render Wall</button>
+        <button class="studio-button" type="button" data-tool="clip" aria-pressed="false">Billo Clip</button>
+      </div>
+      <div class="studio-group" role="group" aria-label="Workspace aspect ratio">
+        <button class="studio-button" type="button" data-ratio="wide" aria-pressed="true">16:9</button>
+        <button class="studio-button" type="button" data-ratio="vertical" aria-pressed="false">9:16</button>
+      </div>
+      <a class="studio-link" id="studio-open" href="https://billysorrells.com/renderwall/" target="_blank" rel="noopener">Open full page ↗</a>
+    </div>
+    <div class="studio-viewport" id="studio-viewport">
+      <iframe class="studio-frame" id="studio-wall" title="Render Wall" data-src="https://billysorrells.com/renderwall/" loading="lazy" allow="fullscreen"></iframe>
+      <iframe class="studio-frame" id="studio-clip" title="Billo Clip" data-src="https://billysorrells.com/billotech/apps/clip/" hidden allow="fullscreen"></iframe>
+    </div>
+  </section>
 
   <h2 id="today">Today · open loops</h2>
   <div id="private">
@@ -99,7 +140,6 @@ nav a i{display:block;font-size:17px;font-style:normal;margin-bottom:2px}
   <h2>Your desk</h2>
   <div class="grid">
     <a class='card' href='https://billo-browser.netlify.app/os'><b>Billo OS</b><span>directory</span></a>
-    <a class="card" href="https://billo-render-wall.netlify.app"><b>Render Wall</b><span>every cut</span></a>
     <a class="card" href="https://kehlin-billy-workbench.netlify.app"><b>Kehlin room</b><span>script · mix · 3D</span></a>
     <a class="card" id="styleLab" href="https://billo-os.netlify.app/stylelab.html"><b>Style Lab</b><span>cut in any style</span></a>
     <a class="card" href="https://billysorrells.com/billotech"><b>BilloTech</b><span>tools</span></a>
@@ -153,7 +193,7 @@ nav a i{display:block;font-size:17px;font-style:normal;margin-bottom:2px}
 </main>
 
 <nav>
-  <a class="on" href="#today"><i>◈</i>Desk</a>
+  <a class="on" href="#production"><i>◈</i>Desk</a>
   <a href="#ai"><i>✦</i>AI</a>
   <a href="#data"><i>▦</i>Data</a>
   <a href="#tools"><i>⚒</i>Tools</a>
@@ -162,6 +202,42 @@ nav a i{display:block;font-size:17px;font-style:normal;margin-bottom:2px}
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script>
 const $=s=>document.querySelector(s), esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+
+/* ---------- production workspace ---------- */
+const studio = $('#production');
+const studioTools = [...studio.querySelectorAll('[data-tool]')];
+const studioRatios = [...studio.querySelectorAll('[data-ratio]')];
+function studioSetting(key, value) {
+  try {
+    if (value !== undefined) localStorage.setItem(key, value);
+    return localStorage.getItem(key);
+  } catch {
+    return null;
+  }
+}
+function selectStudioTool(tool) {
+  studioTools.forEach(button => {
+    const selected = button.dataset.tool === tool;
+    button.setAttribute('aria-pressed', selected);
+    const frame = $('#studio-' + button.dataset.tool);
+    frame.hidden = !selected;
+    if (selected) {
+      if (!frame.hasAttribute('src')) frame.src = frame.dataset.src;
+      $('#studio-open').href = frame.dataset.src;
+    }
+  });
+  studioSetting('billo-studio-tool', tool);
+}
+function selectStudioRatio(ratio) {
+  studioRatios.forEach(button => button.setAttribute('aria-pressed', button.dataset.ratio === ratio));
+  $('#studio-viewport').classList.toggle('vertical', ratio === 'vertical');
+  studioSetting('billo-studio-ratio', ratio);
+}
+studioTools.forEach(button => button.addEventListener('click', () => selectStudioTool(button.dataset.tool)));
+studioRatios.forEach(button => button.addEventListener('click', () => selectStudioRatio(button.dataset.ratio)));
+selectStudioTool(studioSetting('billo-studio-tool') === 'clip' ? 'clip' : 'wall');
+selectStudioRatio(studioSetting('billo-studio-ratio') === 'vertical' ? 'vertical' : 'wide');
 
 /* ---------- machine status: bridge · grab · agent browser ---------- */
 const PORTS={bridge:'http://127.0.0.1:7788/api/health',grab:'http://127.0.0.1:8765/health',obscura:'http://127.0.0.1:9222/json/version'};
