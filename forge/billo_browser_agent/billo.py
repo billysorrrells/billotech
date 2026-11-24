@@ -8,7 +8,7 @@ Every page an agent touches is journaled so it can be mined later instead of for
   - local journal  ~/BillySorrells/billo-agent/journal.jsonl  (always)
   - page text      ~/BillySorrells/billo-agent/pages/<sha>.txt
   - Billo OS       os.habit_events via public.os_habit_ingest when BILLO_AGENT_KEY is set
-                   (app='billo-agent', kind='agent_<action>', meta: session, words, links, status, excerpt)
+                   (app='billo-agent', kind='visit', meta: action, session, words, links, status, excerpt)
   `billo sync` pushes anything not yet sent.
 
   billo text  URL            readable text of the page
@@ -42,9 +42,9 @@ def push(rows):
     key = os.environ.get("BILLO_AGENT_KEY")
     if not key or not rows:
         return False
-    ev = [{"at": r["at"], "url": r["url"], "title": r.get("title"), "app": "billo-agent", "kind": "agent_" + r["action"],
+    ev = [{"at": r["at"], "url": r["url"], "title": r.get("title"), "app": "billo-agent", "kind": "visit",
            "device": os.environ.get("BILLO_DEVICE", os.uname().nodename)[:80], "dwell_s": r.get("secs"),
-           "meta": {k: r.get(k) for k in ("session", "words", "links", "status", "excerpt", "page_file", "engine")}} for r in rows]
+           "meta": {**{k: r.get(k) for k in ("session", "words", "links", "status", "excerpt", "page_file", "engine")}, "action": r["action"], "by": "agent"}} for r in rows]
     req = urllib.request.Request(SB + "/rest/v1/rpc/os_habit_ingest", method="POST",
                                  data=json.dumps({"p_key": key, "p_events": ev}).encode(),
                                  headers={"apikey": PUB, "Authorization": "Bearer " + PUB, "Content-Type": "application/json"})
