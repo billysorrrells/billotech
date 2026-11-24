@@ -1,0 +1,322 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#fdfcf9">
+<link rel="manifest" href="/manifest.json">
+<link rel="apple-touch-icon" href="/icons/icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<title>Billo OS — your doorway</title>
+<style>
+:root{--ink:#141310;--gold:#c9a84c;--line:#e6e0d4;--bg:#fdfcf9;--dim:#8a8378}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 -apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif;padding-bottom:72px}
+header{position:sticky;top:0;background:rgba(253,252,249,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);padding:14px 18px;display:flex;align-items:center;gap:10px;z-index:10}
+.bm{font-weight:800;letter-spacing:.16em;font-size:12px}
+.bm b{color:var(--gold)}
+.who{margin-left:auto;font:10.5px ui-monospace,Menlo,monospace;color:var(--dim);letter-spacing:.06em}
+main{padding:18px}
+h2{font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--dim);font-family:ui-monospace,Menlo,monospace;margin:26px 0 10px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+a.card{display:block;background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px;text-decoration:none;color:var(--ink)}
+a.card b{display:block;font-size:14.5px;margin-bottom:2px}
+a.card span{color:var(--dim);font-size:12px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(96px,1fr));gap:8px}
+.stat{background:#fff;border:1px solid var(--line);border-radius:12px;padding:10px 12px}
+.stat b{display:block;font-size:19px;letter-spacing:-.02em}
+.stat span{font:9px ui-monospace,Menlo,monospace;color:var(--dim);letter-spacing:.08em;text-transform:uppercase}
+nav{position:fixed;bottom:0;left:0;right:0;display:flex;background:rgba(253,252,249,.96);backdrop-filter:blur(10px);border-top:1px solid var(--line);padding:8px 6px calc(8px + env(safe-area-inset-bottom))}
+nav a{flex:1;text-align:center;text-decoration:none;color:var(--dim);font:10px ui-monospace,Menlo,monospace;letter-spacing:.1em;text-transform:uppercase;padding:6px 0}
+nav a.on{color:var(--ink)}
+nav a i{display:block;font-size:17px;font-style:normal;margin-bottom:2px}
+#gate{position:fixed;inset:0;background:var(--bg);display:flex;align-items:center;justify-content:center;z-index:50;padding:24px}
+#gate .box{width:min(360px,92vw);text-align:center}
+#gate h1{font-size:30px;margin:0 0 6px;letter-spacing:-.02em}
+#gate p{color:var(--dim);font-size:13px;margin:0 0 18px}
+#gate input{width:100%;height:50px;border:1px solid var(--line);border-radius:12px;text-align:center;font-size:16px;letter-spacing:.2em;background:#fff;outline:none}
+#gate button{margin-top:12px;width:100%;height:48px;border:0;border-radius:12px;background:var(--ink);color:#fff;font-weight:700;letter-spacing:.1em;font-size:12px;text-transform:uppercase}
+.hint{font:10px ui-monospace,Menlo,monospace;color:#b9b2a6;margin-top:14px;letter-spacing:.06em}
+.install{display:none;margin:16px 0 0;padding:12px 14px;border:1px dashed var(--gold);border-radius:12px;font-size:12.5px;color:#6d5a24;background:#fdf8ea}
+.install button{margin-top:8px;border:0;background:var(--gold);color:#141310;border-radius:9px;padding:8px 14px;font-weight:700;font-size:12px}
+
+.cmd{position:sticky;top:52px;z-index:9;background:var(--bg);padding:10px 0 6px}
+.cmd input{width:100%;height:50px;border:1px solid var(--line);border-radius:14px;padding:0 16px;font-size:16px;background:#fff;outline:none}
+.cmd input:focus{border-color:var(--gold)}
+.acts{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.acts button,.pill{border:1px solid var(--line);background:#fff;border-radius:999px;padding:7px 12px;font:600 12.5px -apple-system,sans-serif;color:var(--ink);cursor:pointer}
+.acts button.go{background:var(--ink);color:#fff;border-color:var(--ink)}
+.acts:empty{display:none}
+.msg{font:11px ui-monospace,Menlo,monospace;color:var(--dim);margin-top:6px;min-height:14px}
+.dots{display:flex;gap:12px;flex-wrap:wrap;font:10.5px ui-monospace,Menlo,monospace;color:var(--dim)}
+.dots span:before{content:"";display:inline-block;width:8px;height:8px;border-radius:50%;background:#d6cfc2;margin-right:5px;vertical-align:0}
+.dots span.up:before{background:#3aa66a}
+.list{background:#fff;border:1px solid var(--line);border-radius:16px;overflow:hidden}
+.row{display:flex;gap:10px;align-items:flex-start;padding:11px 14px;border-top:1px solid var(--line)}
+.row:first-child{border-top:0}
+.row .t{flex:1;min-width:0}.row b{display:block;font-size:14px}.row small{color:var(--dim);font-size:12px;display:block;word-break:break-word}
+.row .tag{font:9px ui-monospace,Menlo,monospace;letter-spacing:.08em;text-transform:uppercase;color:#6d5a24;background:#fdf8ea;border:1px solid #efe3bf;border-radius:6px;padding:2px 6px;white-space:nowrap}
+.row input[type=checkbox]{margin-top:3px;width:18px;height:18px;accent-color:var(--gold)}
+.row.done b{text-decoration:line-through;color:var(--dim)}
+.row a{color:inherit}
+.signin{background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px}
+.signin input{width:100%;height:42px;border:1px solid var(--line);border-radius:10px;padding:0 12px;margin:4px 0;font-size:15px}
+.signin button{height:42px;border:0;border-radius:10px;background:var(--ink);color:#fff;font-weight:700;padding:0 16px;margin-top:6px}
+.rules{columns:2 260px;column-gap:16px;font-size:13px;color:#3b3833}
+.rules div{break-inside:avoid;margin-bottom:6px}.rules b{color:var(--ink)}
+[hidden]{display:none!important}
+.add{display:flex;gap:6px;margin-top:8px}.add input{flex:1;height:38px;border:1px solid var(--line);border-radius:10px;padding:0 10px;font-size:14px}
+
+/* Billo Browser workspace */
+:root{--bg:#f6f4ef;--ink:#211d17;--dim:#625a50;--line:#ddd5c8}
+body{background:radial-gradient(ellipse at 16% 0%,#f4e5cf,transparent 48rem),linear-gradient(145deg,#fdfbf8,#eeebe5);background-attachment:fixed}
+header{background:rgba(251,247,239,.8);backdrop-filter:blur(22px) saturate(145%)}
+main{max-width:1400px;margin:auto;padding:clamp(14px,3vw,38px)}
+.cmd{position:relative;top:auto;background:transparent;padding-top:0}
+.cmd input,a.card,.signin,.stat,.list{background:rgba(255,255,255,.72)}
+a.card:hover{border-color:#aa8a56}
+nav{z-index:12;background:rgba(252,249,243,.87);backdrop-filter:blur(20px) saturate(145%)}
+:focus-visible{outline:2px solid #876329;outline-offset:3px}
+.studio{scroll-margin-top:85px;border:1px solid rgba(255,255,255,.9);border-radius:25px;padding:clamp(12px,2.4vw,24px);background:rgba(255,255,255,.56);box-shadow:0 16px 48px rgba(58,44,22,.12);backdrop-filter:blur(20px) saturate(135%)}
+.studio h1{margin:0;font-size:clamp(25px,4vw,40px);line-height:1.12;letter-spacing:-.06em}
+.studio-bar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:14px 0 12px}
+.studio-group{display:flex;gap:4px;padding:4px;border:1px solid var(--line);border-radius:16px;background:rgba(232,224,211,.51);max-width:100%}
+.studio-button,.studio-link{font-family:inherit;font-size:13px;font-weight:650;color:var(--ink);padding:9px 11px;border:1px solid transparent;border-radius:11px;background:transparent;cursor:pointer;text-decoration:none;white-space:nowrap}
+.studio-button[aria-pressed=true]{background:#fffdf9;border-color:#e3d9ca;box-shadow:0 2px 5px #38291a18}
+.studio-link{border-color:var(--line);background:rgba(255,255,255,.55)}
+.studio-viewport{width:100%;margin:auto;aspect-ratio:16/9;min-height:360px;max-height:77vh}
+.studio-viewport.vertical{aspect-ratio:9/16;max-width:calc(77vh * 9 / 16)}
+.studio-frame{display:block;width:100%;height:100%;border:1px solid var(--line);border-radius:16px;background:#fff}
+@media(max-width:560px){header{flex-wrap:wrap}.who{display:none}.studio-viewport{min-height:450px}.studio-viewport.vertical{max-width:100%}.studio-bar{gap:6px}.studio-button,.studio-link{padding:8px}}
+</style>
+<link rel="preconnect" href="https://hnzekejoaamsnmtqtwie.supabase.co">
+</head>
+<body>
+
+
+<header><div class="bm">BILLO<b>·</b>OS</div><div class="dots" id="dots" style="margin-left:14px"><span id="d-bridge">bridge</span><span id="d-grab">grab</span><span id="d-obscura">agent browser</span></div><div class="who">billo os · this device</div></header>
+<main>
+  <div class="cmd">
+    <input id="q" placeholder="Paste a link or type anything…  (⌘K)" autocomplete="off" autocapitalize="off" spellcheck="false">
+    <div class="acts" id="acts"></div>
+    <div class="msg" id="qmsg"></div>
+  </div>
+  <div class="install" id="installBox">Install Billo OS to your home screen — full-screen app, no store.<br><button id="installBtn">Add to home screen</button></div>
+
+  <section class="studio" id="production" aria-labelledby="production-title">
+    <h1 id="production-title">Production desk</h1>
+    <div class="studio-bar">
+      <div class="studio-group" role="group" aria-label="Production tools">
+        <button class="studio-button" type="button" data-tool="wall" aria-pressed="true">Render Wall</button>
+        <button class="studio-button" type="button" data-tool="clip" aria-pressed="false">Billo Clip</button>
+      </div>
+      <div class="studio-group" role="group" aria-label="Workspace aspect ratio">
+        <button class="studio-button" type="button" data-ratio="wide" aria-pressed="true">16:9</button>
+        <button class="studio-button" type="button" data-ratio="vertical" aria-pressed="false">9:16</button>
+      </div>
+      <a class="studio-link" id="studio-open" href="https://billysorrells.com/renderwall/" target="_blank" rel="noopener">Open full page ↗</a>
+    </div>
+    <div class="studio-viewport" id="studio-viewport">
+      <iframe class="studio-frame" id="studio-wall" title="Render Wall" data-src="https://billysorrells.com/renderwall/" loading="lazy" allow="fullscreen"></iframe>
+      <iframe class="studio-frame" id="studio-clip" title="Billo Clip" data-src="https://billysorrells.com/billotech/apps/clip/" hidden allow="fullscreen"></iframe>
+    </div>
+  </section>
+
+  <h2 id="today">Today · open loops</h2>
+  <div id="private">
+    <div class="signin" id="signin">
+      <b>Sign in to see your loops, people and watch list.</b>
+      <div style="color:var(--dim);font-size:12.5px;margin:4px 0 8px">Same login as the Billo Binder. Nothing private is written into this page — it loads from your database after you sign in.</div>
+      <input id="em" type="email" placeholder="email" autocomplete="username" value="billysorrells@gmail.com">
+      <input id="pw" type="password" placeholder="binder password" autocomplete="current-password">
+      <button id="siBtn">Sign in</button> <span class="msg" id="simsg"></span>
+    </div>
+    <div id="loops" class="list" hidden></div>
+    <div class="add" id="addLoop" hidden><input id="newLoop" placeholder="Add a loop…  (Enter)"></div>
+    <h2 class="priv" hidden>Keep up with</h2>
+    <div id="people" class="list" hidden></div>
+    <h2 class="priv" hidden>Watch</h2>
+    <div id="watch" class="list" hidden></div>
+  </div>
+
+  <h2>Your desk</h2>
+  <div class="grid">
+    <a class='card' href='https://billo-browser.netlify.app/os'><b>Billo OS</b><span>directory</span></a>
+    <a class="card" href="https://kehlin-billy-workbench.netlify.app"><b>Kehlin room</b><span>script · mix · 3D</span></a>
+    <a class="card" id="styleLab" href="https://billo-os.netlify.app/stylelab.html"><b>Style Lab</b><span>cut in any style</span></a>
+    <a class="card" href="https://billysorrells.com/billotech"><b>BilloTech</b><span>tools</span></a>
+    <a class="card" href="https://billo-os.netlify.app"><b>Billo OS tools</b><span>all apps</span></a>
+    <a class="card" href="https://drive.google.com"><b>Drive</b><span>files</span></a>
+    <a class="card" href="https://github.com/billysorrrells"><b>GitHub</b><span>repos</span></a>
+  </div>
+
+  <h2>Make</h2>
+  <div class="grid">
+    <a class="card" href="https://higgsfield.ai/create/video"><b>Higgsfield</b><span>Seedance · Ultra</span></a>
+    <a class="card" href="https://dreamina.capcut.com"><b>Dreamina</b><span>Seedance credits</span></a>
+    <a class="card" href="https://app.netlify.com/teams"><b>Netlify</b><span>sites</span></a>
+    <a class="card" href="https://supabase.com/dashboard/project/hnzekejoaamsnmtqtwie"><b>Billo Binder DB</b><span>supabase</span></a>
+    <a class="card" href="https://studio.youtube.com"><b>YouTube Studio</b><span>channel</span></a>
+    <a class="card" href="https://www.instagram.com/billysorrells/"><b>Instagram</b><span>@billysorrells</span></a>
+  </div>
+
+  <h2 id="ai">AI desks</h2>
+  <div class="grid">
+    <a class="card" href="https://claude.ai"><b>Claude</b><span>anthropic</span></a>
+    <a class="card" href="https://chatgpt.com"><b>ChatGPT</b><span>openai</span></a>
+    <a class="card" href="https://grok.com"><b>Grok</b><span>xai</span></a>
+    <a class="card" href="https://gemini.google.com"><b>Gemini</b><span>google</span></a>
+    <a class="card" href="https://chat.deepseek.com"><b>DeepSeek</b><span>deepseek</span></a>
+    <a class="card" href="https://notebooklm.google.com"><b>NotebookLM</b><span>knowledge</span></a>
+  </div>
+
+  <h2 id="data">Your data <span id="conn" style="text-transform:none;letter-spacing:0;color:#b9b2a6"></span></h2>
+  <div class="stats" id="stats"><div class="stat"><b>—</b><span>loading</span></div></div>
+
+  <h2>House rules</h2>
+  <div class="rules">
+    <div><b>Build, don't buy.</b> Free/open tools first; say what money buys.</div>
+    <div><b>Four backups.</b> GitHub + Drive + two more. Never lose a build.</div>
+    <div><b>Wall it.</b> Every cut goes on the Render Wall with its full package.</div>
+    <div><b>Lock refs first.</b> Real photos of Billy, no AI slop; preview before credits; never render at 1080.</div>
+    <div><b>Stems first.</b> Edit the vocal stem, never the whole song.</div>
+    <div><b>One OS.</b> One database, one repo — no stray projects.</div>
+    <div><b>Seth</b> clears anything legal.</div>
+    <div><b>Live link</b> on every deploy.</div>
+  </div>
+
+  <h2 id="tools">Creator tools</h2>
+  <div class="grid">
+    <a class="card" href="download/BilloBrowser.apk"><b>Android / TV app</b><span>APK</span></a>
+    <a class='card' href='/info'><b>Documentation</b><span>docs</span></a>
+    <a class="card" href="https://app.mailgun.com"><b>Mailgun</b><span>email</span></a>
+    <a class="card" href="/stream.html"><b>Billo Stream</b><span>workspace</span></a>
+  </div>
+</main>
+
+<nav>
+  <a class="on" href="#production"><i>◈</i>Desk</a>
+  <a href="#ai"><i>✦</i>AI</a>
+  <a href="#data"><i>▦</i>Data</a>
+  <a href="#tools"><i>⚒</i>Tools</a>
+</nav>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script>
+const $=s=>document.querySelector(s), esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+
+/* ---------- production workspace ---------- */
+const studio = $('#production');
+const studioTools = [...studio.querySelectorAll('[data-tool]')];
+const studioRatios = [...studio.querySelectorAll('[data-ratio]')];
+function studioSetting(key, value) {
+  try {
+    if (value !== undefined) localStorage.setItem(key, value);
+    return localStorage.getItem(key);
+  } catch {
+    return null;
+  }
+}
+function selectStudioTool(tool) {
+  studioTools.forEach(button => {
+    const selected = button.dataset.tool === tool;
+    button.setAttribute('aria-pressed', selected);
+    const frame = $('#studio-' + button.dataset.tool);
+    frame.hidden = !selected;
+    if (selected) {
+      if (!frame.hasAttribute('src')) frame.src = frame.dataset.src;
+      $('#studio-open').href = frame.dataset.src;
+    }
+  });
+  studioSetting('billo-studio-tool', tool);
+}
+function selectStudioRatio(ratio) {
+  studioRatios.forEach(button => button.setAttribute('aria-pressed', button.dataset.ratio === ratio));
+  $('#studio-viewport').classList.toggle('vertical', ratio === 'vertical');
+  studioSetting('billo-studio-ratio', ratio);
+}
+studioTools.forEach(button => button.addEventListener('click', () => selectStudioTool(button.dataset.tool)));
+studioRatios.forEach(button => button.addEventListener('click', () => selectStudioRatio(button.dataset.ratio)));
+selectStudioTool(studioSetting('billo-studio-tool') === 'clip' ? 'clip' : 'wall');
+selectStudioRatio(studioSetting('billo-studio-ratio') === 'vertical' ? 'vertical' : 'wide');
+
+/* ---------- machine status: bridge · grab · agent browser ---------- */
+const PORTS={bridge:'http://127.0.0.1:7788/api/health',grab:'http://127.0.0.1:8765/health',obscura:'http://127.0.0.1:9222/json/version'};
+const UP={};
+async function ping(k){try{const c=new AbortController();setTimeout(()=>c.abort(),1500);await fetch(PORTS[k],{cache:'no-store',signal:c.signal});UP[k]=1}catch(e){UP[k]=0}$('#d-'+k).classList.toggle('up',!!UP[k]);if(k==='grab'&&UP.grab)$('#styleLab').href='http://127.0.0.1:8765/'}
+Object.keys(PORTS).forEach(ping);
+
+/* ---------- command bar ---------- */
+const MEDIA=/(youtube\.com|youtu\.be|instagram\.com|tiktok\.com|twitter\.com|x\.com|facebook\.com|fb\.watch|vimeo\.com|twitch\.tv|reddit\.com|threads\.net|soundcloud\.com|dailymotion\.com)/i;
+function isUrl(v){return /^https?:\/\//i.test(v)||/^[\w-]+(\.[\w-]+)+(\/\S*)?$/.test(v)}
+function norm(v){return /^https?:\/\//i.test(v)?v:'https://'+v}
+function go(u){location.href=u}
+function acts(){
+  const v=$('#q').value.trim(),a=$('#acts');$('#qmsg').textContent='';
+  if(!v){a.innerHTML='';return}
+  let b=[];
+  if(isUrl(v)){const u=norm(v);
+    b.push(['Open',()=>go(u),1]);
+    if(MEDIA.test(u)){b.push(['Grab MP4',()=>grab(u)]);b.push(['Style Lab it',()=>{go((UP.grab?'http://127.0.0.1:8765/':'https://billo-os.netlify.app/stylelab.html')+'?add='+encodeURIComponent(u))}]);}
+    b.push(['Copy clean link',()=>{const c=new URL(u);['si','igsh','utm_source','utm_medium','utm_campaign','fbclid','dmpr'].forEach(p=>c.searchParams.delete(p));navigator.clipboard.writeText(c.toString());$('#qmsg').textContent='Copied: '+c}]);
+  }else{const e=encodeURIComponent(v);
+    b=[['Google',()=>go('https://www.google.com/search?q='+e),1],['YouTube',()=>go('https://www.youtube.com/results?search_query='+e)],['Instagram',()=>go('https://www.instagram.com/explore/search/keyword/?q='+e)],['TikTok',()=>go('https://www.tiktok.com/search?q='+e)],['GitHub',()=>go('https://github.com/search?q='+e+'&type=repositories')],['My repos',()=>go('https://github.com/search?q=user%3Abillysorrrells+'+e+'&type=code')],['Drive',()=>go('https://drive.google.com/drive/search?q='+e)],['Gmail',()=>go('https://mail.google.com/mail/u/0/#search/'+e)],['Ask Claude',()=>go('https://claude.ai/new?q='+e)],['Ask Grok',()=>go('https://grok.com/?q='+e)]];
+    if(UP.bridge)b.splice(1,0,['My contacts',()=>contacts(v)]);
+  }
+  a.innerHTML='';b.forEach(([t,f,main])=>{const x=document.createElement('button');x.textContent=t;if(main)x.className='go';x.onclick=f;a.appendChild(x)});
+}
+$('#q').addEventListener('input',acts);
+$('#q').addEventListener('keydown',e=>{if(e.key==='Enter'){const f=$('#acts button');if(f)f.click()}});
+document.addEventListener('keydown',e=>{if((e.metaKey||e.ctrlKey)&&e.key==='k'){e.preventDefault();$('#q').focus();$('#q').select()}});
+async function grab(u){
+  if(!UP.grab){$('#qmsg').textContent='Billo Grab is off on this computer. Mac: cd ~/billotech && bash forge/billo_grab/install.sh';return}
+  $('#qmsg').textContent='Pulling…';
+  try{const r=await fetch('http://127.0.0.1:8765/grab?url='+encodeURIComponent(u)+'&max=1080');if(!r.ok)throw new Error((await r.json()).error);
+    const m=JSON.parse(decodeURIComponent(r.headers.get('X-Billo-Meta')||'%7B%7D')),b=await r.blob(),a=document.createElement('a');
+    a.href=URL.createObjectURL(b);a.download=((m.title||'clip').replace(/[^\w .-]+/g,'').slice(0,60)||'clip')+'.mp4';a.click();
+    $('#qmsg').textContent=`Saved ${a.download} · ${m.aspect||''} · also cached in ~/BillySorrells/grab`}
+  catch(e){$('#qmsg').textContent=String(e.message||e).slice(0,240)}
+}
+async function contacts(v){try{const r=await fetch('http://127.0.0.1:7788/api/search?q='+encodeURIComponent(v));const j=await r.json();const rows=(j.contacts||j.results||[]).slice(0,8);
+  $('#qmsg').innerHTML=rows.length?rows.map(c=>esc([c.name,c.phone,c.email,c.city].filter(Boolean).join(' · '))).join('<br>'):'No contacts found.'}catch(e){$('#qmsg').textContent='Bridge search failed.'}}
+
+/* ---------- private desk (Supabase, owner-only RLS) ---------- */
+const sb=supabase.createClient('https://hnzekejoaamsnmtqtwie.supabase.co','sb_publishable_51ybFNizblfWMqL_qdekcg_kZT7nXHy');
+function rowHtml(r){const t=r.link?`<a href="${esc(r.link)}">${esc(r.title)}</a>`:esc(r.title);
+  return `<div class="row ${r.done?'done':''}" data-id="${r.id}">${r.kind==='loop'?`<input type="checkbox" ${r.done?'checked':''}>`:''}<div class="t"><b>${t}</b>${r.detail?`<small>${esc(r.detail)}</small>`:''}</div>${r.tag?`<span class="tag">${esc(r.tag)}</span>`:''}</div>`}
+async function loadDesk(){
+  const {data,error}=await sb.from('billo_desk').select('*').order('done').order('sort');
+  if(error){$('#simsg').textContent=error.message;return}
+  $('#signin').hidden=true;['#loops','#people','#watch','#addLoop'].forEach(s=>$(s).hidden=false);document.querySelectorAll('.priv').forEach(h=>h.hidden=false);
+  const by=k=>data.filter(r=>r.kind===k);
+  const open=by('loop').filter(r=>!r.done).length;$('#today').textContent=`Today · ${open} open loop${open===1?'':'s'}`;
+  $('#loops').innerHTML=by('loop').map(rowHtml).join('')||'<div class="row"><small>Nothing open.</small></div>';
+  $('#people').innerHTML=by('person').map(rowHtml).join('');$('#watch').innerHTML=by('watch').map(rowHtml).join('');
+  $('#loops').querySelectorAll('input[type=checkbox]').forEach(cb=>cb.onchange=async e=>{const id=e.target.closest('.row').dataset.id;await sb.from('billo_desk').update({done:e.target.checked,updated_at:new Date().toISOString()}).eq('id',id);loadDesk()});
+}
+$('#newLoop').addEventListener('keydown',async e=>{if(e.key!=='Enter'||!e.target.value.trim())return;await sb.from('billo_desk').insert({kind:'loop',title:e.target.value.trim(),sort:50});e.target.value='';loadDesk()});
+$('#siBtn').onclick=async()=>{$('#simsg').textContent='…';const{error}=await sb.auth.signInWithPassword({email:$('#em').value.trim(),password:$('#pw').value});$('#simsg').textContent=error?error.message:'';if(!error)loadDesk()};
+$('#pw').addEventListener('keydown',e=>{if(e.key==='Enter')$('#siBtn').click()});
+sb.auth.getSession().then(({data})=>{if(data.session)loadDesk()});
+
+/* ---------- live data from the local bridge, else snapshot ---------- */
+(async()=>{
+  const localOK = location.protocol === 'http:' && /^(127\.0\.0\.1|localhost)$/.test(location.hostname);
+  if(!localOK){document.getElementById('conn').textContent=' · snapshot';document.getElementById('stats').innerHTML=[[36280,'profiles'],[1551,'complete'],[4120,'buyers'],[24852,'contacts'],[72,'covers'],['780 GB','scratch']].map(([n,l])=>`<div class="stat"><b>${n}</b><span>${l}</span></div>`).join('');return}
+  try{
+    const r=await fetch('http://127.0.0.1:7788/api/stats',{cache:'no-store'});
+    const s=await r.json();
+    document.getElementById('conn').textContent=' · live';
+    document.getElementById('stats').innerHTML=[[s.master_profiles,'profiles'],[s.complete_profiles,'complete'],[s.ticket_buyers,'buyers'],[s.contacts_total,'contacts'],[s.covers,'covers'],[s.ssd_free_gb,'GB free']]
+      .map(([n,l])=>`<div class="stat"><b>${n==null?'—':Number(n).toLocaleString()}</b><span>${l}</span></div>`).join('');
+  }catch(e){
+    document.getElementById('conn').textContent=' · bridge offline — open on your Mac for live numbers';
+    document.getElementById('stats').innerHTML='<div class="stat"><b>—</b><span>offline</span></div>';
+  }
+})();
+let deferred=null;
+window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferred=e;const b=document.getElementById('installBox');b.style.display='block';});
+document.getElementById('installBtn')?.addEventListener('click',async()=>{if(deferred){deferred.prompt();deferred=null;document.getElementById('installBox').style.display='none';}});
+if('serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js').catch(()=>{});
+</script>
+</body>
+</html>

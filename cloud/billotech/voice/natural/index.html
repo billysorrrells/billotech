@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Billo Voice · Naturalize · BilloTech</title>
+<meta name="description" content="Make AI or phone narration sound like the real person in a real room. Free, runs on your device.">
+<link rel="stylesheet" href="../../apps/app.css">
+<style>
+main{max-width:980px;margin:0 auto;padding:22px 16px 80px}
+.hero{border:1px solid var(--ln2);background:linear-gradient(135deg,#041714,#0D0D10 60%);padding:22px}
+.hero p{max-width:640px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}
+.card{border:1px solid var(--ln2);background:var(--p1);padding:16px}
+.drop{border:1px dashed var(--ln2);padding:18px;text-align:center;cursor:pointer;display:block}
+.drop:hover,.drop.ok{border-color:var(--teal)}
+.drop input{display:none}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:10px}
+label.s{font:12px "JetBrains Mono",monospace;color:var(--dim);display:flex;flex-direction:column;gap:4px;min-width:150px;flex:1}
+input[type=range]{accent-color:var(--teal)}
+.chain{display:flex;gap:0;margin-top:14px;flex-wrap:wrap}
+.chain div{flex:1;min-width:110px;border:1px solid var(--ln);padding:10px;background:var(--p2)}
+.chain div b{display:block;font:400 18px Anton,Impact,sans-serif;text-transform:uppercase;color:var(--teal)}
+.chain div span{font-size:12px;color:var(--dim)}
+.chain div.on{border-color:var(--teal);background:#06231c}
+table{width:100%;border-collapse:collapse;font:12.5px "JetBrains Mono",monospace;margin-top:10px}
+td,th{border-bottom:1px solid var(--ln);padding:6px;text-align:right}th:first-child,td:first-child{text-align:left}
+canvas{width:100%;height:170px;display:block;background:#050507;border:1px solid var(--ln);margin-top:10px}
+audio{width:100%;margin-top:6px}
+.law{border-left:3px solid var(--teal);padding:8px 12px;background:var(--p2);margin-top:14px;font-size:14px}
+@media(max-width:720px){.grid{grid-template-columns:1fr}}
+</style></head>
+<body>
+<header class="ab">
+ <a class="ab-mark" href="../../pro/"><img src="../../apps/mark.svg" alt=""><span class="ab-name">BILLO<em>VOICE</em></span></a>
+ <div class="ab-doc"><span class="ab-state">Naturalize · runs on your device · free</span></div>
+ <div class="ab-acts"><a class="b" href="../../production/">Production Line</a></div>
+</header>
+<main>
+ <section class="hero">
+  <div class="kick">Billo Voice · Naturalize</div>
+  <h1 class="h" style="font-size:40px">Kill the tin. Keep the man.</h1>
+  <p class="dimt">AI voices and phone reads sound thin because they're missing the chest of a real voice, they spit harsh highs, and they sit in dead silence with no room around them. Drop the narration, drop a clean clip of the real person, and Billo Voice matches the tone, tames the fizz, warms it up, and puts it back in a room. Nothing uploads. Your audio never leaves this device.</p>
+ </section>
+
+ <div class="grid">
+  <div class="card"><div class="kick">1 · Narration to fix</div>
+   <label class="drop" id="dn"><input type="file" id="fn" accept="audio/*,video/*"><b>Drop or tap</b><br><span class="dimt">AI voiceover, phone read, Higgsfield output</span></label>
+   <audio id="pa" controls hidden></audio></div>
+  <div class="card"><div class="kick">2 · The real voice (reference)</div>
+   <label class="drop" id="dr"><input type="file" id="fr" accept="audio/*,video/*"><b>Drop or tap</b><br><span class="dimt">30–120 s of the real person talking on a good mic, no music</span></label>
+   <audio id="pr" controls hidden></audio></div>
+ </div>
+
+ <div class="card" style="margin-top:12px">
+  <div class="kick">3 · Dial it</div>
+  <div class="row">
+   <label class="s">Match strength <input type="range" id="kMatch" min="0" max="1" step=".05" value="1"><span id="vMatch">100%</span></label>
+   <label class="s">Warmth <input type="range" id="kWarm" min="0" max=".4" step=".02" value=".18"><span id="vWarm">18%</span></label>
+   <label class="s">Room <input type="range" id="kRoom" min="0" max=".25" step=".01" value=".08"><span id="vRoom">8%</span></label>
+   <label class="s">Loudness <select id="kLufs" class="b"><option value="-16">-16 narration / podcast</option><option value="-14">-14 social</option><option value="-23">-23 broadcast</option></select></label>
+  </div>
+  <div class="row"><button class="b pri" id="go" disabled>Naturalize</button><a class="b" id="dl" hidden download="narration_billo.wav">Download WAV</a><span class="mono dimt" id="st"></span></div>
+  <div class="chain" id="chain">
+   <div data-k="clean"><b>Clean</b><span>rumble out under 70 Hz</span></div>
+   <div data-k="body"><b>Body</b><span>tone-match to the real voice</span></div>
+   <div data-k="tame"><b>Tame</b><span>de-ess the 4.5–9k fizz</span></div>
+   <div data-k="warm"><b>Warmth</b><span>tube harmonics</span></div>
+   <div data-k="air"><b>Air</b><span>room + room tone in the gaps</span></div>
+   <div data-k="level"><b>Level</b><span>glue + loudness, -1 dB peak</span></div>
+  </div>
+  <audio id="po" controls hidden></audio>
+ </div>
+
+ <div class="card" style="margin-top:12px">
+  <div class="kick">Tone read</div>
+  <canvas id="cv" width="960" height="170"></canvas>
+  <div class="mono dimt" style="font-size:11px;margin-top:4px">— teal: real voice · — purple: before · — white: after</div>
+  <table id="tb"><thead><tr><th></th><th>Body 150–500</th><th>Bite 2k–5k</th><th>Fizz 6k–12k</th><th>Body − Bite</th></tr></thead><tbody></tbody></table>
+ </div>
+
+ <div class="law"><b>The Billo Voice law:</b> the performance comes from the person, the polish comes from the tool. Record the read yourself (closet, phone 6 inches away) and run it through here. For a word you can't re-record, make it speech-to-speech from your own scratch read, never straight text-to-speech, then run it through here so it sits with the rest.</div>
+</main>
+
+<script>
+const SR=48000, $=id=>document.getElementById(id);
+let NARR=null, REF=null, OUT=null;
+const CENT=[63,80,100,125,160,200,250,315,400,500,630,800,1000,1250,1600,2000,2500,3150,4000,5000,6300,8000,10000,12500,16000];
+
+async function decode(file){
+  const buf=await file.arrayBuffer();
+  const ac=new (window.AudioContext||window.webkitAudioContext)();
+  const a=await ac.decodeAudioData(buf); ac.close();
+  const off=new OfflineAudioContext(1,Math.ceil(a.duration*SR),SR);
+  const s=off.createBufferSource(); s.buffer=a; s.connect(off.destination); s.start();
+  return (await off.startRendering()).getChannelData(0).slice();
+}
+function bindDrop(drop,input,player,set){
+  const take=async f=>{ if(!f) return; $('st').textContent='Reading '+f.name+'…';
+    try{ set(await decode(f)); player.src=URL.createObjectURL(f); player.hidden=false; drop.classList.add('ok');
+      drop.querySelector('b').textContent=f.name; $('st').textContent=''; ready(); }
+    catch(e){ $('st').textContent='Could not read that file: '+e.message; } };
+  input.onchange=()=>take(input.files[0]);
+  drop.ondragover=e=>{e.preventDefault();drop.classList.add('ok')};
+  drop.ondrop=e=>{e.preventDefault();take(e.dataTransfer.files[0])};
+}
+bindDrop($('dn'),$('fn'),$('pa'),x=>NARR=x);
+bindDrop($('dr'),$('fr'),$('pr'),x=>REF=x);
+function ready(){ $('go').disabled=!(NARR&&REF); if(NARR&&REF) tone(); }
+[['kMatch','vMatch',v=>Math.round(v*100)+'%'],['kWarm','vWarm',v=>Math.round(v*100)+'%'],['kRoom','vRoom',v=>Math.round(v*100)+'%']]
+ .forEach(([k,o,f])=>{$(k).oninput=()=>$(o).textContent=f(+$(k).value)});
+
+/* ---------- analysis ---------- */
+function fft(re,im){const n=re.length;for(let i=1,j=0;i<n;i++){let b=n>>1;for(;j&b;b>>=1)j^=b;j^=b;if(i<j){[re[i],re[j]]=[re[j],re[i]];[im[i],im[j]]=[im[j],im[i]]}}
+ for(let len=2;len<=n;len<<=1){const a=-2*Math.PI/len,wr=Math.cos(a),wi=Math.sin(a);for(let i=0;i<n;i+=len){let cr=1,ci=0;for(let k=0;k<len/2;k++){const ur=re[i+k],ui=im[i+k],vr=re[i+k+len/2]*cr-im[i+k+len/2]*ci,vi=re[i+k+len/2]*ci+im[i+k+len/2]*cr;re[i+k]=ur+vr;im[i+k]=ui+vi;re[i+k+len/2]=ur-vr;im[i+k+len/2]=ui-vi;const t=cr*wr-ci*wi;ci=cr*wi+ci*wr;cr=t}}}}
+function frameRms(x,w=2048){const out=[];for(let i=0;i+w<=x.length;i+=w/2){let s=0;for(let j=0;j<w;j++)s+=x[i+j]*x[i+j];out.push(10*Math.log10(s/w+1e-12))}return out}
+function voicedThr(x){const r=frameRms(x).slice().sort((a,b)=>a-b);return r[Math.floor(r.length*.9)]-25}
+function ltas(x){ // returns dB per 1/3-oct centre, voiced frames only
+  const N=4096,thr=voicedThr(x),acc=new Float64Array(N/2);let cnt=0;const win=new Float64Array(N).map((_,i)=>.5-.5*Math.cos(2*Math.PI*i/N));
+  const step=Math.max(N,Math.floor(x.length/400));
+  for(let i=0;i+N<=x.length;i+=step){let s=0;for(let j=0;j<N;j++)s+=x[i+j]*x[i+j];if(10*Math.log10(s/N+1e-12)<thr)continue;
+    const re=new Float64Array(N),im=new Float64Array(N);for(let j=0;j<N;j++)re[j]=x[i+j]*win[j];fft(re,im);
+    for(let k=0;k<N/2;k++)acc[k]+=re[k]*re[k]+im[k]*im[k];cnt++}
+  if(!cnt)cnt=1; const hz=SR/N;
+  const bands=CENT.map(fc=>{const lo=fc/2**(1/6),hi=fc*2**(1/6);let s=0,n=0;for(let k=Math.ceil(lo/hz);k<=Math.floor(hi/hz)&&k<N/2;k++){s+=acc[k]/cnt;n++}return 10*Math.log10((n?s/n:1e-20)+1e-20)});
+  return bands;
+}
+const bandAvg=(b,lo,hi)=>{let s=0,n=0;CENT.forEach((c,i)=>{if(c>=lo&&c<hi){s+=10**(b[i]/10);n++}});return 10*Math.log10(s/Math.max(n,1)+1e-20)};
+const prof=b=>{const body=bandAvg(b,150,500),bite=bandAvg(b,2000,5000),fizz=bandAvg(b,6000,12500);return[body,bite,fizz,body-bite]};
+function norm(b){const m=bandAvg(b,200,4000);return b.map(v=>v-m)}
+
+let T={};
+function tone(){T.n=ltas(NARR);T.r=ltas(REF);draw();table()}
+function draw(){const c=$('cv'),g=c.getContext('2d');g.clearRect(0,0,c.width,c.height);
+  const line=(b,col)=>{if(!b)return;const nb=norm(b);g.strokeStyle=col;g.lineWidth=2;g.beginPath();nb.forEach((v,i)=>{const x=20+i*(c.width-40)/(CENT.length-1),y=c.height/2-v*4;i?g.lineTo(x,y):g.moveTo(x,y)});g.stroke()};
+  g.fillStyle='#555';g.font='11px monospace';[100,500,1000,5000,10000].forEach(f=>{const i=CENT.findIndex(c=>c>=f);g.fillText(f>=1000?f/1000+'k':f,20+i*(c.width-40)/(CENT.length-1)-8,c.height-6)});
+  line(T.r,'#2DD6AE');line(T.n,'#9B81B6');line(T.o,'#ffffff')}
+function table(){const rows=[['Real voice',T.r],['Before',T.n],['After',T.o]].filter(r=>r[1]);
+  $('tb').querySelector('tbody').innerHTML=rows.map(([k,b])=>{const p=prof(b);return`<tr><td>${k}</td>${p.map(v=>`<td>${v.toFixed(1)}</td>`).join('')}</tr>`}).join('')}
+
+/* ---------- processing ---------- */
+function roomIR(ctx,rt=.28,pre=.012){const n=Math.floor((rt+pre)*SR),b=ctx.createBuffer(1,n,SR),d=b.getChannelData(0);let seed=713;const rnd=()=>{seed=(seed*16807)%2147483647;return seed/2147483647};
+  d[0]=1;for(let i=0;i<6;i++)d[Math.floor((pre+rnd()*.03)*SR)]+=.2+rnd()*.25;
+  for(let i=Math.floor(pre*SR);i<n;i++){const t=(i/SR-pre);d[i]+=.12*(rnd()*2-1)*Math.exp(-6.9*t/rt)}return b}
+function quietBed(ref,len){const w=2048,thr=voicedThr(ref),q=[];for(let i=0;i+w<=ref.length;i+=w){let s=0;for(let j=0;j<w;j++)s+=ref[i+j]**2;if(10*Math.log10(s/w+1e-12)<thr)q.push(...ref.subarray(i,i+w))}
+  const src=q.length>SR/2?Float32Array.from(q):Float32Array.from({length:SR*2},()=>Math.random()*2-1);
+  let r=0;for(const v of src)r+=v*v;r=Math.sqrt(r/src.length)+1e-12;const g=10**(-58/20)/r,out=new Float32Array(len);for(let i=0;i<len;i++)out[i]=src[i%src.length]*g;return out}
+function shaper(drive=1.6){const c=new Float32Array(2048);for(let i=0;i<2048;i++){const x=i/1023.5-1;c[i]=Math.tanh(drive*x)/Math.tanh(drive)}return c}
+async function kLoud(x){ // approx integrated LUFS (K-weighted, gated)
+  const off=new OfflineAudioContext(1,x.length,SR),b=off.createBuffer(1,x.length,SR);b.copyToChannel(x,0);
+  const s=off.createBufferSource();s.buffer=b;const hs=off.createBiquadFilter();hs.type='highshelf';hs.frequency.value=1500;hs.gain.value=4;
+  const hp=off.createBiquadFilter();hp.type='highpass';hp.frequency.value=38;s.connect(hs).connect(hp).connect(off.destination);s.start();
+  const y=(await off.startRendering()).getChannelData(0),w=Math.floor(.4*SR),bl=[];for(let i=0;i+w<=y.length;i+=w/4){let e=0;for(let j=0;j<w;j++)e+=y[i+j]**2;bl.push(e/w)}
+  const L=e=>-.691+10*Math.log10(e+1e-12);let g=bl.filter(e=>L(e)>-70);let m=g.reduce((a,b)=>a+b,0)/g.length;g=g.filter(e=>L(e)>L(m)-10);m=g.reduce((a,b)=>a+b,0)/g.length;return L(m)}
+
+$('go').onclick=async()=>{
+  const chain=[...$('chain').children];const lit=k=>chain.forEach(d=>d.classList.toggle('on',d.dataset.k===k));
+  $('go').disabled=true;$('st').textContent='Working…';
+  try{
+  const k=+$('kMatch').value,warm=+$('kWarm').value,room=+$('kRoom').value,lufs=+$('kLufs').value;
+  const dn=norm(T.n),dr=norm(T.r),diff=CENT.map((c,i)=>Math.max(-12,Math.min(12,(dr[i]-dn[i])*k))).map((v,i)=>CENT[i]<70?Math.min(v,0):v);
+  const off=new OfflineAudioContext(1,NARR.length,SR),buf=off.createBuffer(1,NARR.length,SR);buf.copyToChannel(NARR,0);
+  const src=off.createBufferSource();src.buffer=buf;
+  lit('clean');const hp=off.createBiquadFilter();hp.type='highpass';hp.frequency.value=70;hp.Q.value=.7;let node=src.connect(hp);
+  lit('body');diff.forEach((g,i)=>{const p=off.createBiquadFilter();p.type='peaking';p.frequency.value=CENT[i];p.Q.value=4.3;p.gain.value=g;node=node.connect(p)});
+  lit('tame');const ds=off.createBiquadFilter();ds.type='peaking';ds.frequency.value=6500;ds.Q.value=1.2;ds.gain.value=-Math.max(0,prof(T.n)[2]-prof(T.r)[2])*.5-1.5;node=node.connect(ds);
+  lit('warm');const dry=off.createGain(),wet=off.createGain(),ws=off.createWaveShaper(),sum=off.createGain();ws.curve=shaper();ws.oversample='4x';dry.gain.value=1-warm;wet.gain.value=warm;
+  node.connect(dry).connect(sum);node.connect(ws).connect(wet).connect(sum);
+  lit('air');const cv=off.createConvolver();cv.buffer=roomIR(off);cv.normalize=true;const rd=off.createGain(),rw=off.createGain(),mix=off.createGain();rd.gain.value=1-room;rw.gain.value=room*1.6;
+  sum.connect(rd).connect(mix);sum.connect(cv).connect(rw).connect(mix);
+  lit('level');const comp=off.createDynamicsCompressor();comp.threshold.value=-20;comp.ratio.value=2.5;comp.attack.value=.008;comp.release.value=.12;comp.knee.value=6;
+  mix.connect(comp).connect(off.destination);src.start();
+  let y=(await off.startRendering()).getChannelData(0);
+  const bed=quietBed(REF,y.length);for(let i=0;i<y.length;i++)y[i]+=bed[i];
+  const cur=await kLoud(y),g=10**((lufs-cur)/20),ceil=10**(-1/20);for(let i=0;i<y.length;i++){let v=y[i]*g;y[i]=Math.abs(v)>ceil*.9?Math.tanh(v/ceil)*ceil:v}
+  OUT=y;T.o=ltas(y);draw();table();
+  const url=URL.createObjectURL(wav(y));$('po').src=url;$('po').hidden=false;$('dl').href=url;$('dl').hidden=false;
+  const p0=prof(T.n)[3],p1=prof(T.o)[3],pr=prof(T.r)[3];
+  $('st').textContent=`Done · ${lufs} LUFS · tone gap ${Math.abs(pr-p0).toFixed(1)} dB → ${Math.abs(pr-p1).toFixed(1)} dB`;lit('');
+  }catch(e){$('st').textContent='Error: '+e.message}
+  $('go').disabled=false;
+};
+function wav(x){const n=x.length,b=new ArrayBuffer(44+n*2),v=new DataView(b);const w=(o,s)=>[...s].forEach((c,i)=>v.setUint8(o+i,c.charCodeAt(0)));
+  w(0,'RIFF');v.setUint32(4,36+n*2,true);w(8,'WAVE');w(12,'fmt ');v.setUint32(16,16,true);v.setUint16(20,1,true);v.setUint16(22,1,true);v.setUint32(24,SR,true);v.setUint32(28,SR*2,true);v.setUint16(32,2,true);v.setUint16(34,16,true);w(36,'data');v.setUint32(40,n*2,true);
+  for(let i=0;i<n;i++)v.setInt16(44+i*2,Math.max(-1,Math.min(1,x[i]))*32767,true);return new Blob([b],{type:'audio/wav'})}
+</script>
+</body></html>

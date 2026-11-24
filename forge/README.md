@@ -59,3 +59,14 @@ Tempo and kicks are detected from the song itself. Output: `.json` plan, CMX3600
 All 11 effects, 7 looks plus the match LUT, `grade`, all 4 cadence recipes (tempo read as 120.04 on a 120 BPM test track) and `sheet` ran clean on synthetic test media. The 1080 guard refused as designed.
 
 Map of every product this opens: `../billotech-map/billotech_map.json`.
+
+## billo_voice.py · Billo Voice Naturalize (CLI)
+
+Makes AI voiceovers and phone reads sound like the real person in a real room. Free, local, no API.
+
+```
+pip install numpy scipy soundfile pyloudnorm   # plus ffmpeg
+python3 billo_voice.py narration.m4a --ref billy_real.wav -o narration_billo.wav --report report.json
+```
+
+The chain is Clean (high-pass) → Body (spectral match to the reference) → Tame (de-ess) → Warmth (saturation) → Air (room + room tone) → Level (compress, LUFS, −1 dB ceiling). The browser version is at `/billotech/voice/natural/`.

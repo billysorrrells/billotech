@@ -1,0 +1,31 @@
+{
+  "code": "TOKENS",
+  "title": "Billy & Claude: Tokens",
+  "logline": "A comedian's family stages an intervention for his $200-a-morning AI habit, and the AI shows up spitting sunflower seeds in their coffee.",
+  "format": "6 × ~2 min · Seedance 2.5 · vertical + 16:9",
+  "director_grammar": "Scorsese homage: Billy V.O., freeze frames, needle drops, the oner, whip pans, red serif cards",
+  "narrator": "Billy Sorrells (his own recorded voice, polished in Billo Voice)",
+  "script": "script.md",
+  "binder": {"supabase_project": "hnzekejoaamsnmtqtwie", "table": "ob_projects", "code": "TOKENS"},
+  "budget": {"test_pass_480p_credits": 1380, "rule": "Never render at 1080. 480p test, upscale the winners."},
+  "episodes": [
+    {"n": 1, "title": "Intervention", "device": "Freeze-frame cold open", "status": "punched up"},
+    {"n": 2, "title": "What He Was Doing Wrong", "device": "Needle-drop montage", "status": "punched up"},
+    {"n": 3, "title": "The Divorce Whisperer", "device": "Whip pan + crash zoom", "status": "punched up"},
+    {"n": 4, "title": "The OS", "device": "The 4:56 AM oner", "status": "punched up"},
+    {"n": 5, "title": "Tokens Anonymous", "device": "Push around the circle", "status": "punched up"},
+    {"n": 6, "title": "Peak Cinema", "device": "Hero walk → freeze frame", "status": "punched up"}
+  ],
+  "phases": [
+    {"id": "write", "name": "Write", "tool": "Billo Draft", "url": "https://billysorrells.com/billotech", "status": "done", "next": "v1 series written with Seedance prompts."},
+    {"id": "punch", "name": "Punch-up", "tool": "Roast Room + Screen Craft", "url": "https://billysorrells.com/billotech", "status": "done", "next": "v2: Billy's real cadence, Scorsese devices, running gags planted and paid off."},
+    {"id": "read", "name": "Table read", "tool": "Billo Voice · Naturalize", "url": "../voice/natural/", "status": "now", "next": "Billy records all V.O. on his phone. Run each take through Naturalize with a clean reference clip."},
+    {"id": "refs", "name": "Lock refs", "tool": "Higgsfield elements", "url": "https://higgsfield.ai", "status": "next", "next": "Claude character sheet + Billy's real photos + living room, courtroom, kitchen, basement, street."},
+    {"id": "animatic", "name": "Animatic", "tool": "Billo Director", "url": "https://billysorrells.com/billotech", "status": "next", "next": "3D motion preview of Ep 1 for sign-off before any credits."},
+    {"id": "render", "name": "Render", "tool": "Seedance 2.5 @ 480p", "url": "https://higgsfield.ai", "status": "locked", "next": "~1,380 credits for the full test pass."},
+    {"id": "sound", "name": "Sound", "tool": "Billo Voice + Billo Laugh + Billo Sound", "url": "../voice/natural/", "status": "locked", "next": "Stems first. V.O. naturalized, music under, -14 LUFS social."},
+    {"id": "cut", "name": "Cut", "tool": "Billo Edit / NLE Bridge", "url": "https://billysorrells.com/billotech", "status": "locked", "next": "Cut to the V.O., not the picture."},
+    {"id": "wall", "name": "Render Wall", "tool": "Render Wall package", "url": "https://billo-render-wall.netlify.app", "status": "locked", "next": "Full 01–07 package per episode."},
+    {"id": "ship", "name": "Ship", "tool": "Social Autopilot", "url": "https://billysorrells.com/billotech", "status": "locked", "next": "Release one episode a day, timed to Jive Turkeys week."}
+  ]
+}

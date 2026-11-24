@@ -1,0 +1,358 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Billo Style Lab — BilloTech</title><link rel="icon" href="icon.svg">
+<link rel="stylesheet" href="styles.css"><link rel="stylesheet" href="glass.css"><link rel="stylesheet" href="command.css"><link rel="stylesheet" href="stylepreview.css">
+<style>
+html,body{height:auto;overflow:auto;background:#05070A}.lg{overflow-x:hidden}
+.wrap{box-sizing:border-box;width:100%;max-width:820px;margin:0 auto;padding:26px 16px 90px;display:grid;gap:16px;grid-template-columns:minmax(0,1fr)}.wrap>*{min-width:0}
+.card{padding:18px;display:grid;gap:12px;grid-template-columns:minmax(0,1fr)}.card>*{min-width:0}.card h3{margin:0;font-size:17px}.card p{margin:0;font-size:15px;line-height:1.55}
+.muted{opacity:.72;font-size:13.5px!important}
+.in{all:unset;box-sizing:border-box;width:100%;padding:12px 14px;border-radius:14px;border:1px solid rgba(255,255,255,.18);font-size:16px;color-scheme:dark}
+.pill{all:unset;cursor:pointer;box-sizing:border-box;padding:10px 15px;border-radius:99px;border:1px solid rgba(255,255,255,.18);font-size:14px;font-weight:600;text-align:center}
+.pill.go{background:var(--lg-teal,#2DD6AE);color:#04130F;border-color:transparent}.pill.big{padding:16px 20px;font-size:17px;font-weight:800;width:100%}
+.pill[aria-pressed="true"]{background:#fff;color:#111;border-color:transparent}.pill[disabled]{opacity:.4;cursor:default}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}@media(max-width:640px){.two{grid-template-columns:minmax(0,1fr)}}
+.ref{position:relative;width:100%;max-width:340px;aspect-ratio:9/16;margin:0 auto;border-radius:18px;overflow:hidden;background:#0c1016;border:1px solid rgba(255,255,255,.14)}
+.ref iframe{position:absolute;inset:0;width:100%;height:100%;border:0;background:#fff}
+.ref button{all:unset;cursor:pointer;position:absolute;inset:0;display:grid;place-items:center;text-align:center;font-weight:800;font-size:17px;padding:20px;box-sizing:border-box}
+.ref button i{display:grid;place-items:center;width:74px;height:74px;border-radius:50%;background:#fff;color:#111;font-style:normal;font-size:28px;margin:0 auto 12px}
+.map{display:flex;height:54px;border-radius:10px;overflow:hidden;border:1px solid rgba(255,255,255,.14);cursor:pointer}
+.map b{display:block;height:100%;border-right:1px solid #05070A;box-sizing:border-box;min-width:1px}.map b.on{outline:2px solid #fff;outline-offset:-2px}
+.sl-legend{display:flex;flex-wrap:wrap;gap:6px 12px;font-size:12.5px}.sl-legend span{display:inline-flex;align-items:center;gap:5px}.sl-legend i{width:11px;height:11px;border-radius:3px;display:inline-block}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}.stats div{padding:10px;border-radius:12px;border:1px solid rgba(255,255,255,.12);text-align:center}.stats b{display:block;font-size:20px}.stats span{font-size:12px;opacity:.7}
+.assets{display:grid;gap:8px}.asset{display:grid;grid-template-columns:54px minmax(0,1fr) auto auto;gap:10px;align-items:center;padding:8px;border-radius:12px;border:1px solid rgba(255,255,255,.12)}
+.asset canvas{width:54px;height:72px;border-radius:8px;background:#111;object-fit:cover}.asset .nm{font-size:13.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.asset small{opacity:.65;display:block}
+.asset select{color-scheme:dark;background:#0c1016;color:#fff;border:1px solid rgba(255,255,255,.2);border-radius:10px;padding:8px;font-size:14px}
+.x{all:unset;cursor:pointer;padding:6px 10px;border-radius:99px;border:1px solid rgba(255,255,255,.18);font-size:13px}
+.drop{border:1.5px dashed rgba(255,255,255,.3);border-radius:16px;padding:22px;text-align:center;cursor:pointer;font-weight:700}
+.caps{display:grid;gap:8px}.cap{display:grid;grid-template-columns:86px minmax(0,1fr);gap:8px;align-items:center;font-size:12.5px}
+.stage{position:relative;width:100%;max-width:340px;margin:0 auto}.stage canvas,.stage video{width:100%;aspect-ratio:9/16;border-radius:18px;background:#000;display:block;border:1px solid rgba(255,255,255,.14)}
+.bar{height:8px;border-radius:99px;background:rgba(255,255,255,.12);overflow:hidden}.bar i{display:block;height:100%;width:0;background:var(--lg-teal,#2DD6AE)}
+.note{padding:12px 14px;border-radius:12px;border:1px solid rgba(242,177,60,.5);background:rgba(242,177,60,.08);font-size:14px;line-height:1.5}
+label.f{font-size:13px;font-weight:700;display:grid;gap:6px}
+.score{display:grid;gap:8px}.sc{padding:11px 13px;border-radius:12px;border:1px solid rgba(255,255,255,.12);display:grid;gap:4px}.sc b{font-size:14.5px}.sc span{font-size:14px;line-height:1.5;opacity:.9}
+.sc em{font-style:normal;font-size:11px;font-weight:700;padding:2px 8px;border-radius:99px;margin-left:6px;vertical-align:1px}.sc em.m{background:rgba(45,214,174,.18);color:#7BE9CF}.sc em.e{background:rgba(242,177,60,.18);color:#F7CC7A}
+.tw{overflow-x:auto;margin-top:10px}.tw table{border-collapse:collapse;font-size:12px;white-space:nowrap}.tw th,.tw td{padding:5px 8px;border-bottom:1px solid rgba(255,255,255,.1);text-align:left}.tw td i{display:inline-block;width:11px;height:11px;border-radius:2px;margin-right:2px}
+</style></head>
+<body><div class="lg"><div class="wrap">
+  <div class="lg-top"><div><div class="lg-kicker">BilloTech · Video</div><h1 class="lg-h1">Billo Style Lab</h1>
+    <p class="lg-lede">Watch a reel. See how it is cut, shot by shot. Add your own clips and get your own video cut the same way.</p></div>
+    <div class="row"><a class="lg-btn" href="./#apps">Back to Billo OS</a></div></div>
+
+  <div class="lg-glass card">
+    <h3>1 · Pick a style</h3>
+    <div class="row" id="styles"></div>
+    <div class="two">
+      <div><div class="sl-seg" id="refseg" hidden><button data-m="demo" aria-pressed="true">Billo cut</button><button data-m="orig">Original reel</button></div><div class="ref" id="ref"></div>
+        <p class="muted" id="credit" style="text-align:center;margin-top:8px"></p></div>
+      <div style="display:grid;gap:12px;align-content:start">
+        <p id="about"></p>
+        <div class="stats" id="stats"></div>
+        <div class="map" id="map"></div>
+        <div class="sl-legend" id="legend"></div>
+        <p class="muted" id="shotinfo">Tap any bar to see that shot.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="lg-glass card" id="mvcard" hidden>
+    <h3>The moves · each one playing</h3>
+    <div class="mv-rail" id="mvrail"></div>
+    <div class="mv-detail" id="mvdetail"></div>
+    <p class="muted" id="mvnote"></p>
+  </div>
+
+  <div class="lg-glass card" id="forensic" hidden>
+    <h3>Forensic map · 12 of 12</h3>
+    <p class="muted">Every number here was measured off the file frame by frame, except where it says estimate or by eye.</p>
+    <div class="score" id="score"></div>
+    <details><summary style="cursor:pointer;font-weight:700">Every shot, one row each</summary><div class="tw"><table id="ftable"></table></div></details>
+    <details id="sy"><summary style="cursor:pointer;font-weight:700">The story it tells, and how it frames it</summary><div class="score" id="story" style="margin-top:10px"></div></details>
+    <details id="tu"><summary style="cursor:pointer;font-weight:700">Edit tutorial: the effects and the steps</summary><div class="score" id="tut" style="margin-top:10px"></div></details>
+    <details id="mv"><summary style="cursor:pointer;font-weight:700">The named moves, with frame numbers</summary><div class="score" id="moves" style="margin-top:10px"></div></details>
+    <details id="ab"><summary style="cursor:pointer;font-weight:700">What this reel does not do</summary><div class="score" id="absent" style="margin-top:10px"></div></details>
+    <details id="sx"><summary style="cursor:pointer;font-weight:700">Section by section</summary><div class="tw"><table id="sectab"></table></div></details>
+    <details id="rc"><summary style="cursor:pointer;font-weight:700">How to shoot and cut one like it</summary><div class="score" id="recipe" style="margin-top:10px"></div></details>
+    <div class="row"><button class="pill" id="csvb">Download the shot sheet (CSV)</button><button class="pill" id="jsonb">Download the full style file (JSON)</button></div>
+  </div>
+
+  <div class="lg-glass card">
+    <h3>2 · Add your clips and photos</h3>
+    <label class="drop" id="drop">Tap to add videos and photos<input id="files" type="file" accept="video/*,image/*" multiple hidden></label>
+    <p class="muted">They stay on this device. Nothing is uploaded. More clips means less repeating; 10 or more is best. Set a type on a clip if you want it used for that kind of shot.</p>
+    <div class="assets" id="assets"></div>
+    <div class="two">
+      <label class="f">Your logo (optional)<input class="in" id="logo" type="file" accept="image/*"></label>
+      <label class="f">Your music (optional)<input class="in" id="music" type="file" accept="audio/*,video/mp4"></label>
+      <label class="f">Brand name<input class="in" id="brand" placeholder="Shown if no logo, and on the end card"></label>
+      <label class="f">Title card<input class="in" id="title" placeholder="e.g. 2026"></label>
+    </div>
+    <details><summary style="cursor:pointer;font-weight:700">Captions (optional) — small caps lines timed like the reference</summary>
+      <div class="caps" id="caps" style="margin-top:10px"></div></details>
+  </div>
+
+  <div class="lg-glass card">
+    <h3>3 · Make your version</h3>
+    <div class="stage"><canvas id="cv" width="720" height="1280"></canvas><video id="out" controls playsinline hidden></video></div>
+    <div class="bar"><i id="prog"></i></div>
+    <p class="muted" id="status">Add at least one clip to start.</p>
+    <div class="row">
+      <button class="pill" id="preview" disabled>Preview</button>
+      <button class="pill go" id="make" disabled>Make my video</button>
+      <button class="pill" id="stop" hidden>Stop</button>
+      <a class="pill" id="dl" hidden>Save video</a>
+      <button class="pill" id="edl" disabled>Edit list (EDL)</button>
+      <button class="pill" id="plan" disabled>Edit plan (JSON)</button>
+    </div>
+    <p class="muted">Making the video plays it through once in real time while it records, so keep this tab open. The edit list opens in Resolve, Premiere or Final Cut if you would rather finish it there.</p>
+  </div>
+
+  <div class="lg-glass card">
+    <h3>Turn any reel into a style</h3>
+    <p>Add a video file and this reads every cut and saves it as a new style you can pick above.</p>
+    <label class="drop">Tap to add a video to break down<input id="newref" type="file" accept="video/*" hidden></label>
+    <div class="bar"><i id="aprog"></i></div>
+    <p class="muted" id="astatus">It finds the cuts, how long each shot is, and which shots are black-and-white or flash. It cannot tell what is in a shot, so those slots take any clip.</p>
+  </div>
+</div></div>
+<script>
+const $=s=>document.querySelector(s), W=720, H=1280;
+const TYPES={wide:["Wide","#3B82F6"],portrait:["Person","#F2B13C"],moment:["Moment","#E5533D"],detail:["Detail","#2DD6AE"],venue:["Place sign","#A78BFA"],city:["City","#64748B"],selfie:["Selfie","#EC4899"],stage:["Stage","#F97316"],transition:["Blur / dark","#334155"],title:["Title card","#FDE68A"],end:["End card","#FFFFFF"],logo:["Logo stutter","#D4D4D8"],any:["Any clip","#94A3B8"]};
+const TAGS=["auto","wide","portrait","moment","detail","venue","city","selfie","stage"];
+const LOOKS={color:"colour",mono:"warm black-and-white",["mono-stripe"]:"warm black-and-white with stripes",stripe:"colour with stripes",strobe:"light-streak strobe against black",["logo-stutter"]:"logo on four quick shots",flash:"white flash in",["flash-mono"]:"white flash, then black-and-white",orb:"glass-ball lens",dip:"dark dip",streak:"light streak"};
+const TIN={flash:"cream flash pop",smear:"blur smear",black:"black frames"};
+let STYLE=null, assets=[], logoImg=null, musicBuf=null, musicFile=null, run=null, PLAN=[];
+const saved=JSON.parse(localStorage.getItem("bos.stylelab")||"{}");
+const save=()=>localStorage.setItem("bos.stylelab",JSON.stringify(saved));
+const mine=()=>JSON.parse(localStorage.getItem("bos.stylelab.styles")||"[]");
+
+async function loadStyles(pick){
+  let list=[];try{list=await (await fetch("styles/index.json")).json()}catch(e){}
+  const all=[...list.map(s=>({...s,built:1})),...mine().map(s=>({id:s.id,name:s.name,local:s}))];
+  $("#styles").innerHTML="";
+  all.forEach((s,i)=>{const b=document.createElement("button");b.className="pill";b.textContent=s.name;b.onclick=async()=>{[...$("#styles").children].forEach(c=>c.setAttribute("aria-pressed","false"));b.setAttribute("aria-pressed","true");setStyle(s.local||await (await fetch(s.file)).json())};$("#styles").append(b);if((pick&&s.id===pick)||(!pick&&i===0))b.click()});
+}
+const hx=t=>String(t??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const MOVE_OF=x=>x.i===1?"Roll and whip open":x.type==="title"?"Title blip":x.type==="logo"?"Logo stutter":x.type==="end"?"Out on black":x.look==="strobe"?"Streak strobe":x.look==="orb"?"Light-plate wipe":x.look==="mono-stripe"?"Black-and-white stripe run":x.look==="stripe"?"Selfie run, stripes on":x.look==="mono"?"Black-and-white reveal":x.tin&&x.tin.kind==="flash"?"Cream flash cut":x.tin&&x.tin.kind==="smear"?"Smear cut":x.frames<=4?"Four-frame insert":"Hard cut";
+function showRef(s,mode){
+  const box=$("#ref"),d=s.demo,r=s.reference;[...$("#refseg").children].forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.m===mode)));
+  const old=$("#map u");if(old)old.remove();
+  if(mode==="demo"&&d){
+    box.className="sl-play";box.innerHTML=`<video muted loop playsinline autoplay poster="${hx(d.poster)}" src="${hx(d.video)}"></video><button class="sp-chip" aria-pressed="false">Sound off</button><div class="sl-tag"><i></i><span></span></div>`;
+    const v=box.querySelector("video"),tag=box.querySelector(".sl-tag"),lab=tag.querySelector("span"),snd=box.querySelector("button"),head=document.createElement("u");$("#map").append(head);
+    snd.onclick=()=>{v.muted=!v.muted;snd.textContent=v.muted?"Sound off":"Sound on";snd.setAttribute("aria-pressed",String(!v.muted));v.play().catch(()=>{})};
+    v.onclick=()=>v.paused?v.play():v.pause();v.play().catch(()=>{});
+    let last=-1;const T=d.t0,tot=s.shots.reduce((a,x)=>a+x.dur,0);
+    (function tick(){if(!v.isConnected)return;let k=0;while(k+1<T.length&&T[k+1]<=v.currentTime)k++;
+      const sh=s.shots[k],bars=$("#map").querySelectorAll("b");
+      if(k!==last){last=k;lab.textContent=`${sh.i} · ${MOVE_OF(sh)}`;tag.classList.remove("pop");void tag.offsetWidth;tag.classList.add("pop");bars.forEach((b,j)=>b.classList.toggle("on",j===k));$("#credit").textContent=d.credit}
+      const b=bars[k];if(b){const nx=(T[k+1]??d.duration),f=Math.min(1,(v.currentTime-T[k])/Math.max(.01,nx-T[k]));head.style.left=(b.offsetLeft+b.offsetWidth*f)+"px";head.style.top="0";head.style.bottom="0"}
+      requestAnimationFrame(tick)})();
+    box._v=v;
+  }else{
+    box.className="sl-play";$("#credit").textContent=r?r.credit:"";
+    box.innerHTML=r?`<iframe allow="autoplay; encrypted-media" allowfullscreen scrolling="no" title="Original reel" src="https://www.instagram.com/reel/${hx(String(r.shortcode).replace(/[^A-Za-z0-9_-]/g,""))}/embed/"></iframe>`:`<div class="sl-tag"><i></i><span>No reference stored for this style</span></div>`;
+  }
+}
+function showMoves(s){
+  const d=s.demo,card=$("#mvcard");card.hidden=!(d&&d.moves&&s.moves);if(card.hidden)return;
+  const list=s.moves.filter(m=>d.moves[m.name]),nice=n=>n.replace(/_/g," ");
+  $("#mvnote").textContent=d.note||"";
+  $("#mvrail").innerHTML=list.map((m,i)=>`<button class="mv" data-n="${hx(m.name)}" aria-pressed="${i===0}"><span><video muted loop playsinline preload="none" data-src="${hx(d.moves_dir+m.name)}.mp4"></video></span><b>${hx(nice(m.name))}</b></button>`).join("");
+  const pick=n=>{const m=list.find(x=>x.name===n);[...$("#mvrail").children].forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.n===n)));
+    $("#mvdetail").innerHTML=`<span><video muted loop playsinline autoplay src="${hx(d.moves_dir+m.name)}.mp4"></video></span><div><h4>${hx(nice(m.name))}</h4><p>${hx(m.what)}</p><p><b>How often:</b> ${hx(m.rate)}</p><p><b>How to do it:</b> ${hx(m.how)}</p></div>`;
+    $("#mvdetail video").play().catch(()=>{})};
+  [...$("#mvrail").children].forEach(b=>b.onclick=()=>pick(b.dataset.n));
+  const io=new IntersectionObserver(es=>es.forEach(x=>{const v=x.target.querySelector("video");if(x.isIntersecting){if(!v.src)v.src=v.dataset.src;v.play().catch(()=>{})}else v.pause()}),{root:$("#mvrail"),rootMargin:"0px 120px"});
+  [...$("#mvrail").children].forEach(b=>io.observe(b));pick(list[0].name);
+}
+function setStyle(s){
+  STYLE=s;const sh=s.shots,avg=s.duration/sh.length;
+  $("#about").textContent=s.about||"";
+  $("#stats").innerHTML=`<div><b>${sh.length}</b><span>shots</span></div><div><b>${s.duration.toFixed(1)}s</b><span>long</span></div><div><b>${avg.toFixed(2)}s</b><span>average shot</span></div><div><b>${sh.filter(x=>x.tin&&x.tin.kind==="flash").length}</b><span>flash pops</span></div>`;
+  $("#map").innerHTML=sh.map(x=>`<b data-i="${x.i}" style="flex:${x.dur};background:${(TYPES[x.type]||TYPES.any)[1]};${/mono/.test(x.look)?"filter:grayscale(1) brightness(1.3);":""}${x.tin&&x.tin.kind==="flash"?"border-left:2px solid #fff;":""}"></b>`).join("");
+  const used=[...new Set(sh.map(x=>x.type))];
+  $("#legend").innerHTML=used.map(t=>`<span><i style="background:${(TYPES[t]||TYPES.any)[1]}"></i>${(TYPES[t]||TYPES.any)[0]} × ${sh.filter(x=>x.type===t).length}</span>`).join("");
+  const r=s.reference;$("#credit").textContent=r?r.credit:"";
+  showRef(s,s.demo?"demo":"orig");
+  $("#refseg").hidden=!(s.demo&&r);[...$("#refseg").children].forEach(b=>b.onclick=()=>showRef(s,b.dataset.m));
+  showMoves(s);
+  $("#caps").innerHTML=(s.captions||[]).map(c=>`<label class="cap"><span>${c.t0.toFixed(1)}–${c.t1.toFixed(1)}s<br>about ${c.words} word${c.words>1?"s":""}</span><input class="in" data-c="${c.i}" value="${((saved.caps||{})[s.id+":"+c.i]||"").replace(/"/g,"&quot;")}" placeholder="Line ${c.i}"></label>`).join("")||'<p class="muted">This style has no caption timing.</p>';
+  $("#caps").querySelectorAll("input").forEach(i=>i.oninput=()=>{saved.caps=saved.caps||{};saved.caps[s.id+":"+i.dataset.c]=i.value;save()});
+  drawForensic();drawExtra();replan();
+}
+$("#map").onclick=e=>{const b=e.target.closest("b");if(!b)return;{const v=$("#ref")._v;if(v&&v.isConnected&&STYLE.demo){v.currentTime=STYLE.demo.t0[b.dataset.i-1]+.01;v.play().catch(()=>{})}}[...$("#map").children].forEach(c=>c.classList.remove("on"));b.classList.add("on");const x=STYLE.shots[b.dataset.i-1],p=PLAN[b.dataset.i-1];
+  let t=`Shot ${x.i} of ${STYLE.shots.length} · starts ${x.t0.toFixed(2)}s · lasts ${x.dur.toFixed(2)}s (${Math.round(x.dur*STYLE.fps)} frames) · ${(TYPES[x.type]||TYPES.any)[0]} · ${LOOKS[x.look]||x.look}`;
+  if(x.what)t=`Shot ${x.i}: ${x.what} — `+t.replace(/^Shot \d+ of \d+ · /,"");
+  if(x.tin)t+=` · comes in on a ${x.tin.frames||1}-frame ${TIN[x.tin.kind]}${x.tin.peak?" at "+Math.round(x.tin.peak*100)+"% strength":""}`;else if(x.i>1)t+=" · hard cut in";
+  if(x.cam)t+=` · camera: ${x.cam.label}`;if(x.scale)t+=` · ${x.scale}${x.face_h?" (face "+Math.round(x.face_h*100)+"% of frame height, "+x.faces+" in shot)":""}`;
+  if(x.luma)t+=` · brightness ${Math.round(x.luma.mean*100)}% average, ${Math.round(x.luma.crush*100)}% near-black · saturation ${Math.round(x.sat*100)}%`;
+  if(p&&p.a)t+=" · your clip: "+p.a.name;
+  $("#shotinfo").innerHTML=t.replace(/</g,"&lt;")+(x.palette?' <span style="white-space:nowrap">'+x.palette.map(c=>`<i style="display:inline-block;width:14px;height:14px;border-radius:3px;background:${c};vertical-align:-2px;margin-left:3px"></i>`).join("")+"</span>":"")};
+function drawForensic(){
+  const s=STYLE,box=$("#forensic");if(!s.score){box.hidden=true;return}box.hidden=false;
+  $("#score").innerHTML=s.score.map((r,i)=>`<div class="sc"><b>${i+1}. ${r[0]} <em class="${r[1]==="measured"?"m":"e"}">${r[1]}</em></b><span>${r[2].replace(/</g,"&lt;")}</span></div>`).join("");
+  $("#ftable").innerHTML="<tr><th>#</th><th>Start</th><th>Frames</th><th>In</th><th>Type</th><th>Look</th><th>Size</th><th>Camera</th><th>Bright</th><th>Sat</th><th>Colours</th></tr>"+s.shots.map(x=>`<tr><td>${x.i}</td><td>${x.t0.toFixed(2)}</td><td>${Math.round(x.dur*s.fps)}</td><td>${x.tin?(x.tin.frames||1)+"f "+x.tin.kind:x.i>1?"cut":"—"}</td><td>${(TYPES[x.type]||TYPES.any)[0]}</td><td>${x.look}</td><td>${x.scale||""}</td><td>${x.cam?x.cam.label:""}</td><td>${x.luma?Math.round(x.luma.mean*100)+"%":""}</td><td>${x.sat!=null?Math.round(x.sat*100)+"%":""}</td><td>${(x.palette||[]).map(c=>`<i style="background:${c}"></i>`).join("")}</td></tr>`).join("");
+}
+function drawExtra(){const s=STYLE,e=t=>String(t).replace(/</g,"&lt;");
+  $("#sy").hidden=!s.story;$("#tu").hidden=!s.tutorial;
+  if(s.story)$("#story").innerHTML=`<div class="sc"><b>The frame</b><span>${e(s.story.frame)}</span><span class="muted">${e(s.story.context)}</span>${s.house?`<span><a class="pill" href="stylehouse.html?h=${e(s.house)}">See the makers' house style</a></span>`:""}</div>`+s.story.beats.map(b=>`<div class="sc"><b>${e(b[1])} <em class="e">${e(b[0])}</em></b><span>${e(b[2])}</span></div>`).join("")+`<div class="sc"><b>How to find the frame of any reel</b><span>${e(s.story.how_to_find_the_frame)}</span></div>`;
+  if(s.tutorial){const T=s.tutorial,kit="styles/kit/"+s.id+"/";$("#tut").innerHTML=`<div class="sc"><span>${e(T.level)}</span><span>Kit: <a href="${kit}stripes-1080x1920.png" download>stripes 1080</a> · <a href="${kit}stripes-720x1280.png" download>stripes 720</a> · <a href="${kit}cream.png" download>cream flash colour</a></span></div><div class="sc"><b>The effects you need</b>${T.effects.map(x=>`<span><b>${e(x[0])}.</b> ${e(x[1])} <i style="opacity:.75">${e(x[2])}</i></span>`).join("")}</div><div class="sc"><b>Step by step</b>${T.steps.map(x=>`<span><b>${e(x[0])}.</b> ${e(x[1])}</span>`).join("")}</div><div class="sc"><b>For an agent</b>${T.agent.map(x=>`<span>• ${e(x)}</span>`).join("")}</div>`}
+  $("#mv").hidden=!s.moves;$("#ab").hidden=!s.absent;$("#sx").hidden=!s.sections;$("#rc").hidden=!s.recipe;
+  if(s.moves)$("#moves").innerHTML=s.moves.map(m=>`<div class="sc"><b>${e(m.name)} <em class="${m.grade==="measured"?"m":"e"}">${e(m.grade)}</em></b><span>${e(m.what)}</span><span><b>How often:</b> ${e(m.rate)}</span><span><b>How to do it:</b> ${e(m.how)}</span></div>`).join("");
+  if(s.absent)$("#absent").innerHTML=s.absent.map(a=>`<div class="sc"><span>${e(a)}</span></div>`).join("");
+  if(s.sections)$("#sectab").innerHTML="<tr><th>Section</th><th>Starts</th><th>Length</th><th>Changes/s</th><th>Held shots</th><th>Median shot</th><th>Flashes</th><th>Voice</th></tr>"+s.sections.map(x=>`<tr><td>${e(x.name)}</td><td>${x.t0}s</td><td>${x.len_s}s</td><td>${x.ev_per_s}</td><td>${x.held}</td><td>${x.median_shot_f}f</td><td>${x.flashes}</td><td>${Math.round(x.voice_share*100)}%</td></tr>`).join("");
+  if(s.recipe)$("#recipe").innerHTML=`<div class="sc"><b>Shoot</b>${s.recipe.shoot.map(x=>`<span>• ${e(x)}</span>`).join("")}</div><div class="sc"><b>Cut</b>${s.recipe.cut.map(x=>`<span>• ${e(x)}</span>`).join("")}</div>`}
+function csv(){const s=STYLE,h=["shot","start_s","length_s","frames","transition_in","transition_frames","flash_peak","type","look","shot_size","faces","face_height","face_x","face_y","camera","pan","tilt","zoom","shake","black","mid","white","mean","near_black_share","saturation","warmth","lead_hue","shadows_rgb","mids_rgb","highs_rgb","palette","detail_area","stripe_score"];
+  return h.join(",")+"\n"+s.shots.map(x=>[x.i,x.t0,x.dur,Math.round(x.dur*s.fps),x.tin?x.tin.kind:x.i>1?"cut":"",x.tin?x.tin.frames:"",x.tin&&x.tin.peak||"",x.type,x.look,x.scale,x.faces,x.face_h,x.face_x,x.face_y,x.cam&&x.cam.label,x.cam&&x.cam.pan,x.cam&&x.cam.tilt,x.cam&&x.cam.zoom,x.cam&&x.cam.shake,x.luma&&x.luma.black,x.luma&&x.luma.mid,x.luma&&x.luma.white,x.luma&&x.luma.mean,x.luma&&x.luma.crush,x.sat,x.warm,x.hue,(x.shadows||[]).join(" "),(x.mids||[]).join(" "),(x.highs||[]).join(" "),(x.palette||[]).join(" "),x.detail_area,x.stripe].map(v=>v==null?"":String(v).includes(",")?`"${v}"`:v).join(",")).join("\n")}
+["brand","title"].forEach(k=>{$("#"+k).value=saved[k]||"";$("#"+k).oninput=e=>{saved[k]=e.target.value;save()}});
+
+/* ---------- assets ---------- */
+function mkVideo(url){const v=document.createElement("video");v.src=url;v.muted=true;v.playsInline=true;v.preload="auto";v.setAttribute("playsinline","");return v}
+async function addFiles(fs){
+  for(const f of fs){const url=URL.createObjectURL(f),a={id:Math.random().toString(36).slice(2),name:f.name,tag:"auto",url,flip:0};
+    if(f.type.startsWith("image")){a.kind="image";a.img=new Image();a.img.src=url;await a.img.decode().catch(()=>{});a.dur=0}
+    else{a.kind="video";a.els=[mkVideo(url),mkVideo(url)];await new Promise(r=>{a.els[0].onloadedmetadata=r;a.els[0].onerror=r;setTimeout(r,8000)});a.dur=a.els[0].duration||0;if(!a.dur||!isFinite(a.dur)){URL.revokeObjectURL(url);continue}}
+    assets.push(a)}
+  drawAssets();replan();
+}
+function drawAssets(){
+  $("#assets").innerHTML="";
+  assets.forEach(a=>{const d=document.createElement("div");d.className="asset";
+    d.innerHTML=`<canvas width="54" height="72"></canvas><div class="nm">${a.name.replace(/</g,"&lt;")}<small>${a.kind==="image"?"Photo":a.dur.toFixed(1)+"s video"} · used <span data-u>0</span>×</small></div><select aria-label="Type">${TAGS.map(t=>`<option value="${t}" ${a.tag===t?"selected":""}>${t==="auto"?"Any shot":TYPES[t][0]}</option>`).join("")}</select><button class="x" aria-label="Remove">✕</button>`;
+    const c=d.querySelector("canvas").getContext("2d");
+    if(a.kind==="image")cover(c,a.img,a.img.naturalWidth,a.img.naturalHeight,54,72,1);
+    else{const v=a.els[0];const th=()=>cover(c,v,v.videoWidth,v.videoHeight,54,72,1);v.addEventListener("seeked",th,{once:true});try{v.currentTime=Math.min(a.dur/2,1)}catch(e){}}
+    d.querySelector("select").onchange=e=>{a.tag=e.target.value;replan()};
+    d.querySelector(".x").onclick=()=>{assets=assets.filter(x=>x!==a);drawAssets();replan()};
+    a.row=d;$("#assets").append(d)});
+}
+$("#files").onchange=e=>addFiles([...e.target.files]);
+$("#logo").onchange=async e=>{const f=e.target.files[0];if(!f){logoImg=null;return}logoImg=new Image();logoImg.src=URL.createObjectURL(f);await logoImg.decode().catch(()=>{logoImg=null})};
+$("#music").onchange=e=>{musicFile=e.target.files[0]||null;musicBuf=null};
+
+/* ---------- plan: which clip goes in which shot ---------- */
+function replan(){
+  if(!STYLE)return;const uses=new Map(assets.map(a=>[a,0]));let prev=null;PLAN=[];
+  for(const s of STYLE.shots){
+    if(s.type==="title"||s.type==="end"||!assets.length){PLAN.push({s,a:null});continue}
+    if(s.type==="logo"){PLAN.push({s,a:assets[0],k:0,multi:assets.slice(0,4)});continue}
+    let c=assets.filter(a=>a.tag===s.type);if(!c.length)c=assets.filter(a=>a.tag==="auto");if(!c.length)c=assets;
+    let c2=c.filter(a=>a!==prev);if(!c2.length)c2=assets.length>1?assets.filter(a=>a!==prev):c;
+    c2.sort((x,y)=>uses.get(x)-uses.get(y));const a=c2[0];PLAN.push({s,a,k:uses.get(a)});uses.set(a,uses.get(a)+1);prev=a}
+  for(const p of PLAN)if(p.a&&p.a.kind==="video"){const n=uses.get(p.a),room=Math.max(0,p.a.dur-p.s.dur-0.15);p.in=room*((p.k+0.5)/n)}
+  assets.forEach(a=>{const u=a.row&&a.row.querySelector("[data-u]");if(u)u.textContent=uses.get(a)});
+  const ok=assets.length>0;["preview","make","edl","plan"].forEach(i=>$("#"+i).disabled=!ok);
+  $("#status").textContent=ok?`Ready: ${assets.length} clip${assets.length>1?"s":""} spread over ${STYLE.shots.length} shots.`:"Add at least one clip to start.";
+}
+
+/* ---------- drawing ---------- */
+function cover(c,src,sw,sh,w,h,z,ox){if(!sw||!sh)return;const r=Math.max(w/sw,h/sh)*(z||1),dw=sw*r,dh=sh*r;c.drawImage(src,(w-dw)/2+(ox||0),(h-dh)/2,dw,dh)}
+function spaced(c,t,x,y,tr){const ws=[...t].map(ch=>c.measureText(ch).width+tr),tot=ws.reduce((a,b)=>a+b,0)-tr;let p=x-tot/2;c.textAlign="left";[...t].forEach((ch,i)=>{c.fillText(ch,p,y);p+=ws[i]})}
+function drawFrame(c,t){
+  const sh=STYLE.shots;let i=sh.findIndex(x=>t<x.t0+x.dur);if(i<0)i=sh.length-1;const s=sh[i],p=PLAN[i],u=Math.min(1,Math.max(0,(t-s.t0)/s.dur)),g=STYLE.grade||{};
+  c.globalCompositeOperation="source-over";c.globalAlpha=1;c.fillStyle="#000";c.fillRect(0,0,W,H);
+  const brand=(saved.brand||"").trim();
+  if(s.type==="end"){
+    if(logoImg){const w=W*.56,h=w*logoImg.naturalHeight/logoImg.naturalWidth;c.drawImage(logoImg,(W-w)/2,(H-h)/2,w,h)}
+    else{c.fillStyle="#fff";c.font="800 76px system-ui,Helvetica,Arial";c.textAlign="center";c.textBaseline="middle";c.fillText((brand||"YOUR BRAND").toUpperCase(),W/2,H/2,W*.86)}
+    return i}
+  if(s.type==="title"){
+    const gr=c.createRadialGradient(W/2,H*.45,40,W/2,H*.5,H*.7);gr.addColorStop(0,"#5a3416");gr.addColorStop(1,"#080503");c.fillStyle=gr;c.fillRect(0,0,W,H);
+    c.fillStyle="#F3E3C8";c.textAlign="center";c.textBaseline="middle";c.font="700 34px system-ui,Helvetica,Arial";c.fillText(brand.toUpperCase(),W/2,H*.44,W*.8);
+    c.font="200 150px system-ui,Helvetica,Arial";c.fillText((saved.title||"").trim()||String(new Date().getFullYear()),W/2,H*.53,W*.86);
+  }else if(s.type==="logo"&&p&&p.multi){
+    const fr2=Math.floor((t-s.t0)*STYLE.fps),a=p.multi[Math.min(p.multi.length-1,Math.floor(fr2/3))%p.multi.length],still=a.kind==="image",src=still?a.img:a.els[0];
+    cover(c,src,still?a.img.naturalWidth:src.videoWidth,still?a.img.naturalHeight:src.videoHeight,W,H,1.1);c.fillStyle="rgba(0,0,0,.55)";c.fillRect(0,0,W,H);
+    if(logoImg){const w=W*.56,h=w*logoImg.naturalHeight/logoImg.naturalWidth;c.drawImage(logoImg,(W-w)/2,(H-h)/2,w,h)}else{c.fillStyle="#fff";c.font="800 76px system-ui,Helvetica,Arial";c.textAlign="center";c.textBaseline="middle";c.fillText((brand||"YOUR BRAND").toUpperCase(),W/2,H/2,W*.86)}
+    return i;
+  }else if(p&&p.a){
+    const a=p.a,cm=s.cam||{},still=a.kind==="image";
+    const zr=Math.max(-.5,Math.min(.5,cm.zoom||0)),z=1.04+(still?1:.45)*zr*s.dur*(u-.5)*.6+(still&&!cm.zoom?.05*u:0);
+    const ox=-(Math.max(-.6,Math.min(.6,cm.pan||0)))*s.dur*(u-.5)*W*(still?.5:.2);
+    const src=still?a.img:p.el||a.els[0],sw=still?a.img.naturalWidth:src.videoWidth,shh=still?a.img.naturalHeight:src.videoHeight;
+    const fr=Math.floor((t-s.t0)*STYLE.fps);
+    if(s.look==="strobe"){if(fr%4<2){for(let k=0;k<6;k++){c.globalAlpha=.3;cover(c,src,sw,shh,W,H,1.6,(k-3)*52+fr*40)}c.globalAlpha=1;c.fillStyle="rgba(0,0,0,.35)";c.fillRect(0,0,W,H)}}
+    else if(s.look==="streak"){for(let k=0;k<6;k++){c.globalAlpha=.28;cover(c,src,sw,shh,W,H,1.5,(k-3)*46+u*160)}c.globalAlpha=1}
+    else cover(c,src,sw,shh,W,H,Math.max(1,z),ox);
+    if(/mono/.test(s.look)){c.globalCompositeOperation="saturation";c.fillStyle="#808080";c.fillRect(0,0,W,H);c.globalCompositeOperation="soft-light";c.fillStyle="rgba(255,225,180,.55)";c.fillRect(0,0,W,H);c.globalCompositeOperation="source-over"}
+    else if(s.look!=="strobe"){const m=g.mids||[48,30,28];c.globalCompositeOperation="soft-light";c.fillStyle=`rgba(${Math.min(255,m[0]*4)},${Math.min(255,m[1]*4)},${Math.min(255,m[2]*4)},.22)`;c.fillRect(0,0,W,H);c.globalCompositeOperation="multiply";c.fillStyle="rgba(214,205,198,1)";c.fillRect(0,0,W,H);c.globalCompositeOperation="source-over"}
+    if(/stripe/.test(s.look)){const sp=(STYLE.stripe||{}).period_px||4.7,al=(STYLE.stripe||{}).alpha||.13;c.fillStyle=`rgba(0,0,0,${al})`;for(let x=0;x<W;x+=sp)c.fillRect(Math.round(x),0,Math.max(1,Math.round(sp/2.3)),H)}
+    if(s.look==="dip"){c.fillStyle="rgba(0,0,0,.8)";c.fillRect(0,0,W,H)}
+    if(s.look==="orb"){const r=W*.62,gr=c.createRadialGradient(W/2,H/2,r*.7,W/2,H/2,r*1.25);gr.addColorStop(0,"rgba(0,0,0,0)");gr.addColorStop(.25,"rgba(255,230,190,.35)");gr.addColorStop(.5,"rgba(0,0,0,.75)");gr.addColorStop(1,"rgba(0,0,0,.95)");c.fillStyle=gr;c.fillRect(0,0,W,H)}
+    if(g.vignette){const v=c.createRadialGradient(W/2,H/2,H*.35,W/2,H/2,H*.75);v.addColorStop(0,"rgba(0,0,0,0)");v.addColorStop(1,`rgba(0,0,0,${g.vignette})`);c.fillStyle=v;c.fillRect(0,0,W,H)}
+    if(s.tin||/flash/.test(s.look)){const k=s.tin?s.tin.kind:"flash",n=Math.max(1,s.tin?s.tin.frames||1:6),pk=s.tin&&s.tin.peak||.8;
+      if(fr<n+1){const f=1-fr/(n+1);if(k==="flash"){const fc=STYLE.flash_rgb||[255,244,225];c.fillStyle=`rgba(${fc[0]},${fc[1]},${fc[2]},${pk*f})`;c.fillRect(0,0,W,H)}else if(k==="black"){c.fillStyle="#000";c.fillRect(0,0,W,H)}else{for(let q=1;q<5;q++){c.globalAlpha=.22*f;cover(c,src,sw,shh,W,H,1.25,q*38*f)}c.globalAlpha=1}}}
+  }
+  const L=STYLE.logo||{x:.84,y:.05,w:.14};
+  if(logoImg){const w=W*L.w,h=w*logoImg.naturalHeight/logoImg.naturalWidth;c.drawImage(logoImg,W*L.x-w/2,H*L.y-h/2,w,h)}
+  else if(brand){c.fillStyle="#fff";c.font="800 20px system-ui,Helvetica,Arial";c.textAlign="center";c.textBaseline="middle";c.fillText(brand.toUpperCase(),W*L.x,H*L.y,W*.28)}
+  const cp=(STYLE.captions||[]).find(k=>t>=k.t0&&t<k.t1),C=STYLE.caption||{y:.74,size:.0135,track:.12,weight:700,upper:true};
+  if(cp){let tx=((saved.caps||{})[STYLE.id+":"+cp.i]||"").trim();if(tx){if(C.upper)tx=tx.toUpperCase();const px=Math.round(H*C.size);c.font=`${C.weight} ${px}px system-ui,Helvetica,Arial`;c.textBaseline="middle";c.shadowColor="rgba(0,0,0,.7)";c.shadowBlur=6;c.fillStyle="#fff";spaced(c,tx,W/2,H*C.y,px*C.track);c.shadowBlur=0}}
+  return i;
+}
+
+/* ---------- play / record ---------- */
+function cue(n){const p=PLAN[n];if(!p||!p.a||p.a.kind!=="video")return;const a=p.a;a.flip^=1;p.el=a.els[a.flip];try{p.el.pause();p.el.currentTime=p.in||0}catch(e){}}
+function mime(){const m=["video/mp4;codecs=avc1.42E01E,mp4a.40.2","video/mp4","video/webm;codecs=vp9,opus","video/webm;codecs=vp8,opus","video/webm"];return m.find(x=>window.MediaRecorder&&MediaRecorder.isTypeSupported(x))||""}
+async function go(record,limit){
+  if(run)return;replan();const cv=$("#cv"),c=cv.getContext("2d");$("#out").hidden=true;cv.hidden=false;$("#dl").hidden=true;
+  const dur=Math.min(limit||STYLE.duration,STYLE.duration);let ac=null,srcN=null,dest=null,rec=null,chunks=[];
+  $("#status").textContent="Getting your clips ready…";
+  if(musicFile){try{ac=new (window.AudioContext||window.webkitAudioContext)();if(!musicBuf)musicBuf=await ac.decodeAudioData(await musicFile.arrayBuffer());srcN=ac.createBufferSource();srcN.buffer=musicBuf;dest=ac.createMediaStreamDestination();const gn=ac.createGain();srcN.connect(gn);gn.connect(dest);gn.connect(ac.destination);
+    const end=Math.min(dur,musicBuf.duration);gn.gain.setValueAtTime(1,ac.currentTime);gn.gain.setValueAtTime(1,ac.currentTime+Math.max(0,end-1.2));gn.gain.linearRampToValueAtTime(0,ac.currentTime+end)}catch(e){ac=null;$("#status").textContent="Could not read that music file, carrying on without it."}}
+  cue(0);await new Promise(r=>setTimeout(r,500));
+  if(record){const mt=mime();if(!mt||!cv.captureStream){$("#status").textContent="This browser cannot record the video. Preview still works, and the edit list still exports.";return}
+    const st=cv.captureStream(30);if(dest)dest.stream.getAudioTracks().forEach(t=>st.addTrack(t));rec=new MediaRecorder(st,{mimeType:mt,videoBitsPerSecond:6e6});rec.ondataavailable=e=>e.data.size&&chunks.push(e.data);rec.start(500)}
+  run={stop:false};$("#stop").hidden=false;["preview","make"].forEach(i=>$("#"+i).disabled=true);
+  const t0=performance.now();if(srcN)srcN.start();let cur=-1;
+  await new Promise(done=>{(function tick(){
+    const t=(performance.now()-t0)/1000;
+    if(t>=dur||run.stop)return done();
+    let i=STYLE.shots.findIndex(x=>t<x.t0+x.dur);if(i<0)i=STYLE.shots.length-1;
+    if(i!==cur){const old=PLAN[cur];cur=i;const p=PLAN[i];if(p&&p.el){p.el.play().catch(()=>{})}if(old&&old.el&&(!p||old.el!==p.el))old.el.pause();cue(i+1)}
+    drawFrame(c,t);$("#prog").style.width=(100*t/dur)+"%";$("#status").textContent=`${record?"Recording":"Playing"} · shot ${i+1} of ${STYLE.shots.length} · ${t.toFixed(1)}s of ${dur.toFixed(1)}s`;
+    requestAnimationFrame(tick)})()});
+  PLAN.forEach(p=>p.el&&p.el.pause());try{srcN&&srcN.stop()}catch(e){}
+  let blob=null;
+  if(rec){await new Promise(r=>{rec.onstop=r;rec.stop()});blob=new Blob(chunks,{type:rec.mimeType.split(";")[0]});const url=URL.createObjectURL(blob),ext=/mp4/.test(blob.type)?"mp4":"webm";
+    $("#out").src=url;$("#out").hidden=false;cv.hidden=true;const d=$("#dl");d.href=url;d.download=`${(saved.brand||"my").replace(/\W+/g,"-").toLowerCase()||"my"}-${STYLE.id}.${ext}`;d.textContent=`Save video (${(blob.size/1e6).toFixed(1)} MB ${ext})`;d.hidden=false}
+  ac&&ac.close();const stopped=run.stop;run=null;$("#stop").hidden=true;["preview","make"].forEach(i=>$("#"+i).disabled=false);$("#prog").style.width=stopped?"0":"100%";
+  $("#status").textContent=stopped?"Stopped.":record?"Done. Play it above, then save it.":"Preview done. Tap Make my video to record it.";
+  return blob;
+}
+$("#preview").onclick=()=>go(false);$("#make").onclick=()=>go(true);$("#stop").onclick=()=>{if(run)run.stop=true};
+
+/* ---------- exports ---------- */
+function dlText(name,text,type){const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([text],{type:type||"text/plain"}));a.download=name;a.click()}
+const tc=s=>{const f=Math.round(s*24),p=n=>String(n).padStart(2,"0");return `${p(Math.floor(f/86400))}:${p(Math.floor(f/1440)%60)}:${p(Math.floor(f/24)%60)}:${p(f%24)}`};
+function edl(){let o=`TITLE: ${STYLE.name} - ${saved.brand||"my version"}\nFCM: NON-DROP FRAME\n\n`,n=0;
+  PLAN.forEach(p=>{if(!p.a)return;n++;const i=p.in||0;o+=`${String(n).padStart(3,"0")}  AX       V     C        ${tc(i)} ${tc(i+p.s.dur)} ${tc(3600+p.s.t0)} ${tc(3600+p.s.t0+p.s.dur)}\n* FROM CLIP NAME: ${p.a.name}\n* SHOT ${p.s.i} ${p.s.type.toUpperCase()} LOOK ${p.s.look.toUpperCase()}\n\n`});return o}
+$("#csvb").onclick=()=>dlText(`${STYLE.id}-shot-sheet.csv`,csv(),"text/csv");$("#jsonb").onclick=()=>dlText(`${STYLE.id}.json`,JSON.stringify(STYLE),"application/json");
+$("#edl").onclick=()=>{replan();dlText(`${STYLE.id}.edl`,edl())};
+$("#plan").onclick=()=>{replan();dlText(`${STYLE.id}-plan.json`,JSON.stringify({style:STYLE.id,name:STYLE.name,fps:STYLE.fps,size:[W,H],brand:saved.brand||"",title:saved.title||"",captions:(STYLE.captions||[]).map(c=>({...c,text:(saved.caps||{})[STYLE.id+":"+c.i]||""})),shots:PLAN.map(p=>({shot:p.s.i,start:p.s.t0,length:p.s.dur,type:p.s.type,look:p.s.look,clip:p.a?p.a.name:null,clip_in:p.a&&p.a.kind==="video"?+(p.in||0).toFixed(3):null}))},null,1),"application/json")};
+
+/* ---------- break down a new reel into a style ---------- */
+async function analyze(file,step){
+  const v=mkVideo(URL.createObjectURL(file));await new Promise((r,j)=>{v.onloadedmetadata=r;v.onerror=()=>j(new Error("cannot read"))});
+  const dur=v.duration,cw=48,ch=Math.round(48*v.videoHeight/v.videoWidth)||86,c=Object.assign(document.createElement("canvas"),{width:cw,height:ch}).getContext("2d",{willReadFrequently:true});
+  step=step||(dur<=75?1/24:1/15);const F=[];let prev=null;
+  for(let t=0;t<dur-step/2;t+=step){await new Promise(r=>{v.onseeked=r;v.currentTime=t;setTimeout(r,1500)});c.drawImage(v,0,0,cw,ch);const d=c.getImageData(0,0,cw,ch).data;
+    let diff=0,lum=0,sat=0;const g=new Uint8Array(cw*ch*3);for(let k=0,q=0;k<d.length;k+=4){const R=d[k],G=d[k+1],B=d[k+2];g[q++]=R;g[q++]=G;g[q++]=B;const mx=Math.max(R,G,B),mn=Math.min(R,G,B);lum+=mx;sat+=mx?(mx-mn)/mx:0}
+    if(prev)for(let k=0;k<g.length;k++)diff+=Math.abs(g[k]-prev[k]);prev=g;const n=cw*ch;F.push({t,diff:diff/(n*3),lum:lum/n,sat:sat/n});
+    $("#aprog").style.width=(100*t/dur)+"%";$("#astatus").textContent=`Reading frames… ${t.toFixed(1)}s of ${dur.toFixed(1)}s`}
+  const ds=F.map(f=>f.diff).sort((a,b)=>a-b),med=ds[ds.length>>1],thr=Math.max(22,med*3.2);
+  const cuts=[0];for(let k=1;k<F.length;k++){const f=F[k];if(f.diff>thr&&f.diff>1.6*Math.max(F[k-1].diff,(F[k+1]||{diff:0}).diff*0.6)&&f.t-cuts[cuts.length-1]>=step*1.9)cuts.push(f.t)}
+  cuts.push(dur);const shots=[];
+  for(let k=0;k<cuts.length-1;k++){const fr=F.filter(f=>f.t>=cuts[k]&&f.t<cuts[k+1]),sat=fr.reduce((a,f)=>a+f.sat,0)/(fr.length||1),lum=fr.reduce((a,f)=>a+f.lum,0)/(fr.length||1),first=fr[0]?fr[0].lum:0;
+    let look="color";if(sat<.16&&lum>25)look="mono";if(first>215&&fr.length>1&&fr[fr.length-1].lum<first-40)look=look==="mono"?"flash-mono":"flash";if(lum<14&&look==="color")look="dip";
+    shots.push({i:k+1,t0:+cuts[k].toFixed(3),dur:+(cuts[k+1]-cuts[k]).toFixed(3),type:"any",look,motion:0})}
+  const name=(file.name.replace(/\.[^.]+$/,"").slice(0,28)||"My reel")+" style",id="my-"+Date.now().toString(36);
+  return {id,name,about:`Read from your file: ${shots.length} cuts in ${dur.toFixed(1)} seconds.`,w:W,h:H,fps:24,duration:+dur.toFixed(3),grade:{vignette:.3},logo:{x:.84,y:.05,w:.14},caption:{y:.74,size:.0135,track:.12,weight:700,upper:true},shots,captions:[]};
+}
+$("#newref").onchange=async e=>{const f=e.target.files[0];if(!f)return;try{const s=await analyze(f);const l=mine();l.push(s);localStorage.setItem("bos.stylelab.styles",JSON.stringify(l.slice(-12)));$("#aprog").style.width="100%";$("#astatus").textContent=`Saved "${s.name}": ${s.shots.length} cuts. It is now in the style list at the top.`;loadStyles(s.id)}catch(err){$("#astatus").textContent="Could not read that video on this device."}};
+
+window.__sl={go,analyze,addFiles,edl,get plan(){return PLAN},get style(){return STYLE},get assets(){return assets},drawFrame};
+loadStyles();
+</script></body></html>

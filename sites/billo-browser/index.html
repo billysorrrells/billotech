@@ -1,0 +1,69 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Billo Browser — your OS, in the browser</title>
+<meta name="description" content="Billo Browser: a creator browser with your own engine, your own data bridge, and your Billo OS inside every tab.">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;700;900&family=JetBrains+Mono:wght@400;700&display=swap');
+:root{--ink:#141310;--gold:#c9a84c;--line:#e6e0d4;--bg:#fdfcf9;--dim:#8a8378}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 'DM Sans',-apple-system,sans-serif}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+header{padding:56px 0 30px;border-bottom:1px solid var(--line)}
+.k{font:11px 'JetBrains Mono',monospace;letter-spacing:.34em;text-transform:uppercase;color:var(--dim)}
+h1{font-family:'Bebas Neue',Impact,sans-serif;font-size:clamp(52px,8vw,104px);line-height:.88;margin:12px 0 8px;text-transform:uppercase}
+h1 em{color:var(--gold);font-style:normal}
+p.lede{font-size:18px;color:#4d473d;max-width:64ch}
+h2{font-family:'Bebas Neue',Impact,sans-serif;font-size:34px;letter-spacing:.02em;margin:44px 0 10px;text-transform:uppercase}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:14px}
+.card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px}
+.card b{display:block;font-size:15px;margin-bottom:4px}
+.card span{color:var(--dim);font-size:13px}
+.shot{width:100%;border:1px solid var(--line);border-radius:18px;margin:22px 0;box-shadow:0 24px 60px rgba(20,19,16,.08)}
+pre{background:#141310;color:#f4efe3;border-radius:14px;padding:18px 20px;overflow:auto;font:12.5px/1.7 'JetBrains Mono',monospace}
+pre b{color:#e8c764}
+table{width:100%;border-collapse:collapse;margin-top:12px;font-size:14px}
+th{text-align:left;font:10px 'JetBrains Mono',monospace;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);padding:8px;border-bottom:1px solid var(--line)}
+td{padding:9px 8px;border-bottom:1px solid #f1ece1}
+footer{margin:50px 0 40px;padding-top:18px;border-top:1px solid var(--line);color:var(--dim);font:11px 'JetBrains Mono',monospace;letter-spacing:.1em;text-transform:uppercase}
+a{color:var(--ink)}
+</style></head><body><div class="wrap">
+<header>
+  <div class="k">Billo OS · creator tools · v1</div>
+  <h1>Billo <em>Browser</em></h1>
+  <p class="lede">A browser built for creators. Your own engine. Your own data. Billo OS lives inside every tab — contacts, renders, covers, events — without touching Chrome, without a cloud account, without a plugin store.</p>
+</header>
+
+<img class="shot" src="dashboard.png" alt="Billo Browser start page with live Billo OS stats">
+
+<h2>What's in it</h2>
+<div class="grid">
+  <div class="card"><b>Own engine</b><span>Rust + WKWebView. 1.6 MB binary. No Chrome, no extension required.</span></div>
+  <div class="card"><b>Your data bridge</b><span>36,280 profiles · 24,852 contacts · 72 covers · live counts on the start page.</span></div>
+  <div class="card"><b>Creator search</b><span>Search people, cities, covers and projects from the address bar.</span></div>
+  <div class="card"><b>Light + fast</b><span>Near-white UI, gold accent, keyboard-first: ⌘L ⌘R ⌘[ ⌘].</span></div>
+  <div class="card"><b>Local-first</b><span>Data stays on the machine (or your private network). No account, no telemetry.</span></div>
+  <div class="card"><b>Runs everywhere</b><span>macOS app today; bridge API works from phone, tablet or another laptop on your tailnet.</span></div>
+</div>
+
+<h2>Run it</h2>
+<pre><b># 1. start the data bridge</b>
+python3 ~/BillySorrells/scripts/billo_serve.py
+
+<b># 2. open the browser</b>
+~/BillySorrells/tools/billo-browser-rs/target/release/billo_browser
+
+<b># 3. (optional) browse from the CLI, no window</b>
+billo text https://site.com
+billo dump https://site.com
+billo shot https://site.com out.png</pre>
+
+<h2>Bridge API</h2>
+<table>
+  <tr><th>endpoint</th><th>returns</th></tr>
+  <tr><td><code>GET /api/stats</code></td><td>live counts: profiles, complete, buyers, contacts, covers, SSD free</td></tr>
+  <tr><td><code>GET /api/search?q=</code></td><td>matching people, cities, covers</td></tr>
+  <tr><td><code>GET /api/open?url=</code></td><td>opens a URL in Billo Browser</td></tr>
+</table>
+
+<p style="margin-top:34px"><a href='/os' style='display:inline-block;border:1px solid #c9a84c;border-radius:999px;padding:10px 18px;text-decoration:none;margin-right:10px;font:11px \'JetBrains Mono\',monospace;letter-spacing:.14em;text-transform:uppercase'>Billo OS directory →</a><a href='/info' style='display:inline-block;border:1px solid #141310;border-radius:999px;padding:10px 18px;text-decoration:none;font:11px \'JetBrains Mono\',monospace;letter-spacing:.14em;text-transform:uppercase'>Full documentation →</a></p>
+<p style="margin-top:18px"><a href="download/BilloBrowser.apk" download style="display:inline-block;border:1px solid #141310;border-radius:999px;padding:10px 18px;text-decoration:none;font:11px 'JetBrains Mono',monospace;letter-spacing:.14em;text-transform:uppercase">Download the app (APK) ↓</a></p>
+<footer>Billo Browser · Billy Sorrells Entertainment · built in-house · no Chrome involved</footer>
+</div></body></html>
