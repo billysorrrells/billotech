@@ -5,8 +5,11 @@
 //!   billo_remote [port]            (default 8651)   prints the token on start
 //!   BILLO_REMOTE_TOKEN=... to pin a token
 
+mod drives;
+
 use axum::{
-    extract::{Query, State},
+    extract::{DefaultBodyLimit, Query, Request, State},
+    middleware::{self, Next},
     http::{header, StatusCode},
     response::{Html, IntoResponse, Response},
     routing::{get, post},
@@ -70,6 +73,18 @@ async fn frame(State(app): State<App>, Query(q): Query<HashMap<String, String>>)
         Ok(Err(e)) => (StatusCode::INTERNAL_SERVER_ERROR, e).into_response(),
         Err(e) => (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()).into_response(),
     }
+}
+
+async fn drives_page(State(app): State<App>) -> Response {
+    Html(include_str!("drives.html").replace("__TOKEN__", app.token.as_str())).into_response()
+}
+
+/// Every /drives route needs the token in ?k=
+async fn gate(State(app): State<App>, Query(q): Query<HashMap<String, String>>, req: Request, next: Next) -> Response {
+    if !authed(&app, &q) {
+        return (StatusCode::FORBIDDEN, "locked").into_response();
+    }
+    next.run(req).await
 }
 
 async fn input(State(app): State<App>, Query(q): Query<HashMap<String, String>>, Json(i): Json<Input>) -> Response {
@@ -146,6 +161,16 @@ async fn main() {
         .route("/", get(page))
         .route("/frame", get(frame))
         .route("/input", post(input))
+        .merge(
+            Router::new()
+                .route("/drives", get(drives_page))
+                .route("/drives/roots", get(drives::list_roots))
+                .route("/drives/ls", get(drives::list))
+                .route("/drives/get", get(drives::get_file))
+                .route("/drives/up", post(drives::upload))
+                .layer(DefaultBodyLimit::disable())
+                .route_layer(middleware::from_fn_with_state(app.clone(), gate)),
+        )
         .with_state(app);
     let addr = format!("127.0.0.1:{port}");
     println!("billo_remote on http://{addr}/?k={token}");

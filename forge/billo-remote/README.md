@@ -25,3 +25,9 @@ Stop: `pkill -f bin/billo_remote` · Close the public door: `tailscale funnel --
 
 macOS permissions: Screen Recording (frames) and Accessibility (taps/typing) for the process that launches it.
 Note: xcap 0.0.14 fails to compile against current core-foundation; use xcap 0.7.
+
+## Drives (`/drives?k=<token>`)
+Every attached drive on your phone: Mac home, Monterey OS - Data (954 GB SSD), Podcast SSD (read-only volume).
+Browse with folder filter, play video/audio inline (HTTP Range, works in iPhone Safari), view photos/text/PDF,
+download anything, upload from the phone into any writable folder (never overwrites — adds " (1)").
+Jailed to home + /Volumes/*; `.ssh`, `.gnupg`, Keychains, `.aws`, `.netrc` and the remote's own `.token` are blocked. No delete.

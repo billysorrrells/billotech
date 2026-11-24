@@ -1,0 +1,86 @@
+<!doctype html><html><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Billo Remote · Drives</title>
+<style>
+:root{--ink:#0A0A0B;--bone:#F4F2EC;--teal:#2DD6AE;--gold:#D4AF37;--ln:#26262b;--mute:#9a9a9f}
+*{box-sizing:border-box}body{margin:0;background:var(--ink);color:var(--bone);font:15px -apple-system,system-ui,sans-serif}
+header{position:sticky;top:0;z-index:2;background:var(--ink);display:flex;align-items:center;gap:8px;padding:10px;border-bottom:1px solid var(--ln)}
+header b{font:700 15px system-ui;letter-spacing:.04em}header b em{color:var(--teal);font-style:normal}
+a{color:inherit;text-decoration:none}
+.btn{background:#141416;border:1px solid var(--ln);color:var(--bone);padding:9px 12px;font-size:14px;border-radius:0}
+.btn.pri{background:var(--teal);color:#000;border:0;font-weight:700}
+#crumbs{padding:10px;font:12px ui-monospace,monospace;color:var(--mute);overflow-x:auto;white-space:nowrap;border-bottom:1px solid var(--ln)}
+#crumbs span{color:var(--bone);cursor:pointer}#crumbs span:hover{color:var(--teal)}
+.drive{display:block;padding:16px 12px;border-bottom:1px solid var(--ln)}
+.drive .n{font:700 18px system-ui}.bar{height:6px;background:#1c1c20;margin-top:8px}.bar i{display:block;height:6px;background:var(--gold)}
+.drive .s{font:12px ui-monospace,monospace;color:var(--mute);margin-top:6px}
+.row{display:flex;align-items:center;gap:10px;padding:12px;border-bottom:1px solid #18181b;cursor:pointer}
+.row .ic{width:28px;text-align:center;font-size:18px}.row .nm{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.row .mt{font:11px ui-monospace,monospace;color:var(--mute);text-align:right;white-space:nowrap}
+.tools{display:flex;gap:6px;padding:10px;flex-wrap:wrap;border-bottom:1px solid var(--ln)}
+#filter{flex:1;min-width:120px;background:#141416;border:1px solid var(--ln);color:var(--bone);padding:9px;font-size:16px}
+#view{position:fixed;inset:0;background:rgba(0,0,0,.94);display:none;flex-direction:column;z-index:5}
+#view .vh{display:flex;gap:6px;padding:10px;align-items:center}#view .vh .t{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:13px}
+#view .vb{flex:1;display:flex;align-items:center;justify-content:center;overflow:auto}
+#view img,#view video{max-width:100%;max-height:100%}#view audio{width:92%}
+#view pre{white-space:pre-wrap;padding:12px;font:12px ui-monospace,monospace;align-self:flex-start;width:100%}
+#msg{padding:8px 12px;font:12px ui-monospace,monospace;color:var(--teal);min-height:1em}
+</style></head><body>
+<header><b>Billo <em>Remote</em> · Drives</b><span style="flex:1"></span><a class="btn" href="/?k=__TOKEN__">Screen</a></header>
+<div id="crumbs"></div>
+<div class="tools" id="tools" style="display:none">
+  <input id="filter" placeholder="Filter this folder" autocapitalize="off" autocorrect="off">
+  <label class="btn pri">Upload here<input id="up" type="file" multiple style="display:none"></label>
+  <button class="btn" id="hid">Hidden: off</button>
+</div>
+<div id="msg"></div>
+<div id="list"></div>
+<div id="view"><div class="vh"><span class="t" id="vt"></span><a class="btn" id="vdl">Download</a><button class="btn" id="vx">Close</button></div><div class="vb" id="vb"></div></div>
+<script>
+const K='__TOKEN__';let cur=null,hidden=false,entries=[];
+const $=id=>document.getElementById(id);
+const q=(u,p)=>u+'?k='+K+Object.entries(p||{}).map(([a,b])=>'&'+a+'='+encodeURIComponent(b)).join('');
+const sz=n=>n<1024?n+' B':n<1048576?(n/1024).toFixed(0)+' KB':n<1073741824?(n/1048576).toFixed(1)+' MB':(n/1073741824).toFixed(2)+' GB';
+const kind=n=>{const e=(n.split('.').pop()||'').toLowerCase();
+ if(['jpg','jpeg','png','gif','webp','heic','bmp'].includes(e))return'img';
+ if(['mp4','mov','m4v','webm'].includes(e))return'vid';
+ if(['mp3','wav','m4a','aac','aif','aiff','flac','ogg'].includes(e))return'aud';
+ if(['txt','md','json','csv','log','py','js','rs','html','css','toml','yml','yaml','srt','fountain','sh'].includes(e))return'txt';
+ if(e==='pdf')return'pdf';return'file'};
+const icon={dir:'📁',img:'🖼',vid:'🎬',aud:'🎵',txt:'📄',pdf:'📕',file:'▫️'};
+async function drives(){cur=null;$('tools').style.display='none';$('crumbs').textContent='All drives on the Mac';
+ const r=await (await fetch(q('/drives/roots'))).json();
+ $('list').innerHTML=r.map(d=>{const used=d.total_gb?100*(1-d.free_gb/d.total_gb):0;
+  return `<a class="drive" data-p="${encodeURIComponent(d.path)}"><div class="n">${d.name}</div><div class="bar"><i style="width:${used.toFixed(0)}%"></i></div><div class="s">${d.free_gb} GB free of ${d.total_gb} GB · ${d.path}</div></a>`}).join('');
+ document.querySelectorAll('.drive').forEach(a=>a.onclick=()=>openDir(decodeURIComponent(a.dataset.p)));}
+async function openDir(p){$('msg').textContent='';const r=await fetch(q('/drives/ls',hidden?{p,hidden:1}:{p}));
+ if(!r.ok){$('msg').textContent='Can\'t open: '+await r.text();return}
+ const j=await r.json();cur=j.path;entries=j.entries;$('tools').style.display='flex';$('filter').value='';
+ const parts=cur.split('/').filter(Boolean);let acc='';
+ $('crumbs').innerHTML='<span data-p="">Drives</span>'+parts.map(x=>{acc+='/'+x;return ` / <span data-p="${encodeURIComponent(acc)}">${x}</span>`}).join('');
+ document.querySelectorAll('#crumbs span').forEach(s=>s.onclick=()=>s.dataset.p?openDir(decodeURIComponent(s.dataset.p)):drives());
+ render();history.replaceState(null,'',q('/drives',{p:cur}));}
+function render(){const f=$('filter').value.toLowerCase();
+ $('list').innerHTML=entries.filter(e=>!f||e.name.toLowerCase().includes(f)).map((e,i)=>{const k=e.dir?'dir':kind(e.name);
+  const d=e.mtime?new Date(e.mtime*1000).toLocaleDateString():'';
+  return `<div class="row" data-i="${entries.indexOf(e)}"><span class="ic">${icon[k]}</span><span class="nm">${e.name}</span><span class="mt">${e.dir?'':sz(e.size)}<br>${d}</span></div>`}).join('')||'<div id="msg">Empty folder</div>';
+ document.querySelectorAll('.row').forEach(r=>r.onclick=()=>{const e=entries[+r.dataset.i];const p=cur.replace(/\/$/,'')+'/'+e.name;e.dir?openDir(p):view(p,e)});}
+function view(p,e){const k=kind(e.name),u=q('/drives/get',{p});$('vt').textContent=e.name+' · '+sz(e.size);$('vdl').href=q('/drives/get',{p,dl:1});
+ const b=$('vb');b.innerHTML='';
+ if(k==='img')b.innerHTML=`<img src="${u}">`;
+ else if(k==='vid')b.innerHTML=`<video src="${u}" controls playsinline autoplay></video>`;
+ else if(k==='aud')b.innerHTML=`<audio src="${u}" controls autoplay></audio>`;
+ else if(k==='pdf'){window.open(u,'_blank');return}
+ else if(k==='txt'&&e.size<2e6)fetch(u).then(r=>r.text()).then(t=>{b.innerHTML='<pre></pre>';b.firstChild.textContent=t});
+ else{location.href=q('/drives/get',{p,dl:1});return}
+ $('view').style.display='flex';}
+$('vx').onclick=()=>{$('view').style.display='none';$('vb').innerHTML=''};
+$('filter').oninput=render;
+$('hid').onclick=()=>{hidden=!hidden;$('hid').textContent='Hidden: '+(hidden?'on':'off');if(cur)openDir(cur)};
+$('up').onchange=async ev=>{const fs=[...ev.target.files];for(const [i,f] of fs.entries()){
+  $('msg').textContent=`Uploading ${i+1}/${fs.length}: ${f.name} (${sz(f.size)})…`;
+  const r=await fetch(q('/drives/up',{d:cur,name:f.name}),{method:'POST',body:f});
+  $('msg').textContent=r.ok?`Saved ${f.name}`:`Failed ${f.name}: ${await r.text()}`}
+ ev.target.value="";openDir(cur)};;
+const start=new URLSearchParams(location.search).get('p');start?openDir(start):drives();
+</script></body></html>
